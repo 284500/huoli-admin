@@ -1,6 +1,18 @@
 {
   "name": "nuxt-app",
   "private": true,
+  "homepage": "https://e.coding.net/huolinet/ffd/ffd-distributor-web#readme",
+  "bugs": {
+    "url": "https://e.coding.net/huolinet/ffd/ffd-distributor-web/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://e.coding.net/huolinet/ffd/ffd-distributor-web.git"
+  },
+  "author": {
+    "name": "zhus@huoli.tech",
+    "email": "zhus@hsit.com.cn"
+  },
   "type": "module",
   "scripts": {
     "build": "nuxt build",
@@ -9,7 +21,18 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint . && stylelint \"**/*.{css,less,scss}\"",
     "lint:fix": "prettier --write . && eslint --fix . && stylelint --fix \"**/*.{css,less,scss}\"",
+    "prepare": "husky install",
     "preview": "nuxt preview"
+  },
+  "commitlint": {
+    "extends": [
+      "ali"
+    ]
+  },
+  "lint-staged": {
+    "*.{cjs,cts,js,jsx,mjs,mts,ts,tsx,vue}": "eslint --fix",
+    "*.{css,less,scss}": "stylelint --fix",
+    "*.{cjs,css,cts,html,js,json,jsx,less,md,mjs,mts,scss,ts,tsx,vue,yaml,yml}": "prettier --write"
   },
   "prettier": "prettier-config-ali",
   "eslintConfig": {
@@ -37,15 +60,19 @@
     "vue-router": "^4.3.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.2.1",
     "@nuxtjs/tailwindcss": "^6.12.0",
-    "eslint": "^8.57.0",
-    "eslint-config-ali": "^15.0.1",
+    "commitlint-config-ali": "^1.0.0",
+    "eslint": "^8.56.0",
+    "eslint-config-ali": "^15.0.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.1.3",
-    "prettier": "^3.2.5",
-    "prettier-config-ali": "^1.3.2",
-    "stylelint": "^16.3.1",
-    "stylelint-config-ali": "^2.1.1",
+    "eslint-plugin-prettier": "^5.0.1",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.1.1",
+    "prettier-config-ali": "^1.0.0",
+    "stylelint": "^16.0.2",
+    "stylelint-config-ali": "^2.1.0",
     "stylelint-prettier": "^5.0.0",
     "typescript": "^5.4.5"
   }
