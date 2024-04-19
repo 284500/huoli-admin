@@ -2,7 +2,7 @@
 
 - 项目规约继承【[阿里巴巴前端规范](https://alibaba.github.io/f2e-spec/zh/)】
 - [开发框架Nuxt 3中文文档](https://www.nuxt.com.cn/) 开发查阅.
-
+- [shadcn-vue组件库](https://www.shadcn-vue.com/docs)
 
 ## Setup
 
