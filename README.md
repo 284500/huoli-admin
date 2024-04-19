@@ -1,8 +1,8 @@
-# Nuxt 3 Minimal Starter
+# ffd-distributor-web 发发单广告投放商业务流程
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+- 项目规约继承【阿里巴巴前端规范】：https://alibaba.github.io/f2e-spec/zh/coding/
+- [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
-项目规约继承【阿里巴巴前端规范】：https://alibaba.github.io/f2e-spec/zh/coding/
 
 ## Setup
 
