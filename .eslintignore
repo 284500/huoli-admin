@@ -5,6 +5,8 @@ es
 lib
 node_modules
 package-lock.json
+components
+composables
 pnpm-lock.yaml
 yarn.lock
 *.min.js
