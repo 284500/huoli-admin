@@ -6,7 +6,7 @@
         <TabsTrigger value="password"> H5模板 </TabsTrigger>
       </TabsList>
       <div>
-        <ul class="flex">
+        <ul class="flex whitespace-nowrap">
           <label class="px-3 py-1" for="">物品类型</label>
           <li
             class="px-3 py-1 hover:bg-black text-black hover:text-white rounded-full"
@@ -16,7 +16,7 @@
             {{ item }}
           </li>
         </ul>
-        <ul class="flex">
+        <ul class="flex whitespace-nowrap">
           <label class="px-3 py-1" for="">行业分类</label>
           <li
             class="px-3 py-1 hover:bg-black text-black hover:text-white rounded-full"
