@@ -34,7 +34,7 @@ export const http = (obj: HttpParms) => {
       },
       onResponse({ request, response, options }) {
         // 处理响应数据
-        resolve(response._data);
+        resolve(response._data.data);
       },
       onResponseError({ request, response, options }) {
         // 处理响应错误
@@ -43,3 +43,16 @@ export const http = (obj: HttpParms) => {
   });
   return res;
 };
+
+export function getAxios(params:any) {
+ return http({url:'/api/login',...params});
+}
+//post请求
+export function postAxios(params:any) {
+  return http({url:'/api/sign',...params});
+}
+
+// await getAxios();
+// postAxios().then(res)=>{
+//   console.log(res);
+// }

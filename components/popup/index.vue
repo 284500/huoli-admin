@@ -8,12 +8,5 @@
     ></DialogContent>
   </Dialog>
 </template>
-<script setup lang="ts">
-// interface Popup {
-//   name: string;
-//   age: number;
-// }
-
-// const props = defineProps<Popup>();
-</script>
+<script setup lang="ts"></script>
 <style scoped></style>

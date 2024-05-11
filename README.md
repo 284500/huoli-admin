@@ -77,6 +77,7 @@ bun run preview
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
 
 ## Git提交规范
+
 ### 基本的 message 格式
 
 ```
@@ -89,8 +90,6 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 
 其中 message header（即首行）必选，scope、body 和 footer 可选。
 
-
-
 ### type 用来描述本次提交的改动类型，可选值及对应含义如下：
 
 - feat: 新增功能
@@ -98,25 +97,31 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 > git add -m "feat: 新增功能"
 
 - fix: 修复 bug
-> git add -m "fix: 修复 bug"
+
+  > git add -m "fix: 修复 bug"
 
 - docs: 文档相关的改动
-> git add -m "docs: 文档相关的改动"
+
+  > git add -m "docs: 文档相关的改动"
 
 - style: 对代码的格式化改动，代码逻辑并未产生任何变化(例如代码缩进，分号的移除和添加)
-> git add -m "style: 对代码的格式化改动"
+
+  > git add -m "style: 对代码的格式化改动"
 
 - test: 新增或修改测试用例
-> git add -m "test: 新增或修改测试用例"
+
+  > git add -m "test: 新增或修改测试用例"
 
 - refactor: 重构代码或其他优化举措
-> git add -m "refactor: 重构代码或其他优化举措"
+
+  > git add -m "refactor: 重构代码或其他优化举措"
 
 - chore: 项目工程方面的改动，代码逻辑并未产生任何变化
-> git add -m "chore: 项目工程方面的改动"
+
+  > git add -m "chore: 项目工程方面的改动"
 
 - revert: 恢复之前的提交
-> git add -m "revert: 恢复之前的提交"
+  > git add -m "revert: 恢复之前的提交"
 
 > 注意：
 >

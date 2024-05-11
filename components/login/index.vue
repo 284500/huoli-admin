@@ -1,87 +1,248 @@
 <template>
-  <div class="flex justify-center">
-    <div class="img hidden sm:block">
-      <img src="/public/1.jpg" alt="" />
+  <div class="flex rounded-[12px] overflow-hidden">
+    <div class="hidden sm:block">
+      <img src="/public/img/login/login-img.png" alt="" class="w-[320px] h-[520px]" />
     </div>
-    <!-- 登录菜单 -->
-    <Card v-if="Type === 'login'" class="lsm:border-none flex-1 mx-auto max-w-sm">
-      <CardHeader>
-        <CardTitle class="text-xl"> 账号登陆 </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div class="grid gap-4">
-          <div class="grid gap-2">
-            <Label for="phone">手机号</Label>
-            <Input
-              id="phone"
-              type="phone"
-              placeholder="请输入您的手机号"
-              v-model="userinfo.phone"
-              required
-            />
-          </div>
-          <div class="grid gap-2">
-            <div class="flex items-center">
-              <Label for="password">密码</Label>
-              <a href="#" class="ml-auto inline-block text-sm underline"> 忘记密码? </a>
-            </div>
-            <Input
-              id="password"
-              type="password"
-              placeholder="请输入您的密码"
-              v-model="userinfo.password"
-              required
-            />
-          </div>
-          <Button type="submit" class="w-full" @click="login"> 登录 </Button>
-          <Button variant="outline" class="w-full"> 微信登陆 </Button>
+    <div
+      class="bg-white w-[480px] md:h-[520px] max-w-[100vw] h-[420px] relative md:py-[60px] md:px-[100px] px-8 py-6"
+    >
+      <!-- 账号登录 -->
+      <div v-if="logintype === 'login'" class="flex flex-col items-center h-full">
+        <h1 class="title font-semibold">账号登录</h1>
+        <div class="mt-3">
+          <span class="descripe">没有账号？</span
+          ><span class="descripe font-medium !text-[#2277FF]">立即注册</span>
         </div>
-        <div class="mt-4 text-center text-sm">
-          没有账号?
-          <a href="#" class="underline" @click="changeType('signup')"> 注册 </a>
+        <div class="mt-10 w-full h-10">
+          <Input
+            class="w-full h-10 rounded-[4px]"
+            id="phone"
+            type="phone"
+            placeholder="请输入账号"
+            v-model="userinfo.phone"
+            required
+          />
         </div>
-      </CardContent>
-    </Card>
-    <!-- 注册菜单 -->
-    <Card v-if="Type === 'signup'" class="flex-1 max-w-sm">
-      <CardHeader>
-        <CardTitle class="text-xl"> 账号注册 </CardTitle>
-        <!-- <CardDescription> 请输入您的信息来创建您的账号。、 </CardDescription> -->
-      </CardHeader>
-      <CardContent>
-        <div class="grid gap-4">
-          <!-- <div class="grid gap-2">
-            <Label for="name">Name</Label>
-            <Input id="name" type="name" placeholder="请输入您的姓名" required />
-          </div> -->
-          <div class="grid gap-2">
-            <Label for="phone">手机号</Label>
-            <Input id="phone" type="phone" placeholder="请输入您的手机号" required />
+        <div class="mt-3 w-full h-10">
+          <Input
+            class="w-full h-10 rounded-[4px]"
+            id="phone"
+            type="phone"
+            placeholder="请输入密码"
+            v-model="userinfo.phone"
+            required
+          />
+        </div>
+        <div class="w-full flex justify-between items-center mt-4">
+          <div class="flex gap-2 items-center">
+            <Checkbox id="terms1" /><span class="descripe !text-[#666666]">记住密码</span>
           </div>
-          <div class="grid gap-2">
-            <Label for="password">密码</Label>
-            <Input id="password" type="password" placeholder="请输入您的密码" />
+          <div class="descripe">忘记密码</div>
+        </div>
+        <div class="w-full mt-5">
+          <Button class="w-full rounded-[4px] bg-[#2277FF]">登录</Button>
+        </div>
+        <div class="mt-auto flex justify-center items-center">
+          <div class="flex gap-1.5">
+            <img src="/public/img/login/weixing.png" alt="" class="w-5 h-5" /><span class="text"
+              >微信登录</span
+            >
           </div>
-          <Button type="submit" class="w-full" @click="signup"> 创建账号 </Button>
-          <Button variant="outline" class="w-full"> 微信登录 </Button>
+          <div class="w-[1px] h-4 bg-[#DDDDDD] mx-4"></div>
+          <div class="flex gap-1.5">
+            <img src="/public/img/login/phone.png" alt="" class="w-5 h-5" /><span class="text"
+              >手机登录</span
+            >
+          </div>
         </div>
-        <div class="mt-4 text-center text-sm">
-          已有帐号?
-          <a href="#" class="underline" @click="changeType('login')"> 登录 </a>
+      </div>
+      <!-- 手机验证码登录 -->
+      <div v-if="logintype === 'phone'" class="flex flex-col items-center h-full">
+        <h1 class="title font-semibold">手机验证码登录</h1>
+        <div class="mt-3">
+          <span class="descripe">没有账号？</span
+          ><span class="descripe font-medium !text-[#2277FF]">立即注册</span>
         </div>
-        <button @click="yzm">发送验证码</button>
-      </CardContent>
-    </Card>
+        <div class="mt-10 w-full h-10">
+          <Input
+            class="w-full h-10 rounded-[4px]"
+            id="phone"
+            type="phone"
+            placeholder="请输入手机号码"
+            v-model="userinfo.phone"
+            required
+          />
+        </div>
+        <div class="mt-3 w-full h-10 flex gap-3">
+          <Input
+            class="w-full h-10 rounded-[4px]"
+            id="phone"
+            type="phone"
+            placeholder="请输入验证码"
+            v-model="userinfo.phone"
+            required
+          />
+          <Button class="h-full px-3 text-[#333333]" variant="outline">获取验证码</Button>
+        </div>
+        <div class="w-full mt-5">
+          <Button class="w-full rounded-[4px] bg-[#2277FF]">登录</Button>
+        </div>
+        <div class="mt-auto flex justify-center items-center">
+          <div class="flex gap-1.5">
+            <img src="/public/img/login/weixing.png" alt="" class="w-5 h-5" /><span class="text"
+              >微信登录</span
+            >
+          </div>
+          <div class="w-[1px] h-4 bg-[#DDDDDD] mx-4"></div>
+          <div class="flex gap-1.5">
+            <img src="/public/img/login/phone.png" alt="" class="w-5 h-5" /><span class="text"
+              >手机登录</span
+            >
+          </div>
+        </div>
+      </div>
+      <!-- 微信验证 -->
+      <div v-if="logintype === 'weixing'" class="flex flex-col items-center h-full">
+        <div class="flex">
+          <h1 class="title font-semibold !text-[#2277ff]">微信扫码</h1>
+          <h1 class="title font-semibold">一键登录</h1>
+        </div>
+        <div class="mt-10 w-[240px] h-[240px] p-4 weixing">
+          <img src="" alt="" class="w-full h-full rounded-[4px]" />
+        </div>
+        <div class="mt-auto flex justify-center items-center">
+          <div class="flex gap-1.5">
+            <img src="/public/img/login/weixing.png" alt="" class="w-5 h-5" /><span class="text"
+              >微信登录</span
+            >
+          </div>
+          <div class="w-[1px] h-4 bg-[#DDDDDD] mx-4"></div>
+          <div class="flex gap-1.5">
+            <img src="/public/img/login/phone.png" alt="" class="w-5 h-5" /><span class="text"
+              >手机登录</span
+            >
+          </div>
+        </div>
+      </div>
+      <!-- 账号注册 -->
+      <div v-if="logintype === 'signup'" class="flex flex-col items-center h-full">
+        <h1 class="title font-semibold">账号注册</h1>
+
+        <div class="mt-10 w-full h-10">
+          <Input
+            class="w-full h-10 rounded-[4px]"
+            id="phone"
+            type="phone"
+            placeholder="请输入账号"
+            v-model="userinfo.phone"
+            required
+          />
+        </div>
+        <div class="mt-3 w-full h-10 flex gap-3">
+          <Input
+            class="w-full h-10 rounded-[4px]"
+            id="phone"
+            type="phone"
+            placeholder="请输入验证码"
+            v-model="userinfo.phone"
+            required
+          />
+          <Button class="h-full px-3 text-[#333333]" variant="outline">获取验证码</Button>
+        </div>
+        <div class="mt-3 w-full h-10">
+          <Input
+            class="w-full h-10 rounded-[4px]"
+            id="phone"
+            type="phone"
+            placeholder="请输入密码"
+            v-model="userinfo.phone"
+            required
+          />
+        </div>
+        <div class="mt-3 w-full h-10">
+          <Input
+            class="w-full h-10 rounded-[4px]"
+            id="phone"
+            type="phone"
+            placeholder="请再次输入密码"
+            v-model="userinfo.phone"
+            required
+          />
+        </div>
+        <div class="w-full mt-5">
+          <Button class="w-full rounded-[4px] bg-[#2277FF]">登录</Button>
+        </div>
+        <div class="mt-auto flex justify-center items-center">
+          <span class="descripe">已有账号，</span
+          ><span class="descripe font-medium !text-[#2277FF]">直接登录</span>
+        </div>
+      </div>
+      <!-- 忘记密码 -->
+      <div v-if="logintype === 'forget'" class="flex flex-col items-center h-full">
+        <h1 class="title font-semibold">忘记密码</h1>
+
+        <div class="mt-10 w-full h-10">
+          <Input
+            class="w-full h-10 rounded-[4px]"
+            id="phone"
+            type="phone"
+            placeholder="请输入账号"
+            v-model="userinfo.phone"
+            required
+          />
+        </div>
+        <div class="mt-3 w-full h-10 flex gap-3">
+          <Input
+            class="w-full h-10 rounded-[4px]"
+            id="phone"
+            type="phone"
+            placeholder="请输入验证码"
+            v-model="userinfo.phone"
+            required
+          />
+          <Button class="h-full px-3 text-[#333333]" variant="outline">获取验证码</Button>
+        </div>
+        <div class="mt-3 w-full h-10">
+          <Input
+            class="w-full h-10 rounded-[4px]"
+            id="phone"
+            type="phone"
+            placeholder="请输入密码"
+            v-model="userinfo.phone"
+            required
+          />
+        </div>
+        <div class="mt-3 w-full h-10">
+          <Input
+            class="w-full h-10 rounded-[4px]"
+            id="phone"
+            type="phone"
+            placeholder="请再次输入密码"
+            v-model="userinfo.phone"
+            required
+          />
+        </div>
+        <div class="w-full mt-5">
+          <Button class="w-full rounded-[4px] bg-[#2277FF]">确认修改</Button>
+        </div>
+        <div class="mt-auto flex justify-center items-center">
+          <span class="descripe">想起密码？</span
+          ><span class="descripe font-medium !text-[#2277FF]">去登录</span>
+        </div>
+      </div>
+      <img src="/public/img/login/close.png" alt="" class="w-6 h-6 absolute right-5 top-5" />
+    </div>
+    <div></div>
+    <div></div>
   </div>
 </template>
 <script setup>
-import { useFetch } from '#app';
 import { useToast } from '@/components/ui/toast/use-toast';
 import { reactive, ref } from 'vue';
 const props = defineProps({
   logintype: {
     type: String,
-    default: 'login',
+    default: 'weixing',
   },
 });
 const emits = defineEmits(['showpop']);
@@ -166,13 +327,43 @@ const changeType = (type) => {
 // const valid = (value) => {};
 </script>
 <style scoped lang="scss">
-.img {
-  max-width: 40%;
-  margin-right: 15px;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+.title {
+  font-size: 24px;
+  font-family:
+    PingFang SC,
+    PingFang SC-Semibold;
+  color: #333333;
+  line-height: 32px;
+}
+.descripe {
+  color: #999999;
+  font-size: 14px;
+  font-family:
+    PingFang SC,
+    PingFang SC-Regular;
+  line-height: 20px;
+}
+.text {
+  font-size: 14px;
+  font-family:
+    PingFang SC,
+    PingFang SC-Regular;
+  font-weight: Regular;
+  color: #666666;
+  line-height: 24px;
+}
+input::placeholder {
+  font-size: 14px;
+  font-family:
+    PingFang SC,
+    PingFang SC-Regular;
+  font-weight: Regular;
+  color: #aaaaaa;
+  line-height: 20px;
+}
+.weixing {
+  background: #ffffff;
+  border: 1px solid #eeeeee;
+  border-radius: 8px;
 }
 </style>

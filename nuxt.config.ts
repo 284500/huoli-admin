@@ -2,7 +2,16 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/scss/main.scss'],
-  modules: ['@nuxtjs/tailwindcss', 'shadcn-nuxt', '@pinia/nuxt'],
+
+  modules: [
+    '@nuxtjs/tailwindcss',
+    'shadcn-nuxt',
+    '@pinia/nuxt',
+    '@nuxtjs/color-mode',
+    '@vueuse/nuxt',
+    'nuxt-icon',
+  ],
+
   shadcn: {
     /**
      * Prefix for all the imported component
@@ -14,6 +23,7 @@ export default defineNuxtConfig({
      */
     componentDir: './components/ui',
   },
+
   nitro: {
     devProxy: {
       '/api': {
@@ -21,9 +31,35 @@ export default defineNuxtConfig({
         changeOrigin: true,
       },
       '/test': {
-        target: 'http://192.168.0.106:8084',
+        target: 'http://192.168.0.103:8084',
         changeOrigin: true,
       },
     },
+  },
+
+  tailwindcss: {
+    exposeConfig: true,
+  },
+
+  colorMode: {
+    classSuffix: '',
+  },
+
+  typescript: {
+    shim: false,
+  },
+
+  imports: {
+    imports: [
+      {
+        from: 'tailwind-variants',
+        name: 'tv',
+      },
+      {
+        from: 'tailwind-variants',
+        name: 'VariantProps',
+        type: true,
+      },
+    ],
   },
 });

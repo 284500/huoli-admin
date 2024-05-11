@@ -1,0 +1,181 @@
+<template>
+  <NuxtLayout>
+    <MyBreadcrumb :list="BreadcrumbList" />
+    <div class="flex flex-col gap-4 mt-3">
+      <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="title">投放统计</div>
+          <div>|</div>
+          <div class="text">全部商户</div>
+        </div>
+        <div>
+          <div class="flex justify-between">
+            <div class="text">300/1000</div>
+            <div>30%</div>
+          </div>
+          <Progress />
+        </div>
+        <Separator class="my-3" />
+        <div class="grid gap-3 lg:grid-cols-7 grid-cols-4">
+          <div v-for="item in 7" class="bg-[#F6F7F9] rounded-[4px] sm:px-3 sm:py-5 p-2 flex flex-col sm:gap-2 gap-1">
+            <div class="number text-center">1000</div>
+            <div class="text text-center">总分发数</div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
+        <div class="grid md:grid-cols-2 relative gap-10">
+          <Separator class="absolute left-[50%] hidden md:block" orientation="vertical" />
+
+          <div>
+            <h1 class="title">投放订单信息</h1>
+            <div class="mt-5 mb-8 gap-3 flex flex-col">
+              <div class="flex gap-3">
+                <div class="muted-text">收货信息：</div>
+                <div class="text">投放订单类型收货地址请查看分发商户地址</div>
+              </div>
+              <div class="flex gap-3">
+                <div class="muted-text">订单状态：</div>
+                <div class="text">待接单</div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="muted-text">付款信息：</div>
+                <div class="text">微信支付</div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="muted-text">订单信息：</div>
+                <div class="text">392794546085685-654</div>
+              </div>
+            </div>
+            <div>
+              <h1 class="title">商品信息</h1>
+              <div class="flex mt-5 table-border p-4 justify-between items-center">
+                <div class="flex items-center">
+                  <div
+                    class="w-[48px] h-[48px] overflow-hidden flex justify-center items-center mr-4 rounded-full"
+                  >
+                    <img src="/public/img/wallet/wallet.png" alt="" />
+                  </div>
+                  <div>
+                    <div class="table-title">
+                      商务名片
+                    </div>
+                    <div class="table-text">
+                      订单信息：392794546085685-654
+                    </div>
+                  </div>
+                </div>
+                <div class="text-[#2277FF]">
+                  详情
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h1 class="title">投放信息</h1>
+            <div class="mt-5  gap-3 flex flex-col">
+              <div class="flex gap-3">
+                <div class="muted-text">收货信息：</div>
+                <div class="text">投放订单类型收货地址请查看分发商户地址</div>
+              </div>
+              <div class="flex gap-3">
+                <div class="muted-text">订单状态：</div>
+                <div class="text">待接单</div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="muted-text">付款信息：</div>
+                <div class="text">微信支付</div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="muted-text">订单信息：</div>
+                <div class="text">392794546085685-654</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
+        <h1 class="title">分发商户</h1>
+        <MyTable :hasCheck="false"></MyTable>
+
+      </div>
+    </div>
+  </NuxtLayout>
+</template>
+<script setup>
+import MyTable from '@/components/my-table/table.vue';
+definePageMeta({
+  layout: 'center',
+});
+const BreadcrumbList = ref([
+  {
+    name: '投放订单',
+    url: '/placedorder',
+  },
+  {
+    name: '订单详情',
+    url: '/placedorder/detail',
+  },
+]);
+</script>
+<style scoped>
+.title {
+  font-size: 20px;
+  font-family:
+    PingFang SC,
+    PingFang SC-Semibold;
+  font-weight: 600;
+  text-align: left;
+  color: #333333;
+  line-height: 28px;
+}
+.text {
+  font-size: 14px;
+  font-family:
+    PingFang SC,
+    PingFang SC-Regular;
+  font-weight: 400;
+  color: #333333;
+  line-height: 20px;
+}
+.muted-text {
+  font-size: 14px;
+  font-family:
+    PingFang SC,
+    PingFang SC-Regular;
+  font-weight: 400;
+  color: #666666;
+  line-height: 20px;
+}
+.number {
+  font-size: 24px;
+  font-family: Arial, Arial-Regular;
+  font-weight: 400;
+  color: #333333;
+  line-height: 32px;
+}
+.table-border {
+  border: 1px solid #eeeeee;
+  border-radius: 4px;
+}
+.table-title{
+font-size: 16px;
+font-family: PingFang SC, PingFang SC-Medium;
+font-weight: 500;
+text-align: left;
+color: #333333;
+line-height: 24px;
+}
+.table-text{
+font-size: 12px;
+font-family: PingFang SC, PingFang SC-Regular;
+font-weight: 400;
+text-align: left;
+color: #999999;
+line-height: 20px;
+}
+</style>

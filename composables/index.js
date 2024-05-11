@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-export const useNuxtStore = defineStore('nuxtStore', {
+export const useTestStore = defineStore('nuxtStore', {
   state: () => ({
     count: 0,
     activeProductName: 'dadad',

@@ -2,32 +2,78 @@
   <Toaster />
 
   <div>
-    <Navbar></Navbar>
-    <div class="flex min-h-screen w-full">
+    <div class="flex h-screen w-full">
       <Aside :tab-List="tabList"></Aside>
-      <Appmain :tab-List="tabList"><slot /></Appmain>
+      <Appmain :tab-List="tabList">
+        <slot></slot>
+      </Appmain>
     </div>
   </div>
 </template>
 <script setup>
 import { reactive } from 'vue';
-
 const tabList = reactive([
   {
-    title: 'Home',
-    icon: 'Home',
+    name: '模板中心',
+    icon: 'img/nav/icon-template.png',
+    path: '/modelcenter',
+    isTitle: false,
   },
   {
-    title: 'Dashboard',
-    icon: 'LineChart',
+    name: '个人空间',
+    isTitle: true,
   },
   {
-    title: 'Dashboard',
-    icon: 'Users',
+    name: '作品库',
+    icon: 'img/nav/product.svg',
+    path: '/product',
+    isTitle: false,
   },
   {
-    title: 'Dashboard',
-    icon: 'Home',
+    name: '物料订单',
+    icon: 'img/nav/address.png',
+    path: '/modelorder',
+    isTitle: false,
+  },
+  {
+    name: '投放订单',
+    icon: 'img/nav/address.png',
+    path: '/placedorder',
+    isTitle: false,
+  },
+  {
+    name: '售后服务',
+    icon: 'img/nav/address.png',
+    path: '/aftersales',
+    isTitle: false,
+  },
+  {
+    name: '个人资产',
+    isTitle: true,
+  },
+  {
+    name: '我的钱包',
+    icon: 'img/nav/address.png',
+    path: '/wallet',
+    isTitle: false,
+  },
+  {
+    name: '我的认证',
+    icon: 'img/nav/address.png',
+    path: '/myauth',
+    isTitle: false,
+  },
+  {
+    name: '地址管理',
+    icon: 'img/nav/address.png',
+    path: '/address',
+    isTitle: false,
+  },
+  {
+    name: '网站管理',
+    icon: 'img/nav/address.png',
+    path: '/',
+    isTitle: false,
   },
 ]);
 </script>
