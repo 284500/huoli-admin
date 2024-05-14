@@ -1,8 +1,10 @@
 <template>
   <NuxtLayout title="安全中心">
-    <div class=" items-center headerimg bg-no-repeat bg-top bg-[white] rounded-[8px]">
+    <div class="items-center headerimg bg-no-repeat bg-top bg-[white] rounded-[0.5rem]">
       <div class="flex flex-col items-center">
-        <div class="mt-[58px] w-[104px] h-[104px] rounded-full overflow-hidden border-[4px] border-[white]">
+        <div
+          class="sm:mt-[58px] mt-8 w-[104px] h-[104px] rounded-full overflow-hidden border-[4px] border-[white]"
+        >
           <img src="/public/img/wallet/wallet.png" alt="" class="w-full h-full object-cover" />
         </div>
         <div class="flex items-center mt-4">
@@ -11,47 +13,46 @@
         </div>
         <div class="text !text-[#999999] my-2">176283233434</div>
       </div>
-      <div class="md:p-10 p-6">
-        <div class=" table-border px-6 py-5">
-         <div class="flex justify-between items-center">
-          <div class="flex">
-            <Lucide icon="LockKeyhole" color="#999999" class="w-5 h-5 mr-3"></Lucide>
-            <div>
-              <div class="mb-1 left-title">登录密码</div>
-              <span  class="table-text"> 已设置，可通过账户密码登录</span>
+      <div class="md:p-10 p-0">
+        <div class="table-border px-6 py-5">
+          <div class="flex justify-between items-center">
+            <div class="flex mr-2">
+              <Lucide icon="LockKeyhole" color="#999999" class="w-5 h-5 mr-3 p-0.5 mt-0.5"></Lucide>
+              <div>
+                <div class="mb-1 left-title">登录密码</div>
+                <span class="table-text"> 已设置，可通过账户密码登录</span>
+              </div>
             </div>
+            <div><Button variant="outline">修改密码</Button></div>
           </div>
-          <div><Button variant="outline">修改密码</Button></div>
-         </div>
-         <Separator class="my-5"  />
-         <div class="flex justify-between items-center">
-          <div class="flex">
-            <Lucide icon="LockKeyhole" color="#999999" class="w-5 h-5 mr-3"></Lucide>
-            <div>
-              <div class="mb-1">登录密码</div>
-              <span class="table-text"> 已设置，可通过账户密码登录</span>
+          <Separator class="sm:my-5 my-3" />
+          <div class="flex justify-between items-center">
+            <div class="flex mr-2">
+              <Lucide icon="Smartphone" color="#999999" class="w-5 h-5 mr-3 sm:p-0.5 mt-0.5"></Lucide>
+              <div>
+                <div class="mb-1">手机绑定</div>
+                <span class="table-text">用于登录、重置密码或其他安全验证，建议您定期更改密码以保护安全。</span>
+              </div>
             </div>
+            <div><Button variant="outline">立即绑定</Button></div>
           </div>
-          <div><Button variant="outline">修改密码</Button></div>
-         </div>
-         <Separator class="my-5"  />
-         <div class="flex justify-between items-center">
-          <div class="flex">
-            <Lucide icon="LockKeyhole" color="#999999" class="w-5 h-5 mr-3"></Lucide>
-            <div>
-              <div class=" mb-1">登录密码</div>
-              <span  class="table-text"> 已设置，可通过账户密码登录</span>
+          <Separator class="sm:my-5 my-3" />
+          <div class="flex justify-between items-center">
+            <div class="flex mr-2">
+              <Lucide icon="MessageCircleMore" color="#999999" class="w-5 h-5 mr-3 p-0.5 mt-0.5"></Lucide>
+              <div>
+                <div class="mb-1">绑定微信</div>
+                <span class="table-text"> 用于登录</span>
+              </div>
             </div>
+            <div><Button variant="outline">立即绑定</Button></div>
           </div>
-          <div><Button variant="outline">修改密码</Button></div>
-         </div>
         </div>
       </div>
     </div>
   </NuxtLayout>
 </template>
 <script setup>
-import MyTable from '@/components/my-table/table.vue';
 definePageMeta({
   layout: 'center',
 });
@@ -126,13 +127,14 @@ definePageMeta({
   color: #333333;
   line-height: 32px;
 }
-.left-title{
-
-font-size: 16px;
-font-family: PingFang SC, PingFang SC-Medium;
-font-weight: 500;
-text-align: left;
-color: #333333;
-line-height: 24px;
+.left-title {
+  font-size: 16px;
+  font-family:
+    PingFang SC,
+    PingFang SC-Medium;
+  font-weight: 500;
+  text-align: left;
+  color: #333333;
+  line-height: 24px;
 }
 </style>
