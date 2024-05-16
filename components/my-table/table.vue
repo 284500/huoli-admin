@@ -1,9 +1,9 @@
 <template>
-   <Table class="mt-4 border rounded-[20px]">
+   <Table class=" ">
         <TableHeader>
           <TableRow class="!bg-[#f9fafb]">
             <TableHead v-if="hasCheck" class="w-6">
-              <Checkbox  v-model:checked="allCheck" @update:checked="handleChange" />
+              <Checkbox/>
             </TableHead>
             <TableHead v-for="(item,index) in tableTitle" class="title">
               {{ item }}
@@ -13,7 +13,7 @@
         <TableBody>
           <TableRow v-for="(item, index) in tabItems" :key="index"  :class="item.selected?'bg-muted':''">
             <TableCell v-if="hasCheck" class="w-6">
-              <Checkbox  v-model:checked="item.selected" @update:checked="CheckboxChange"  />
+              <Checkbox/>
             </TableCell>
             <TableCell class="flex items-center" >
               <div class="flex">
@@ -63,7 +63,7 @@ const props=defineProps({
     id: 1, remarks: 'Alice',
     isShelves: 1, selected: false, productType: '鼠标垫'
   },
- 
+
  {
     id: 1, remarks: 'Alice',
     isShelves: 1, selected: false, productType: '鼠标垫'
@@ -83,6 +83,9 @@ const props=defineProps({
     default:true
   }
 });
+const CheckboxChange=(value)=>{
+
+}
 </script>
 <style scoped>
 .title{

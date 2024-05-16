@@ -16,10 +16,10 @@ const delegatedProps = computed(() => {
 <template>
   <PaginationEllipsis
     v-bind="delegatedProps"
-    :class="cn('w-9 h-9 flex items-center justify-center', props.class)"
+    :class="cn('w-9 h-9  items-center justify-center hidden sm:flex', props.class)"
   >
     <slot>
-      <DotsHorizontalIcon />
+      <DotsHorizontalIcon class="" />
     </slot>
   </PaginationEllipsis>
 </template>

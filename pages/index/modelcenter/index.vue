@@ -85,7 +85,7 @@
             <div class="relative card bg-muted pt-[66%]">
               <img src="" alt="" class="absolute top-0 left-0 bottom-0 right-0 object-cover" />
               <div class="more absolute hidden bottom-3 right-1">
-                <Button class="rounded-[4px]"><Lucide icon="Eye" class="mr-1"></Lucide>详情</Button>
+                <Button class="rounded-[4px]" @click="popup"><Lucide icon="Eye" class="mr-1"></Lucide>详情</Button>
               </div>
             </div>
             <div class="flex justify-between items-center py-2">
@@ -142,14 +142,14 @@
             <PaginationFirst />
             <PaginationPrev />
 
-            <template v-for="(item, index) in items">
+            <template v-for="(item, index) in items" class="hidden" >
               <PaginationListItem
                 v-if="item.type === 'page'"
                 :key="index"
                 :value="item.value"
                 as-child
               >
-                <Button class="w-9 h-9 p-0" :variant="item.value === page ? 'default' : 'outline'">
+                <Button class="w-9 h-9 p-0 hidden sm:block" :variant="item.value === page ? 'default' : 'outline'">
                   {{ item.value }}
                 </Button>
               </PaginationListItem>
@@ -164,10 +164,23 @@
       <Footer></Footer>
     </div>
   </ScrollArea>
+  <MyDrawer v-model="isShow" color="bg-[rgba(249,250,251,0.95)]"><H5Detail @close="closepop"></H5Detail></MyDrawer>
+
+  <!-- <MyDrawer v-model="isShow" color="bg-[rgba(249,250,251,0.95)]"><MaterialDetail @close="closepop"></MaterialDetail></MyDrawer> -->
 </template>
 <script setup>
 import Myheader from '@/components/navbar/header.vue';
+import MyDrawer from '@/components/drawer/index.vue';
+import MaterialDetail from '@/components/model-center/Material/detail.vue';
+import H5Detail from '@/components/model-center/H5/detail.vue';
 import { ref } from 'vue';
+const isShow = ref(false);
+const popup=()=>{
+  isShow.value = true;
+}
+const closepop=()=>{
+  isShow.value = false;
+}
 const tabactive = ref(0);
 const ActiveList = ref([0, 0]);
 const sortactive = ref(0);

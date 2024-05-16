@@ -9,8 +9,15 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/color-mode',
     '@vueuse/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
     'nuxt-icon',
   ],
+  piniaPersistedstate: {
+    cookieOptions: {
+      maxAge: 2 * 365 * 24 * 60 * 60 * 1000
+    },
+    storage: 'localStorage'
+  },
 
   shadcn: {
     /**
@@ -27,7 +34,7 @@ export default defineNuxtConfig({
   nitro: {
     devProxy: {
       '/api': {
-        target: 'http://127.0.0.1:8084',
+        target: 'http://192.168.10.102:8084',
         changeOrigin: true,
       },
       '/test': {
@@ -61,5 +68,6 @@ export default defineNuxtConfig({
         type: true,
       },
     ],
+    dirs: ["stores/**/index.{ts,js,mjs,mts}"]
   },
 });

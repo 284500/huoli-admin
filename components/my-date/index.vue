@@ -26,7 +26,7 @@ const value = ref({
 <template>
   <Popover>
     <PopoverTrigger as-child>
-      <Button
+      <Button v-bind="$attrs"
         variant="outline"
         :class="cn(
           'w-[240px] justify-between text-left font-normal',

@@ -1,11 +1,11 @@
 <template>
-  <div class="flex" v-if="1">
+  <div class="flex" v-if="!IsLogin">
     <Button
       class="rounded-[4px] bg-[#ffffff] text-muted-foreground mr-3 hover:bg-white"
-      @click="popup"
+      @click="popup('signup')"
       >注册</Button
     >
-    <Button class="rounded-[4px] bg-[#2277ff] text-white" @click="popup">登录</Button>
+    <Button class="rounded-[4px] bg-[#2277ff] text-white" @click="popup('login')">登录</Button>
   </div>
   <DropdownMenu v-else>
     <DropdownMenuTrigger as-child>
@@ -20,16 +20,28 @@
       <DropdownMenuItem>Settings</DropdownMenuItem>
       <DropdownMenuItem>Support</DropdownMenuItem>
       <DropdownMenuSeparator />
-      <DropdownMenuItem>Logout</DropdownMenuItem>
+      <DropdownMenuItem @click="logout">退出登录</DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
-  <Drawer v-model="isshow"><Login></Login></Drawer>
+  <Drawer v-model="isshow"><Login @closepop="Closepop" :logintype="loginType"></Login></Drawer>
 </template>
 <script setup>
 import Drawer from '@/components/drawer/index.vue';
 import Login from '@/components/login/index.vue';
-const popup = () => {
+const Token = useCookie('token');
+const IsLogin=useCookie('isLogin')
+const popup = (type) => {
+  loginType.value = type;
   isshow.value = true;
 };
 const isshow = ref(false);
+const loginType=ref('signup');
+const Closepop = (e) => {
+  console.log(e);
+  isshow.value = false;
+};
+const logout = () => {
+  Token.value=null;
+  IsLogin.value=false;
+}
 </script>

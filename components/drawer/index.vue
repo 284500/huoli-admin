@@ -1,15 +1,15 @@
 <template>
-  <div class="" style="z-index: 9999; overflow: hidden" v-if="modelValue">
+  <div class="" style="z-index: 10000;" v-if="modelValue">
     <!-- 遮罩层 -->
     <div
       ref="mask"
       @click="clickhide"
       :class="props.color"
-      class="fixed top-0 right-0 left-0 bottom-0 flex justify-center items-center"
+      style="z-index:10000"
+      class="fixed top-0 right-0 left-0 bottom-0 flex  justify-center items-center"
     >
       <slot></slot>
     </div>
-    <div class="fixed"></div>
   </div>
 </template>
 <script setup>

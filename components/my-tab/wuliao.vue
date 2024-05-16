@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full h-[40px] flex items-center relative">
+  <div class=" h-[40px] flex items-center relative">
     <div
-      class="model-list mr-10 cursor-pointer"
+      class="model-list mr-10 cursor-pointer relative"
       @click="tabchange(0)"
       :class="{ '!text-[#333333] font-semibold': modelValue === 0 }"
     >
@@ -23,7 +23,7 @@
   </div>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { computed} from 'vue';
 const props = defineProps({
   modelValue: {
     type: Number,
@@ -33,7 +33,14 @@ const props = defineProps({
     type: Array,
     default: [' 物料模板', ' H5模板'],
   },
+  position:{
+    type: String,
+    default: 'left'
+  }
 });
+const imgleft=computed(()=>{
+  return 'dad'
+})
 const emit = defineEmits(['update:modelValue', 'change']);
 const tabchange = (index) => {
   emit('update:modelValue', index);

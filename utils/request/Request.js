@@ -2,7 +2,6 @@ import axios from 'axios';
 import { useRouter } from 'vue-router';
 import { getToken, removeToken } from '@/utils/cookie';
 let router = useRouter();
-
 const request = axios.create({
   timeout: 1000 * 30,
   withCredentials: true,
@@ -15,7 +14,7 @@ const request = axios.create({
 request.interceptors.request.use(
   (config) => {
     config.headers['token'] =
-      getToken() || '0eSdEJMitTGOjBqqRiIiA30qgkgAJCBTMbhOT0bEaaBWLGTL9LOgebL5N07CbAxT';
+      getToken() ;
     return config;
     //return Promise.resolve(config)
   },
@@ -33,8 +32,9 @@ request.interceptors.response.use(
         name: '/login',
       });
     } else if (response.data.code == 503) {
+      
     }
-    return response.data.data;
+    return response.data;
     // return response
   },
   (error) => {

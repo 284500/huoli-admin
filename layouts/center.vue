@@ -40,6 +40,7 @@
         <div>
           <slot />
         </div>
+        <slot name="footer"></slot>
         <div class="footer">
           Copyright ©2010-2010 厦门或黎科技有限公司 版权所有 闽ICP备100***518号-1
           增值电信业务经营许可证：闽B1-2014032379闽公网安备案 3301043400173号
@@ -47,6 +48,7 @@
       </div>
     </div>
   </ScrollArea>
+  <slot name="footer"></slot>
 </template>
 <script setup>
 const props = defineProps({

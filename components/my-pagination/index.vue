@@ -6,7 +6,7 @@
 				<PaginationPrev class="w-8 h-8 p-0" />
 				<template v-for="(item, index) in items">
 					<PaginationListItem v-if="item.type === 'page'" :key="index" :value="item.value" as-child>
-						<Button class="w-8 h-8 p-0" :variant="item.value === page ? 'default' : 'outline'">
+						<Button  class="w-8 h-8 p-0 !hidden" :variant="item.value === page ? 'default' : 'outline'">
 							{{ item.value }}
 						</Button>
 					</PaginationListItem>
