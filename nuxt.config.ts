@@ -70,4 +70,13 @@ export default defineNuxtConfig({
     ],
     dirs: ["stores/**/index.{ts,js,mjs,mts}"]
   },
+  router:{
+    //@ts-ignore
+    extendRoutes(routes) {
+      routes.push({
+        path: '/',
+        redirect:'/about'
+      })
+    }
+  }
 });

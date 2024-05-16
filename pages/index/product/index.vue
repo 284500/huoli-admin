@@ -5,10 +5,12 @@
     </template>
   </Myheader>
   <ScrollArea class="flex-1 overflow-auto">
-    <div class="w-[100vw] px-4 relative md:px-8 lg:px-12 box-border md:w-full">
+    <div class="w-[100vw] px-4 relative md:px-8 lg:px-12 box-border md:w-full min-h-[calc(100vh-76px)] flex flex-col justify-between">
+      <div>
       <TableHeader></TableHeader>
       <MyTable></MyTable>
       <MyPagination></MyPagination>
+    </div>
       <Footer></Footer>
     </div>
   </ScrollArea>

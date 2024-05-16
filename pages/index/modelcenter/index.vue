@@ -1,7 +1,8 @@
 <template>
   <Myheader></Myheader>
   <ScrollArea class="flex-1 overflow-auto">
-    <div class="w-[100vw] px-4 relative md:px-8 lg:px-12 box-border md:w-full">
+    <div class="w-[100vw] px-4 relative md:px-8 lg:px-12 box-border md:w-full min-h-[calc(100vh-76px)] flex flex-col justify-between">
+      <div>
       <div class="w-full h-[40px] flex items-center relative">
         <div
           class="model-list mr-10 cursor-pointer"
@@ -85,7 +86,7 @@
             <div class="relative card bg-muted pt-[66%]">
               <img src="" alt="" class="absolute top-0 left-0 bottom-0 right-0 object-cover" />
               <div class="more absolute hidden bottom-3 right-1">
-                <Button class="rounded-[4px]" @click="popup"><Lucide icon="Eye" class="mr-1"></Lucide>详情</Button>
+                <Button class="rounded-[4px]" @click="popup(MaterialDetail)"><Lucide icon="Eye" class="mr-1"></Lucide>详情</Button>
               </div>
             </div>
             <div class="flex justify-between items-center py-2">
@@ -96,7 +97,9 @@
         </div>
       </div>
       <div v-if="tabactive === 1">
-        <div class="mt-5 w-full">
+        <div
+          class="bottom-shadow py-3 md:py-5 w-full border-b-[#ffffff] border-b-2 flex flex-col gap-3"
+        >
           <ul class="flex whitespace-nowrap overflow-auto h-8">
             <label class="pr-6 py-1.5 label" for="">类型</label>
             <li
@@ -109,7 +112,7 @@
               {{ item }}
             </li>
           </ul>
-          <ul class="flex whitespace-nowrap overflow-auto h-8 my-3">
+          <ul class="flex whitespace-nowrap overflow-auto h-8">
             <label class="pr-6 py-1.5 label" for="">行业</label>
             <li
               class="px-4 py-1.5 hover:!text-[#2277ff] rounded-[4px] label cursor-pointer"
@@ -122,16 +125,43 @@
             </li>
           </ul>
         </div>
+        <div class="flex justify-between py-3 items-center">
+          <div>
+            <span
+              class="label mr-4 cursor-pointer"
+              @click="sortactive = 0"
+              :class="{ '!text-[#333333] font-semibold': sortactive === 0 }"
+              >综合排序</span
+            >
+            <span
+              class="label cursor-pointer"
+              @click="sortactive = 1"
+              :class="{ '!text-[#333333] font-semibold': sortactive === 1 }"
+              >最新上传</span
+            >
+          </div>
+          <div class="flex">
+            <div class="flex w-[82px] h-[32px] justify-center items-center gap-1">
+              <img src="/public/img/wuliao/color.png" alt="" class="w-4 h-4" /> <span>颜色</span>
+            </div>
+            <div class="flex w-[82px] h-[32px] justify-center items-center gap-1">
+              <img src="/public/img/wuliao/date.png" alt="" class="w-4 h-4" /><span>节日</span>
+            </div>
+          </div>
+        </div>
         <div
-          class="w-full grid lg:grid-cols-4 md:grid-cols-3 xl:grid-cols-5 gap-x-6 gap-y-4 grid-cols-2"
+          class="w-full grid lg:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-6 gap-y-4 grid-cols-2"
         >
           <div v-for="item in 20" :key="item">
             <div class="relative card bg-muted pt-[66%]">
               <img src="" alt="" class="absolute top-0 left-0 bottom-0 right-0 object-cover" />
+              <div class="more absolute hidden bottom-3 right-1">
+                <Button class="rounded-[4px]" @click="popup(H5Detail)"><Lucide icon="Eye" class="mr-1"></Lucide>详情</Button>
+              </div>
             </div>
-            <div class="flex justify-between items-center py-2">
-              <span class="title">手提购物袋子纸袋包装模型</span>
-              <div class="rounded-full bg-orange-300 w-[20px] h-[20px]"></div>
+            <div class="flex justify-between items-center py-2 gap-3">
+              <span class="title">手提购物袋子纸袋包装模型 </span>
+              <div class="rounded-full bg-[#FFA65E] w-[20px] h-[20px]"></div>
             </div>
           </div>
         </div>
@@ -160,11 +190,11 @@
             <PaginationLast />
           </PaginationList>
         </Pagination>
-      </div>
+      </div></div>
       <Footer></Footer>
     </div>
   </ScrollArea>
-  <MyDrawer v-model="isShow" color="bg-[rgba(249,250,251,0.95)]"><H5Detail @close="closepop"></H5Detail></MyDrawer>
+  <MyDrawer v-model="isShow" color="bg-[rgba(249,250,251,0.95)]"><component :is="popname" @close="closepop"></component></MyDrawer>
 
   <!-- <MyDrawer v-model="isShow" color="bg-[rgba(249,250,251,0.95)]"><MaterialDetail @close="closepop"></MaterialDetail></MyDrawer> -->
 </template>
@@ -175,7 +205,8 @@ import MaterialDetail from '@/components/model-center/Material/detail.vue';
 import H5Detail from '@/components/model-center/H5/detail.vue';
 import { ref } from 'vue';
 const isShow = ref(false);
-const popup=()=>{
+const popup=(name)=>{
+  popname.value = name;
   isShow.value = true;
 }
 const closepop=()=>{
@@ -184,6 +215,7 @@ const closepop=()=>{
 const tabactive = ref(0);
 const ActiveList = ref([0, 0]);
 const sortactive = ref(0);
+const popname=ref(MaterialDetail);
 
 const list1 = ref(['全部', '名片', '宣传单', '折页', '卡签']);
 const list2 = ref(['全部', '通用', '生活服务', '折页', '卡签', '电商']);
