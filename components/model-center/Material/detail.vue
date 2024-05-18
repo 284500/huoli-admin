@@ -14,7 +14,7 @@
 
       </div>
       <div class="flex flex-col flex-1 min-w-[300px] max-w-[720px]">
-        <h1 class="main-title">几何花纹纸杯包装设计 </h1>
+        <h1 class="main-title">{{ props.data.name }} </h1>
         <div class="flex  justify-between mt-3">
           <div class="px-2 py-1 bg-[rgba(255,160,36,0.10)] rounded-full flex items-center">
             <span class="text-[12px] text-[#FFA024] leading-4  font-[500]">线下免费印刷</span>
@@ -34,7 +34,7 @@
           </div>
           <div class="mt-4 flex flex-col gap-3 text">
             <div class="flex gap-3">
-              <div class="!text-[#666666]">类型：</div><div>{{ props.data.templateType }}</div>
+              <div class="!text-[#666666]">类型：</div><div>{{ props.data.productType }}</div>
             </div>
             <div class="flex gap-3">
               <div class="!text-[#666666]">行业：</div><div>{{ props.data.industryTypeList }}</div>

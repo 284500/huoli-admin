@@ -12,15 +12,13 @@ import { RangeCalendar } from '@/components/ui/range-calendar'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
-
-const df = new DateFormatter('en-US', {
+const props=defineProps(['modelValue'])
+const emit=defineEmits(['start'])
+const df = new DateFormatter('zh', {
   dateStyle: 'medium',
 })
+const value = useVModel(props,'modelValue',emit)
 
-const value = ref({
-  start: new CalendarDate(2022, 1, 20),
-  end: new CalendarDate(2022, 1, 20).add({ days: 20 }),
-}) as Ref<DateRange>
 </script>
 
 <template>
@@ -29,7 +27,7 @@ const value = ref({
       <Button v-bind="$attrs"
         variant="outline"
         :class="cn(
-          'w-[240px] justify-between text-left font-normal',
+          'w-[260px] justify-between text-left font-normal',
           !value && 'text-muted-foreground',
         )"
       >
@@ -49,7 +47,7 @@ const value = ref({
       </Button>
     </PopoverTrigger>
     <PopoverContent class="w-auto p-0">
-      <RangeCalendar v-model="value" initial-focus :number-of-months="2" @update:start-value="(startDate) => value.start = startDate" />
+      <RangeCalendar v-model="value" initial-focus :number-of-months="2" @update:start-value="(startDate) => {value.start = startDate,emit('start',startDate)}" />
     </PopoverContent>
   </Popover>
 </template>

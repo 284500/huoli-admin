@@ -3,7 +3,7 @@
     <!-- 查询框 -->
     <div class="w-full flex-1">
       <slot name="left">
-        <LeftButton></LeftButton>
+      
       </slot>
     </div>
     <slot name="right">
