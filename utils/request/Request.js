@@ -32,9 +32,9 @@ request.interceptors.response.use(
         name: '/login',
       });
     } else if (response.data.code == 503) {
-      
+
     }
-    return response.data;
+    return response.data.data;
     // return response
   },
   (error) => {

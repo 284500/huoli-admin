@@ -1,3 +1,4 @@
+//@ts-ignore
 import { isFunction } from 'lodash';
 import { reactive, toRaw } from 'vue';
 

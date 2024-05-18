@@ -3,12 +3,12 @@
     <div class="flex flex-wrap gap-8 justify-center w-[100vw] md:w-full p-5 sm:p-10">
       <div class="flex flex-col gap-4 w-full md:w-auto">
         <div class="md:w-[720px] bg-[#F0F1F5] h-[800px] w-full flex justify-center">
-
+          <img :src="props.data.templateCover"  class="w-full h-full object-cover"alt="">
 
         </div>
       </div>
       <div class="flex flex-col flex-1 min-w-[300px] max-w-[720px]">
-        <h1 class="main-title">几何花纹纸杯包装设计 </h1>
+        <h1 class="main-title">{{ props.data.name }} </h1>
         <div class="flex  justify-between mt-3">
           <div class="px-2 py-1 bg-[rgba(255,160,36,0.10)] rounded-full flex items-center">
             <span class="text-[12px] text-[#FFA024] leading-4  font-[500]">线下免费印刷</span>
@@ -26,16 +26,19 @@
           </div>
           <div class="mt-4 flex flex-col gap-3 text">
             <div class="flex gap-3">
-              <div class="!text-[#666666]">类型：</div><div>日常用品</div>
+              <div class="!text-[#666666]">类型：</div><div>{{ props.data.templateType }}</div>
             </div>
             <div class="flex gap-3">
-              <div class="!text-[#666666]">类型：</div><div>通用 生活服务</div>
+              <div class="!text-[#666666]">行业：</div><div>{{ props.data.industryTypeList }}</div>
             </div>
             <div class="flex gap-3">
-              <div class="!text-[#666666]">类型：</div><div ><div class="w-5 h-5 rounded-full bg-[#BCE6D1]"></div></div>
+              <div class="!text-[#666666]">用途：</div><div>{{ props.data.applicablePurposeList }}</div>
             </div>
             <div class="flex gap-3">
-              <div class="!text-[#666666]">类型：</div><div>端午节 夏至</div>
+              <div class="!text-[#666666]">颜色：</div><div ><div class="w-5 h-5 rounded-full bg-[#BCE6D1]"></div></div>
+            </div>
+            <div class="flex gap-3">
+              <div class="!text-[#666666]">节日：</div><div>{{ props.data.applicableHolidays }}</div>
             </div>
           </div>
           <Button class="mt-5">应用模板</Button>
@@ -53,6 +56,11 @@
   </ScrollArea>
 </template>
 <script setup>
+const props=defineProps({
+  data:{
+    type:Object,
+  }
+})
 const emits=defineEmits(['close']);
 </script>
 <style>

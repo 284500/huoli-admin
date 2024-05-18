@@ -1,224 +1,245 @@
 <template>
-  <Myheader></Myheader>
+  <Myheader>
+    <template #left>
+      <div class="relative hidden md:block">
+      <Lucide icon="Search" class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+      <Input
+        placeholder="搜索内容"
+        class="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
+        @keyup.enter="send"
+      />
+    </div>
+    </template>
+  </Myheader>
   <ScrollArea class="flex-1 overflow-auto">
-    <div class="w-[100vw] px-4 relative md:px-8 lg:px-12 box-border md:w-full min-h-[calc(100vh-76px)] flex flex-col justify-between">
-      <div>
-      <div class="w-full h-[40px] flex items-center relative">
-        <div
-          class="model-list mr-10 cursor-pointer"
-          @click="tabactive = 0"
-          :class="{ '!text-[#333333] font-semibold': tabactive === 0 }"
-        >
-          物料模板
+    <div
+      class="w-[100vw] px-4 relative md:px-8 lg:px-12 box-border md:w-full min-h-[calc(100vh-76px)] flex flex-col justify-between"
+    >
+      <div class="w-full">
+        <div class="w-full h-[40px] flex items-center relative">
+          <div
+            class="model-list mr-10 cursor-pointer"
+            @click="changeTemplate(0)"
+            :class="{ '!text-[#333333] font-semibold': templateactive === 0 }"
+          >
+            物料模板
+          </div>
+          <div
+            class="model-list cursor-pointer"
+            @click="changeTemplate(1)"
+            :class="{ '!text-[#333333] font-semibold': templateactive === 1 }"
+          >
+            H5模板
+          </div>
+          <img
+            src="/public/img/tab/tabtips.png"
+            alt=""
+            class="absolute bottom-0 left-4 transition-all"
+            :style="`left:${templateactive * 100 + 16}px`"
+          />
         </div>
-        <div
-          class="model-list cursor-pointer"
-          @click="tabactive = 1"
-          :class="{ '!text-[#333333] font-semibold': tabactive === 1 }"
-        >
-          H5模板
-        </div>
-        <img
-          src="/public/img/tab/tabtips.png"
-          alt=""
-          class="absolute bottom-0 left-4 transition-all"
-          :style="`left:${tabactive * 100 + 16}px`"
-        />
-      </div>
 
-      <div v-if="tabactive === 0">
-        <div
-          class="bottom-shadow py-3 md:py-5 w-full border-b-[#ffffff] border-b-2 flex flex-col gap-3"
-        >
-          <ul class="flex whitespace-nowrap overflow-auto h-8">
-            <label class="pr-6 py-1.5 label" for="">类型</label>
-            <li
-              class="px-4 py-1.5 hover:!text-[#2277ff] rounded-[4px] label cursor-pointer"
-              v-for="(item, index) in list1"
-              :key="index"
-              :class="ActiveList[0] === index ? 'isActive' : ''"
-              @click="ActiveList[0] = index"
-            >
-              {{ item }}
-            </li>
-          </ul>
-          <ul class="flex whitespace-nowrap overflow-auto h-8">
-            <label class="pr-6 py-1.5 label" for="">行业</label>
-            <li
-              class="px-4 py-1.5 hover:!text-[#2277ff] rounded-[4px] label cursor-pointer"
-              v-for="(item, index) in list2"
-              :key="index"
-              :class="ActiveList[1] === index ? 'isActive' : ''"
-              @click="ActiveList[1] = index"
-            >
-              {{ item }}
-            </li>
-          </ul>
-        </div>
-        <div class="flex justify-between py-3 items-center">
-          <div>
-            <span
-              class="label mr-4 cursor-pointer"
-              @click="sortactive = 0"
-              :class="{ '!text-[#333333] font-semibold': sortactive === 0 }"
-              >综合排序</span
-            >
-            <span
-              class="label cursor-pointer"
-              @click="sortactive = 1"
-              :class="{ '!text-[#333333] font-semibold': sortactive === 1 }"
-              >最新上传</span
-            >
-          </div>
-          <div class="flex">
-            <div class="flex w-[82px] h-[32px] justify-center items-center gap-1">
-              <img src="/public/img/wuliao/color.png" alt="" class="w-4 h-4" /> <span>颜色</span>
-            </div>
-            <div class="flex w-[82px] h-[32px] justify-center items-center gap-1">
-              <img src="/public/img/wuliao/date.png" alt="" class="w-4 h-4" /><span>节日</span>
-            </div>
-          </div>
-        </div>
-        <div
-          class="w-full grid lg:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-6 gap-y-4 grid-cols-2"
-        >
-          <div v-for="item in 20" :key="item">
-            <div class="relative card bg-muted pt-[66%]">
-              <img src="" alt="" class="absolute top-0 left-0 bottom-0 right-0 object-cover" />
-              <div class="more absolute hidden bottom-3 right-1">
-                <Button class="rounded-[4px]" @click="popup(MaterialDetail)"><Lucide icon="Eye" class="mr-1"></Lucide>详情</Button>
-              </div>
-            </div>
-            <div class="flex justify-between items-center py-2">
-              <span class="title">东北大米包装盒 </span>
-              <div class="rounded-full bg-blue-600 w-[20px] h-[20px]"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div v-if="tabactive === 1">
-        <div
-          class="bottom-shadow py-3 md:py-5 w-full border-b-[#ffffff] border-b-2 flex flex-col gap-3"
-        >
-          <ul class="flex whitespace-nowrap overflow-auto h-8">
-            <label class="pr-6 py-1.5 label" for="">类型</label>
-            <li
-              class="px-4 py-1.5 hover:!text-[#2277ff] rounded-[4px] label cursor-pointer"
-              v-for="(item, index) in list1"
-              :key="index"
-              :class="ActiveList[0] === index ? 'isActive' : ''"
-              @click="ActiveList[0] = index"
-            >
-              {{ item }}
-            </li>
-          </ul>
-          <ul class="flex whitespace-nowrap overflow-auto h-8">
-            <label class="pr-6 py-1.5 label" for="">行业</label>
-            <li
-              class="px-4 py-1.5 hover:!text-[#2277ff] rounded-[4px] label cursor-pointer"
-              v-for="(item, index) in list2"
-              :key="index"
-              :class="ActiveList[1] === index ? 'isActive' : ''"
-              @click="ActiveList[1] = index"
-            >
-              {{ item }}
-            </li>
-          </ul>
-        </div>
-        <div class="flex justify-between py-3 items-center">
-          <div>
-            <span
-              class="label mr-4 cursor-pointer"
-              @click="sortactive = 0"
-              :class="{ '!text-[#333333] font-semibold': sortactive === 0 }"
-              >综合排序</span
-            >
-            <span
-              class="label cursor-pointer"
-              @click="sortactive = 1"
-              :class="{ '!text-[#333333] font-semibold': sortactive === 1 }"
-              >最新上传</span
-            >
-          </div>
-          <div class="flex">
-            <div class="flex w-[82px] h-[32px] justify-center items-center gap-1">
-              <img src="/public/img/wuliao/color.png" alt="" class="w-4 h-4" /> <span>颜色</span>
-            </div>
-            <div class="flex w-[82px] h-[32px] justify-center items-center gap-1">
-              <img src="/public/img/wuliao/date.png" alt="" class="w-4 h-4" /><span>节日</span>
-            </div>
-          </div>
-        </div>
-        <div
-          class="w-full grid lg:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-6 gap-y-4 grid-cols-2"
-        >
-          <div v-for="item in 20" :key="item">
-            <div class="relative card bg-muted pt-[66%]">
-              <img src="" alt="" class="absolute top-0 left-0 bottom-0 right-0 object-cover" />
-              <div class="more absolute hidden bottom-3 right-1">
-                <Button class="rounded-[4px]" @click="popup(H5Detail)"><Lucide icon="Eye" class="mr-1"></Lucide>详情</Button>
-              </div>
-            </div>
-            <div class="flex justify-between items-center py-2 gap-3">
-              <span class="title">手提购物袋子纸袋包装模型 </span>
-              <div class="rounded-full bg-[#FFA65E] w-[20px] h-[20px]"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="w-full flex justify-center my-10">
-        <Pagination v-slot="{ page }" :total="100" :sibling-count="1" show-edges :default-page="2">
-          <PaginationList v-slot="{ items }" class="flex items-center gap-1">
-            <PaginationFirst />
-            <PaginationPrev />
+        <div v-if="templateactive === 0">
+          <div
+            class="bottom-shadow py-3 md:py-5 w-full border-b-[#ffffff] border-b-2 flex flex-col gap-3"
+          >
+          <MyList :lists="Product.types.data" title="类型" v-model="Materialparams.productType"  @change="Material.resetPage()"></MyList>
+            <MyList :lists="Industry.types.data" title="行业" v-model="Materialparams.industryTypeList"  @change="Material.resetPage()"></MyList>
 
-            <template v-for="(item, index) in items" class="hidden" >
-              <PaginationListItem
-                v-if="item.type === 'page'"
-                :key="index"
-                :value="item.value"
-                as-child
+          </div>
+          <div class="flex justify-between py-3 items-center">
+            <div>
+              <span
+                class="label mr-4 cursor-pointer"
+                @click="sortactive = 0"
+                :class="{ '!text-[#333333] font-semibold': sortactive === 0 }"
+                >综合排序</span
               >
-                <Button class="w-9 h-9 p-0 hidden sm:block" :variant="item.value === page ? 'default' : 'outline'">
-                  {{ item.value }}
-                </Button>
-              </PaginationListItem>
-              <PaginationEllipsis v-else :key="item.type" :index="index" />
-            </template>
+              <span
+                class="label cursor-pointer"
+                @click="sortactive = 1"
+                :class="{ '!text-[#333333] font-semibold': sortactive === 1 }"
+                >最新上传</span
+              >
+            </div>
+            <div class="flex">
+              <div class="flex w-[82px] h-[32px] justify-center items-center gap-1">
+                <img src="/public/img/wuliao/color.png" alt="" class="w-4 h-4" /> <span>颜色</span>
+              </div>
+              <div class="flex w-[82px] h-[32px] justify-center items-center gap-1">
+                <img src="/public/img/wuliao/date.png" alt="" class="w-4 h-4" /><span>节日</span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="w-full grid lg:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-6 gap-y-4 grid-cols-2"
+          >
+            <div v-for="(item, index) in Material.pager.lists" :key="index">
+              <div class="relative card bg-muted pt-[66%]">
+                <div class="absolute top-0 left-0 bottom-0 right-0 object-cover">
+                   <img
+                  :src="item.templateCover"
+                  alt=""
+                  class="w-full h-full object-cover"
+                />
+                </div>
 
-            <PaginationNext />
-            <PaginationLast />
-          </PaginationList>
-        </Pagination>
-      </div></div>
+                <div class="more absolute hidden bottom-3 right-1">
+                  <Button class="rounded-[4px]" @click="popup(MaterialDetail,item.id)"
+                    ><Lucide icon="Eye" class="mr-1"></Lucide>详情</Button
+                  >
+                </div>
+              </div>
+              <div class="flex justify-between items-center py-2">
+                <span class="title">{{ item.name }}</span>
+                <div
+                  class="rounded-full bg-blue-600 w-[20px] h-[20px]"
+                  :class="`bg-[${item.themeColor}]`"
+                ></div>
+              </div>
+            </div>
+          </div>
+          <MyPagination v-model="Material.pager" @change="Material.getLists"></MyPagination>
+
+        </div>
+        <div v-if="templateactive === 1">
+          <div
+            class="bottom-shadow py-3 md:py-5 w-full border-b-[#ffffff] border-b-2 flex flex-col gap-3"
+          >
+          <MyList :lists="Product.types.data" title="类型"  v-model="H5params.productType"  @change="H5.resetPage()"></MyList>
+            <MyList :lists="Industry.types.data" title="行业" v-model="H5params.industryTypeList"  @change="H5.resetPage()"></MyList>
+            <MyList :lists=" Purposes.types.data" title="用途" v-model="H5params.applicablePurposeList"  @change="H5.resetPage()"></MyList>
+
+          </div>
+          <div class="flex justify-between py-3 items-center">
+            <div>
+              <span
+                class="label mr-4 cursor-pointer"
+                @click="sortactive = 0"
+                :class="{ '!text-[#333333] font-semibold': sortactive === 0 }"
+                >综合排序</span
+              >
+              <span
+                class="label cursor-pointer"
+                @click="sortactive = 1"
+                :class="{ '!text-[#333333] font-semibold': sortactive === 1 }"
+                >最新上传</span
+              >
+            </div>
+            <div class="flex">
+              <div class="flex w-[82px] h-[32px] justify-center items-center gap-1">
+                <img src="/public/img/wuliao/color.png" alt="" class="w-4 h-4" /> <span>颜色</span>
+              </div>
+              <div class="flex w-[82px] h-[32px] justify-center items-center gap-1">
+                <img src="/public/img/wuliao/date.png" alt="" class="w-4 h-4" /><span>节日</span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="w-full grid lg:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-6 gap-y-4 grid-cols-2"
+          >
+            <div v-for="(item, index) in H5.pager.lists" :key="item">
+              <div class="relative card bg-muted pt-[66%]">
+                <div class="absolute top-0 left-0 bottom-0 right-0 object-cover">
+                   <img
+                  :src="item.templateCover"
+                  alt=""
+                  class="w-full h-full object-cover"
+                />
+                </div>
+                <div class="more absolute hidden bottom-3 right-1">
+                  <Button class="rounded-[4px]" @click="popup(H5Detail,item.id)"
+                    ><Lucide icon="Eye" class="mr-1"></Lucide>详情</Button
+                  >
+                </div>
+              </div>
+              <div class="flex justify-between items-center py-2 gap-3">
+                <span class="title">{{ item.name }} </span>
+                <div class="rounded-full bg-[#FFA65E] w-[20px] h-[20px]"></div>
+              </div>
+            </div>
+          </div>
+          <div class="w-full flex justify-center my-10">
+          <MyPagination v-model="H5.pager" @change="H5.getLists"></MyPagination>
+        </div>
+        </div>
+      </div>
       <Footer></Footer>
     </div>
   </ScrollArea>
-  <MyDrawer v-model="isShow" color="bg-[rgba(249,250,251,0.95)]"><component :is="popname" @close="closepop"></component></MyDrawer>
-
-  <!-- <MyDrawer v-model="isShow" color="bg-[rgba(249,250,251,0.95)]"><MaterialDetail @close="closepop"></MaterialDetail></MyDrawer> -->
+  <MyDrawer v-model="isShow" color="bg-[rgba(249,250,251,0.95)]">
+  <MaterialDetail v-if="!popname" @close="closepop" :data="Materialdetail.detail.data"></MaterialDetail>
+  <H5Detail v-else @close="closepop" :data="H5detail.detail.data"></H5Detail>
+  </MyDrawer>
 </template>
 <script setup>
 import Myheader from '@/components/navbar/header.vue';
 import MyDrawer from '@/components/drawer/index.vue';
 import MaterialDetail from '@/components/model-center/Material/detail.vue';
 import H5Detail from '@/components/model-center/H5/detail.vue';
-import { ref } from 'vue';
-const isShow = ref(false);
-const popup=(name)=>{
-  popname.value = name;
-  isShow.value = true;
-}
-const closepop=()=>{
-  isShow.value = false;
-}
-const tabactive = ref(0);
-const ActiveList = ref([0, 0]);
-const sortactive = ref(0);
-const popname=ref(MaterialDetail);
+import MyPagination from '@/components/my-pagination/index.vue';
+import { getMaterialTemplateList,getMaterialTemplateDetail } from '@/server/apis/template/material.js';
+import { getH5TemplateList,getH5TemplateDetail} from '@/server/apis/template/h5.js';
+import {getProductType,getIndustryType, getPurposesType} from '@/server/apis/type/index.js';
 
-const list1 = ref(['全部', '名片', '宣传单', '折页', '卡签']);
-const list2 = ref(['全部', '通用', '生活服务', '折页', '卡签', '电商']);
+import { usePaging } from '@/hooks/usePaging';
+import { useType } from '@/hooks/useType';
+import { useDetail } from '@/hooks/useDetail';
+
+
+import { ref ,reactive} from 'vue';
+const isShow = ref(false);
+
+const H5params=reactive({});
+const Materialparams=reactive({
+});
+const MaterialDetailparams=reactive({});
+const H5Detailparams=reactive({});
+const Material = usePaging({ fetchFun: getMaterialTemplateList,params:Materialparams });
+const H5 = usePaging({ fetchFun: getH5TemplateList ,params:H5params});
+const H5detail = useDetail(getH5TemplateDetail,H5Detailparams);
+const Materialdetail = useDetail(getMaterialTemplateDetail,MaterialDetailparams);
+const Product=useType(getProductType);
+const Industry=useType(getIndustryType);
+const Purposes=useType(getPurposesType);
+
+//初始化
+const init = async () => {
+  Material.getLists();
+  H5.getLists();
+  Product.getTypes();
+  Industry.getTypes();
+  await Purposes.getTypes();
+};
+onBeforeMount(() => {
+  init();
+});
+const changeTemplate = (index) => {
+  templateactive.value = index;
+  if(index===0){
+    Material.resetPage();
+  }else{
+    H5.resetPage();
+  }
+};
+const popup = (name,id) => {
+  if(name==MaterialDetail){
+    popname.value=0;
+    MaterialDetailparams["id"]=id;
+    Materialdetail.getDetail();
+  }else if(name=H5Detail){
+    popname.value=1;
+    H5Detailparams["id"]=id;
+    H5detail.getDetail();
+  }
+  isShow.value = true;
+};
+const closepop = () => {
+  isShow.value = false;
+};
+const templateactive = ref(0);
+const sortactive = ref(0);
+const popname = ref(MaterialDetail);
 </script>
 <style scoped lang="scss">
 .isActive {
@@ -260,7 +281,7 @@ const list2 = ref(['全部', '通用', '生活服务', '折页', '卡签', '电�
   font-family:
     PingFang SC,
     PingFang SC-Regular;
-  font-weight: Regular;
+  font-weight: 400;
   text-align: left;
   color: #333333;
   line-height: 24px;

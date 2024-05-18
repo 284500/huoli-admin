@@ -27,21 +27,23 @@
 
         </div>
           <div class=" relative apply-text ">
-            <div class="">日常用品杯/桶/碗/盒/管频道提供《几何花纹纸杯包装设计》在线包装设计创作，点击“编辑模板”按钮，可对《几何花纹纸杯包装设计》进行在线编辑，模板、尺寸和材质可自定义修改，可自主添加修改文字图片及背景颜色…</div>
-            <div class=" absolute right-0 bottom-0 !text-[#2277FF]">更多</div>
+            <span class="hidden-text float-left" :class="{'!line-clamp-[999]':toggletext}">日常用品杯/桶/碗/盒/管频道提供《几何花纹纸杯包装设计》在线包装设计创作，点击“编辑模板”按钮，可对《几何花纹纸杯包装设计》进行在线编辑，模板、尺寸和材质可自定义修改，可自主添加修改文字图片及背景颜色</span>
+            <span v-if="!toggletext" class=" float-right  !text-[#2277FF]" @click="toggletext=true">更多</span>
+            <div v-else class=" float-right !text-[#2277FF]" @click="toggletext=false">收起</div>
+
           </div>
           <div class="mt-4 flex flex-col gap-3 text">
             <div class="flex gap-3">
-              <div class="!text-[#666666]">类型：</div><div>日常用品</div>
+              <div class="!text-[#666666]">类型：</div><div>{{ props.data.templateType }}</div>
             </div>
             <div class="flex gap-3">
-              <div class="!text-[#666666]">类型：</div><div>通用 生活服务</div>
+              <div class="!text-[#666666]">行业：</div><div>{{ props.data.industryTypeList }}</div>
             </div>
             <div class="flex gap-3">
-              <div class="!text-[#666666]">类型：</div><div ><div class="w-5 h-5 rounded-full bg-[#BCE6D1]"></div></div>
+              <div class="!text-[#666666]">颜色：</div><div ><div class="w-5 h-5 rounded-full bg-[#BCE6D1]"></div></div>
             </div>
             <div class="flex gap-3">
-              <div class="!text-[#666666]">类型：</div><div>端午节 夏至</div>
+              <div class="!text-[#666666]">节日：</div><div>端午节 夏至</div>
             </div>
           </div>
           <Button class="mt-5">应用模板</Button>
@@ -89,9 +91,15 @@
 <script setup>
 import Wuliao from '@/components/my-tab/wuliao.vue'
 import MyTable from '@/components/my-table/table.vue';
+const props=defineProps({
+  data:{
+    type:Object,
+  }
+})
 const emits=defineEmits(['close']);
 const tabactive = ref(0);
 const tabList = ref(['模板详情', '客户分享']);
+const toggletext = ref(false);
 const TabItems = ref([
   {
     id: 1,
@@ -107,7 +115,12 @@ const TabItems = ref([
   background: #ffffff;
   /* border-radius: 8px 0px 0px 8px; */
 }
-
+.hidden-text{
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
 .main-title {
   font-size: 24px;
   font-family: PingFang SC, PingFang SC-Semibold;
