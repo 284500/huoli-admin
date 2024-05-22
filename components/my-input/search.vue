@@ -4,7 +4,7 @@
     <Input
       v-model="searchdata"
       placeholder="搜索内容"
-      class="w-full appearance-none bg-background pl-8 shadow-none"
+      class=" appearance-none bg-background pl-8 shadow-none"
       @keyup.enter="emit('search',searchdata)"
     />
   </div>

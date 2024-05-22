@@ -17,6 +17,9 @@
 const props=defineProps({
   modelValue:{
     type:Object,
+    default:{
+      timeType:0
+    }
   },
   selectType:{
     type:Array,

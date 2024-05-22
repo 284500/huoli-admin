@@ -22,13 +22,13 @@
       </div>
       <div class="mt-10">
         <div class="flex items-center">
-          <div class="bg-[#2277FF] w-[3px] h-[16px] mr-2"></div>
+          <div class="bg-[#2277FF] w-[3px] h-[16px] mr-2 "></div>
           <div class="!text-[16px]">订单列表</div>
         </div>
         <div class="my-4">
-          <ul class="flex whitespace-nowrap overflow-auto h-8">
+          <ul class="flex whitespace-nowrap overflow-auto h-8 gap-2">
             <li
-              class="px-4 py-1.5 hover:!text-[#2277ff] rounded-[4px]  cursor-pointer title"
+              class="px-4 pt-1 hover:!text-[#2277ff] rounded-[4px] border  cursor-pointer title"
               v-for="(item, index) in list1"
               :key="index"
               :class="ActiveList === index ? 'isActive' : ''"

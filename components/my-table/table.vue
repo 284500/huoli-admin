@@ -26,8 +26,8 @@
             </div>
           </div>
         </TableCell>
-        <TableCell class="text">{{ item.createdTime }}</TableCell>
-        <TableCell>{{ item.updatedTime }}</TableCell>
+        <TableCell class="text">{{$dayjs(item.createdTime).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
+        <TableCell>{{$dayjs(item.updatedTime).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
         <TableCell class="text sm:!w-[240px]">
           <div class="flex gap-4 w-[fit-content]">
             <div class="text-[#2277FF] cursor-pointer">立即下单</div>
@@ -38,9 +38,9 @@
       </TableRow>
     </TableBody>
   </Table>
+  
 </template>
 <script setup>
-import * as dayjs from 'dayjs'
 const props = defineProps({
   tableTitle: {
     typeof: Array,

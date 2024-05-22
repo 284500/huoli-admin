@@ -57,6 +57,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "dayjs": "^1.11.11",
+    "dayjs-nuxt": "^2.1.9",
     "embla-carousel": "^8.0.4",
     "embla-carousel-vue": "^8.0.4",
     "js-cookie": "^3.0.5",

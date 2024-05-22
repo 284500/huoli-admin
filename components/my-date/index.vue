@@ -12,7 +12,15 @@ import { RangeCalendar } from '@/components/ui/range-calendar'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
-const props=defineProps(['modelValue'])
+const props=defineProps({
+  modelValue: {
+    type:Object,
+    default:{
+      start:new CalendarDate(0, 0, 0),
+      end:new CalendarDate(0, 0, 0)
+    }
+  }
+})
 const emit=defineEmits(['start','update:modelValue'])
 const df = new DateFormatter('zh', {
   dateStyle: 'medium',
