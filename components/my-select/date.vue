@@ -49,9 +49,6 @@ const Start=(e)=>{
   }else{
     search.value.startTime=null;
   }
-
-
-  console.log(e)
 };
 const End=(e)=>{
   if(e.end){

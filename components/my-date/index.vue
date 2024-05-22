@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 const props=defineProps(['modelValue'])
-const emit=defineEmits(['start'])
+const emit=defineEmits(['start','update:modelValue'])
 const df = new DateFormatter('zh', {
   dateStyle: 'medium',
 })

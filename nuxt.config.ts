@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     cookieOptions: {
       maxAge: 2 * 365 * 24 * 60 * 60 * 1000
     },
-    storage: 'localStorage'
+    storage: 'sessionStorage'
   },
 
   shadcn: {
@@ -70,13 +70,5 @@ export default defineNuxtConfig({
     ],
     dirs: ["stores/**/index.{ts,js,mjs,mts}"]
   },
-  router:{
-    //@ts-ignore
-    extendRoutes(routes) {
-      routes.push({
-        path: '/',
-        redirect:'/about'
-      })
-    }
-  }
+
 });

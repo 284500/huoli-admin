@@ -1,7 +1,7 @@
 <template>
   <Myheader>
     <template #left>
-      <MyInputSearch v-model="Materialparams.name" @search="Material.resetPage()"></MyInputSearch>
+      <MyInputSearch v-model="Materialparams.name" @search="Material.resetPage()" class="sm:w-1/2 lg:w-1/3"></MyInputSearch>
     </template>
   </Myheader>
   <ScrollArea class="flex-1 overflow-auto">
@@ -160,6 +160,7 @@
       <Footer></Footer>
     </div>
   </ScrollArea>
+  <input type="text" v-model="store.keyword">
   <MyDrawer v-model="isShow" color="bg-[rgba(249,250,251,0.95)]">
   <MaterialDetail v-if="!popname" @close="closepop" :data="Materialdetail.detail.data"></MaterialDetail>
   <H5Detail v-else @close="closepop" :data="H5detail.detail.data"></H5Detail>
@@ -182,11 +183,11 @@ import { useDetail } from '@/hooks/useDetail';
 
 
 import { ref ,reactive} from 'vue';
+import { useMealsStore } from '~/composables/store';
+const store=useMealsStore()
 const isShow = ref(false);
-
 const H5params=reactive({});
-const Materialparams=reactive({
-});
+const Materialparams=reactive({});
 const MaterialDetailparams=reactive({});
 const H5Detailparams=reactive({});
 const Material = usePaging({ fetchFun: getMaterialTemplateList,params:Materialparams });

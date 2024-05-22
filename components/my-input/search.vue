@@ -5,7 +5,6 @@
       v-model="searchdata"
       placeholder="搜索内容"
       class="w-full appearance-none bg-background pl-8 shadow-none"
-      v-bind="$attrs"
       @keyup.enter="emit('search',searchdata)"
     />
   </div>
