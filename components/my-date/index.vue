@@ -16,8 +16,8 @@ const props=defineProps({
   modelValue: {
     type:Object,
     default:{
-      start:new CalendarDate(0, 0, 0),
-      end:new CalendarDate(0, 0, 0)
+      start:null,
+      end:null
     }
   }
 })

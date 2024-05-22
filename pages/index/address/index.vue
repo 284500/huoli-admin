@@ -11,29 +11,29 @@
       <div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div
-            v-for="item in 3"
+            v-for="item in pager.lists"
             class="border-[1px] border-[#eeeeee] rounder-[4px] flex lg:p-6 justify-between items-center p-4"
           >
             <div class="flex items-center">
               <div
-                class="w-[48px] h-[48px] overflow-hidden flex justify-center items-center mr-4 rounded-full"
+                class="w-[48px] h-[48px] overflow-hidden flex justify-center items-center mr-4 rounded-full bg-[rgba(255,160,36,0.10)]"
               >
-                <img src="/public/img/wallet/wallet.png" alt="" />
+                <img src="/public/img/address/address.png" alt="" class="w-6 h-6" />
               </div>
               <div>
-                <div><span class="user">卢杰荣</span> <span class="user">17679984282</span></div>
+                <div><span class="user">{{ item.consignee }}</span> <span class="user">{{ item.phone }}</span></div>
                 <div>
-                  <div class="text">福建省 厦门市 湖里区 金山街道后坑社区149号</div>
+                  <div class="text flex gap-1"><span>{{ item.province }}</span> <span>{{ item.city }}</span> <span>{{ item.county }}</span> <span>{{ item.address }}</span></div>
                 </div>
               </div>
             </div>
             <div class="flex gap-4">
-              <Lucide icon="PencilLine" color="#999999" class="h-4 w-4"></Lucide>
+              <Lucide icon="PencilLine" color="#999999" class="h-4 w-4" @click="edit(item.id)"></Lucide>
 
-              <Lucide icon="Trash2" color="#999999" class="h-4 w-4"></Lucide>
+              <Lucide icon="Trash2" color="#999999" class="h-4 w-4" @click="del(item.id)"></Lucide>
             </div>
           </div>
-          <div
+          <div @click="add"
             class="border-[1px] border-[#eeeeee] rounder-[4px] flex lg:p-6 justify-between items-center p-4"
           >
             <div class="flex items-center">
@@ -54,12 +54,71 @@
       <Footer></Footer>
     </div>
   </ScrollArea>
+  <MyDrawer v-model="editpop" >
+    <MyForm :data="detail.data" @finish="editfinish" @close="closeedit"></MyForm>
+  </MyDrawer>
+  <MyDrawer v-model="addpop" >
+    <MyForm @finish="addfinish" @close="closeadd"></MyForm>
+  </MyDrawer>
 </template>
 <script setup>
 import Myheader from '@/components/navbar/header.vue';
-import { onMounted } from 'vue';
-const tabactive = ref(0);
-const tabList = ref(['收支明细', '锁定明细']);
+import MyDrawer from '@/components/drawer/index.vue';
+import {getAddressList,getAddressDetail,addAddress,editAddress,deleteAddress} from '@/server/apis/address/index';
+import { usePaging } from '@/hooks/usePaging';
+import { useDetail } from '@/hooks/useDetail';
+import { onBeforeMount} from 'vue';
+import { toast } from '~/components/ui/toast';
+const Params=reactive({});
+const editpop = ref(false);
+const addpop = ref(false);
+const { pager, getLists } = usePaging({
+    fetchFun: getAddressList
+})
+const {detail,getDetail} = useDetail(getAddressDetail,Params);
+const init=()=>{
+  getLists()
+}
+const add=()=>{
+addpop.value=true;
+}
+const edit=async (id)=>{
+  Params.id=id;
+  await getDetail();
+  editpop.value=true
+}
+const del=async (id)=>{
+ await deleteAddress({ids:[id]})
+ toast({
+  title: '删除成功',
+ })
+ getLists()
+}
+const editfinish=async (data)=>{
+  editpop.value=false;
+  await editAddress(data);
+  toast({
+  title: '修改成功',
+ })
+  getLists();
+}
+const addfinish=async (data)=>{
+  console.log(data)
+  addpop.value=false;
+  await addAddress(data);
+  toast({
+  title: '添加成功',
+ })
+  getLists();
+}
+const closeedit=()=>{
+  editpop.value=false;
+  detail.data=null;
+}
+const closeadd=()=>{
+  addpop.value=false;
+}
+onBeforeMount(init);
 </script>
 <style scoped>
 .header-left {

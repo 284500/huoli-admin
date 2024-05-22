@@ -1,4 +1,6 @@
 <template>
+  <NuxtLoadingIndicator  class="!h-[12px]" :duration="2000" color="red" />
+
   <Toaster />
 
   <div>
