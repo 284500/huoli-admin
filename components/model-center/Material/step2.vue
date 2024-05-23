@@ -173,7 +173,7 @@
             ><span class="text-[#FF5030] ml-[2px] pt-2">*</span>
           </div>
           <div>
-            <MyDate class="!w-[270px]"></MyDate>
+            <MyDate></MyDate>
           </div>
           <div>
             <span class="danger-text !text-[#666666]">广告定制商物料生产</span
@@ -209,6 +209,18 @@
               </div>
               <div class="danger-text">任意符合其中一个条件加价0.5元，总价1.5元</div>
             </div>
+            <Separator class="my-4" />
+            <div class="flex gap-2">
+              <div class="bg-[rgba(34,119,255,0.08)] flex justify-center items-center rounded-full gap-1 px-3 py-1.5">
+                <img src="/public/img/other/add.png" class="w-4 h-4" />
+
+                <div class="text !text-[#2277FF]" @click="addrules(1)">添加条件</div>
+              </div>
+              <div v-for="(item,index) in ruleList[0]" :key="index" class="bg-[#EEEEEE] flex justify-center items-center rounded-full gap-1 px-3 py-1.5">
+                <div class="muted-text">{{ item }}</div>
+                <Lucide icon="X" class="w-4 h-4" color="#AAAAAA" @click="delrule(0,index)"></Lucide>
+              </div>
+            </div>
           </div>
           <div class="table-border bg-[#F6F7F9] px-5 py-4">
             <div class="flex justify-between">
@@ -223,15 +235,11 @@
               <div class="bg-[rgba(34,119,255,0.08)] flex justify-center items-center rounded-full gap-1 px-3 py-1.5">
                 <img src="/public/img/other/add.png" class="w-4 h-4" />
 
-                <div class="text !text-[#2277FF]">添加条件</div>
+                <div class="text !text-[#2277FF]" @click="addrules(2)">添加条件</div>
               </div>
-              <div class="bg-[#EEEEEE] flex justify-center items-center rounded-full gap-1 px-3 py-1.5">
-                <div class="muted-text">女&新用户</div>
-                <Lucide icon="X" class="w-4 h-4" color="#AAAAAA"></Lucide>
-              </div>
-              <div class="bg-[#EEEEEE] flex justify-center items-center rounded-full gap-1 px-3 py-1.5">
-                <div class="muted-text">女&新用户</div>
-                <Lucide icon="X" class="w-4 h-4" color="#AAAAAA"></Lucide>
+              <div v-for="(item,index) in ruleList[1]" :key="index" class="bg-[#EEEEEE] flex justify-center items-center rounded-full gap-1 px-3 py-1.5">
+                <div class="muted-text">{{ item }}</div>
+                <Lucide icon="X" class="w-4 h-4" color="#AAAAAA" @click="delrule(1,index)"></Lucide>
               </div>
             </div>
           </div>
@@ -290,10 +298,13 @@
           <Button class="ml-6">提交订单</Button>
         </div>
       </div>
+      <MyDrawer v-model="isShow"><MyFormRule :rulenumber="rulenumber" @finish="add" @close="closepop"></MyFormRule></MyDrawer>
 
 </template>
 <script setup>
 import MyTable from '@/components/my-table/table.vue';
+import MyDate from '@/components/my-date/date.vue';
+import MyDrawer from '@/components/drawer/index.vue';
 const TabItems = ref([
   {
     id: 1,
@@ -303,6 +314,26 @@ const TabItems = ref([
     productType: '名片',
   },
 ]);
+const isShow = ref(false);
+
+const rulenumber=ref(1);
+const ruleList=ref([['adad','testtsd'],['adad','teste']]);
+const delrule=(id,index)=>{
+  ruleList.value[id].splice(index, 1);
+};
+const addrules = (number) => {
+  isShow.value = true;
+  rulenumber.value = number;
+};
+const closepop=()=>{
+  isShow.value=false;
+};
+const add=(e)=>{
+  isShow.value=false;
+  console.log(e)
+  ruleList.value[e.number].push(e.data);
+};
+//投放条件选择
 </script>
 <style scoped>
 .address-text {

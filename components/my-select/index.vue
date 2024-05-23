@@ -18,6 +18,9 @@ import {unset,each} from 'lodash';
 const props=defineProps({
   modelValue:{
     type:Object,
+    default:{
+      name:'',
+    }
   },
   selectType:{
     type:Array,

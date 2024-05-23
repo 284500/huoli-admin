@@ -165,7 +165,7 @@
       <Footer></Footer>
     </div>
   </ScrollArea>
-  <input type="text" v-model="store.keyword">
+  <!-- <input type="text" v-model="store.keyword"> -->
   <MyDrawer v-model="isShow" color="bg-[rgba(249,250,251,0.95)]">
   <MaterialDetail v-if="!popname" @close="closepop" :data="Materialdetail.detail.data"></MaterialDetail>
   <H5Detail v-else @close="closepop" :data="H5detail.detail.data"></H5Detail>

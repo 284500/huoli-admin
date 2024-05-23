@@ -33,19 +33,19 @@ const tabList = reactive([
   },
   {
     name: '物料订单',
-    icon: 'img/nav/address.png',
+    icon: 'img/nav/materialorder.png',
     path: '/modelorder',
     isTitle: false,
   },
   {
     name: '投放订单',
-    icon: 'img/nav/address.png',
+    icon: 'img/nav/placeorder.png',
     path: '/placedorder',
     isTitle: false,
   },
   {
     name: '售后服务',
-    icon: 'img/nav/address.png',
+    icon: 'img/nav/aftersales.png',
     path: '/aftersales',
     isTitle: false,
   },
@@ -55,13 +55,13 @@ const tabList = reactive([
   },
   {
     name: '我的钱包',
-    icon: 'img/nav/address.png',
+    icon: 'img/nav/wallet.png',
     path: '/wallet',
     isTitle: false,
   },
   {
     name: '我的认证',
-    icon: 'img/nav/address.png',
+    icon: 'img/nav/myauth.png',
     path: '/myauth',
     isTitle: false,
   },
@@ -73,7 +73,7 @@ const tabList = reactive([
   },
   {
     name: '网站管理',
-    icon: 'img/nav/address.png',
+    icon: 'img/nav/webcontrol.png',
     path: '/',
     isTitle: false,
   },

@@ -11,12 +11,12 @@
       <div>
         <MyListButton :lists="list"></MyListButton>
         <Separator class="my-5 !bg-[#EEEEEE]" />
-        <div class="flex">
-          <MyInputSearch class="sm:w-1/2 lg:w-1/3"></MyInputSearch>
-        <MySelectDate  class="ml-10"></MySelectDate>
+        <div class="flex gap-y-4">
+          <MyInputSearch class="mr-10 sm:w-[240px] md:w-[200px] lg:w-[240px]"></MyInputSearch>
+        <MySelectDate  class=""></MySelectDate>
         </div>
 
-        <MyTable :hasCheck="false"></MyTable>
+        <MyTable></MyTable>
         <MyPagination></MyPagination>
       </div>
       <Footer></Footer>
@@ -25,7 +25,7 @@
 </template>
 <script setup>
 import Myheader from '@/components/navbar/header.vue';
-import MyTable from '@/components/my-table/table.vue';
+import MyTable from '@/components/my-table/material.vue';
 import MyPagination from '@/components/my-pagination/index.vue';
 
 import { onMounted } from 'vue';

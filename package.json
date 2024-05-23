@@ -68,6 +68,7 @@
     "pinia": "^2.1.7",
     "pinia-plugin-persist": "^1.0.0",
     "pinia-plugin-persistedstate": "^3.2.1",
+    "qrcode": "^1.5.3",
     "radix-vue": "^1.7.4",
     "sass": "^1.75.0",
     "shadcn-nuxt": "^0.10.2",

@@ -39,6 +39,9 @@
           </ul>
         </div>
       </div>
+      <Separator class="my-5 !bg-[#EEEEEE]" />
+      <div class="flex"><MySelect class="mr-10"></MySelect>
+         <MySelectDate></MySelectDate></div>
       <MyTable :hasCheck="false"></MyTable>
       <MyPagination></MyPagination>
       <Footer></Footer>
@@ -46,17 +49,14 @@
   </ScrollArea>
 </template>
 <script setup>
-import Wuliao from '@/components/my-tab/wuliao.vue';
 import Myheader from '@/components/navbar/header.vue';
-import TableHeader from '@/components/my-table/index.vue';
-import MyTable from '@/components/my-table/table.vue';
+import MyTable from '@/components/my-table/place.vue';
 import MyPagination from '@/components/my-pagination/index.vue';
 
 import { onMounted } from 'vue';
 const ActiveList = ref(0);
 
 const list1 = ref(['全部', '待接单', '部门接单', '待投放', '投放中','已完成','已停止']);
-
 </script>
 <style scoped>
 .isActive {
