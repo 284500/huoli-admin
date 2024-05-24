@@ -44,7 +44,7 @@ const value = ref({
           </template>
         </template>
         <template v-else>
-          Pick a date
+         <div class="text-[#AAAAAA]">开始日期 - 结束日期</div>
         </template>
         <CalendarIcon class="mr-2 h-4 w-4" />
       </Button>

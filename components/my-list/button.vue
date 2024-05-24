@@ -12,7 +12,7 @@
                 v-for="(item, index) in props.lists"
                 :key="index"
                 :class=" ActiveList === index ? 'isActive' : ''"
-                @click="listChange(index,item.id)"
+                @click="listChange(index,item.status)"
               >
                {{ item.name }}
               </li>
@@ -39,7 +39,7 @@
 		emit('change')
 	};
 </script>
-<style scoped>
+<style scoped lang="scss">
 .label {
   font-size: 14px;
   font-family:

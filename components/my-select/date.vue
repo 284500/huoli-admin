@@ -3,7 +3,7 @@
   <div class="flex">
   <Select v-model="search.timeType">
       <SelectTrigger class="w-[120px] px-3 py-2 ">
-        <SelectValue placeholder="时间查询"/>
+        <SelectValue placeholder="创建时间"/>
       </SelectTrigger>
       <SelectContent position="popper">
         <SelectItem v-for="item in selectType" :value="item.value" :key="id">{{ item.key }} </SelectItem>
@@ -12,6 +12,9 @@
     <MyDate v-model="date" @update:modelValue="End" @start="Start"></MyDate></div>
 </template>
 <script setup>
+import {ref,defineProps,defineEmits} from 'vue';
+import {useVModel} from '@vueuse/core';
+import MyDate from '@/components/my-date/index.vue';
 // 传入选项列表
 //绑定搜索参数对象
 const props=defineProps({

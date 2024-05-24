@@ -9,19 +9,18 @@
       class="w-[100vw] px-4 relative md:px-8 lg:px-12 box-border md:w-full min-h-[calc(100vh-76px)] flex flex-col justify-between"
     >
       <div>
-          <ul class="flex whitespace-nowrap overflow-auto h-8">
-            <li
-              class="px-4 py-1.5 hover:!text-[#2277ff] rounded-[4px] label cursor-pointer title"
-              v-for="(item, index) in list1"
-              :key="index"
-              :class="ActiveList === index ? 'isActive' : ''"
-              @click="ActiveList = index"
-            >
-              {{ item }}
-            </li>
-          </ul>
-          <Separator class="my-5" />
-          <MyTable></MyTable>
+        <MyListButton :lists="list"></MyListButton>
+        <Separator class="my-5" />
+        <div class="header flex mt-1 flex-wrap">
+          <Button variant="outline" class="h-9 text-[#666666] mr-8" @click="delH5Array"
+            >批量删除</Button
+          >
+          <MySelect v-model="H5params" :selectType="SearchList"></MySelect>
+          <MySelectDate v-model="H5params" class="ml-10"></MySelectDate>
+        </div>
+        <div>
+          ada
+        </div>
       </div>
       <Footer></Footer>
     </div>
@@ -29,12 +28,12 @@
 </template>
 <script setup>
 import Myheader from '@/components/navbar/header.vue';
-import { onMounted } from 'vue';
-const tabactive = ref(0);
-const ActiveList = ref(0);
-const tabList = ref(['收支明细', '锁定明细']);
-const list1 = ref(['全部', '待接单', '部门接单', '待投放', '投放中','已完成','已停止']);
-
+const list = ref([
+  { name: '待处理', status: 0 },
+  { name: '部分退款', status: 1 },
+  { name: '已退款', status: 2},
+  { name: '已关闭', status: 3 },
+]);
 </script>
 <style scoped>
 .header-left {
@@ -46,13 +45,15 @@ const list1 = ref(['全部', '待接单', '部门接单', '待投放', '投放�
   color: #333333;
   line-height: 24px;
 }
-.label{
+.label {
   font-size: 14px;
-font-family: PingFang SC, PingFang SC-Regular;
-@apply font-normal;
-text-align: center;
-color: #333333;
-line-height: 20px;
+  font-family:
+    PingFang SC,
+    PingFang SC-Regular;
+  @apply font-normal;
+  text-align: center;
+  color: #333333;
+  line-height: 20px;
 }
 .text {
   font-size: 12px;

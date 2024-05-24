@@ -38,7 +38,7 @@
       </TableRow>
     </TableBody>
   </Table>
-  
+
 </template>
 <script setup>
 const props = defineProps({
@@ -128,7 +128,6 @@ const del = (e) => {
   color: #666666;
   line-height: 20px;
 }
-
 .text {
   font-size: 14px;
   font-family: PingFang SC, PingFang SC-Regular;
@@ -137,7 +136,6 @@ const del = (e) => {
   color: #333333;
   line-height: 20px;
 }
-
 .table-title {
   font-size: 16px;
   font-family: PingFang SC, PingFang SC-Medium;

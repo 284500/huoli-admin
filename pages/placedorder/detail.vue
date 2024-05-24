@@ -13,7 +13,7 @@
             <div class="text">300/1000</div>
             <div>30%</div>
           </div>
-          <Progress />
+          <Progress  class="!bg-[#F6F7F9]" />
         </div>
         <Separator class="my-3" />
         <div class="grid gap-3 lg:grid-cols-7 grid-cols-4">
@@ -36,17 +36,17 @@
               </div>
               <div class="flex gap-3">
                 <div class="muted-text">订单状态：</div>
-                <div class="text">待接单</div>
+                <div class="text flex items-center"><div class="w-2 h-2 bg-[#FFA024] rounded-full mr-1"></div><div>{{ Orderdetail.status}}</div></div>
               </div>
 
               <div class="flex gap-3">
                 <div class="muted-text">付款信息：</div>
-                <div class="text">微信支付</div>
+                <div class="text">{{ material.payMethod }}</div>
               </div>
 
               <div class="flex gap-3">
                 <div class="muted-text">订单信息：</div>
-                <div class="text">392794546085685-654</div>
+                <div class="text">{{ material.remarks }}</div>
               </div>
             </div>
             <div>
@@ -56,14 +56,14 @@
                   <div
                     class="w-[48px] h-[48px] overflow-hidden flex justify-center items-center mr-4 rounded-full"
                   >
-                    <img src="/public/img/wallet/wallet.png" alt="" />
+                    <img :src="material.cover" alt="" />
                   </div>
                   <div>
                     <div class="table-title">
-                      商务名片
+                      {{ material.orderType }}
                     </div>
                     <div class="table-text">
-                      订单信息：392794546085685-654
+                     订单信息:{{ material.remarks }}
                     </div>
                   </div>
                 </div>
@@ -77,23 +77,44 @@
             <h1 class="title">投放信息</h1>
             <div class="mt-5  gap-3 flex flex-col">
               <div class="flex gap-3">
-                <div class="muted-text">收货信息：</div>
-                <div class="text">投放订单类型收货地址请查看分发商户地址</div>
+                <div class="muted-text w-[98px]">投放地区：</div>
+                <div class="text">{{Orderdetail.releaseArea}}</div>
               </div>
               <div class="flex gap-3">
-                <div class="muted-text">订单状态：</div>
-                <div class="text">待接单</div>
+                <div class="muted-text w-[98px]">分发总数：</div>
+                <div class="text">{{ Orderdetail.quantity }}{{Orderdetail.unit }}</div>
               </div>
 
               <div class="flex gap-3">
-                <div class="muted-text">付款信息：</div>
-                <div class="text">微信支付</div>
+                <div class="muted-text w-[98px]">每一份：</div>
+                <div class="text">{{Orderdetail.quantity/Orderdetail.merchantsNumber  }}{{Orderdetail.unit }}</div>
               </div>
 
               <div class="flex gap-3">
-                <div class="muted-text">订单信息：</div>
-                <div class="text">392794546085685-654</div>
+                <div class="muted-text w-[98px]">截止时间：</div>
+                <div class="text">{{$dayjs(Orderdetail.deadline).format('YYYY-MM-DD HH:mm:ss') }}</div>
               </div>
+              <div class="flex gap-3">
+                <div class="muted-text w-[98px]">分发商户数：</div>
+                <div class="text">{{Orderdetail.merchantsNumber}}</div>
+              </div>
+              <div class="flex gap-3">
+                <div class="muted-text w-[98px]">接单分数限定：</div>
+                <div class="text">1份</div>
+              </div>
+              <div class="flex gap-3">
+                <div class="muted-text w-[98px]">订单预定金额：</div>
+                <div class="text">{{ Orderdetail.prepaidAmount }}</div>
+              </div>
+              <div class="flex gap-3">
+                <div class="muted-text w-[98px]">定向条件：</div>
+                <div class="text">{{ Orderdetail.targetedCondition }}</div>
+              </div>
+              <div class="flex gap-3">
+                <div class="muted-text w-[98px]">定向加价：</div>
+                <div class="text">{{ Orderdetail.targetedPrice/100 }}元</div>
+              </div>
+
             </div>
           </div>
         </div>
@@ -101,16 +122,19 @@
       <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
         <h1 class="title">分发商户</h1>
         <MyTable :hasCheck="false"></MyTable>
-
       </div>
     </div>
   </NuxtLayout>
 </template>
 <script setup>
 import MyTable from '@/components/my-table/table.vue';
+import {  getReleaseOrderDetail } from '@/server/apis/placeorder/index.js';
+import {  getOrderDetail } from '@/server/apis/modelorder/index.js';
+
 definePageMeta({
   layout: 'center',
 });
+const route=useRoute();
 const BreadcrumbList = ref([
   {
     name: '投放订单',
@@ -121,6 +145,13 @@ const BreadcrumbList = ref([
     url: '/placedorder/detail',
   },
 ]);
+const Orderdetail=ref({});
+const material=ref({});
+const init=async ()=>{
+  Orderdetail.value=await getReleaseOrderDetail({id:Number(route.query.id)})
+  material.value=await  getOrderDetail({id:Orderdetail.value.orderId})
+}
+onMounted(init);
 </script>
 <style scoped>
 .title {

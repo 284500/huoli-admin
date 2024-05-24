@@ -26,7 +26,7 @@
         <TableCell class="text">{{$dayjs(item.createdTime).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
         <TableCell>
           <div class="flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-[#FFA024]"></span><span>查看详情</span>
+            <span class="w-2 h-2 rounded-full bg-[#FFA024]"></span><span>投放中</span>
           </div>
         </TableCell>
         <TableCell class="text sm:!w-[200px]">
@@ -40,8 +40,8 @@
         </TableCell>
         <TableCell class="text sm:!w-[200px]">
           <div class="flex gap-4 w-[fit-content]">
-            <div class="text-[#2277FF] cursor-pointer">立即下单</div>
-            <div class="text-[#FF5030] cursor-pointer" @click="del(item.id)">删除</div>
+            <div class="text-[#2277FF] cursor-pointer">查看详情</div>
+            <div class="text-[#FF5030] cursor-pointer" @click="del(item.id)">停止投放</div>
           </div>
         </TableCell>
       </TableRow>
@@ -60,39 +60,10 @@ const props = defineProps({
     default: [
       {
         id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '名片',
+        isShelves: 1, productType: '名片',
         createdTime: '',
         updatedTime: ''
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 0, selected: false, productType: '名片'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
+      }
     ]
   },
 });

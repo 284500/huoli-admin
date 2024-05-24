@@ -9,7 +9,7 @@
         <SelectItem v-for="item in selectType" :value="item.value" :key="id">{{ item.key }} </SelectItem>
       </SelectContent>
     </Select>
-    <MyInputSearch v-model="search[searchkey]" class="!rounded-none !rounded-r-[4px]" /></div>
+    <MyInputSearch v-model="search[searchkey]" class="!rounded-none !rounded-r-[4px]" @search="emit('Search')"></MyInputSearch></div>
 </template>
 <script setup>
 import {unset,each} from 'lodash';
@@ -19,7 +19,7 @@ const props=defineProps({
   modelValue:{
     type:Object,
     default:{
-      name:'',
+      name:null,
     }
   },
   selectType:{
@@ -33,7 +33,7 @@ const props=defineProps({
     }]
   }
 });
-const emit=defineEmits(['update:modelValue']);
+const emit=defineEmits(['update:modelValue','Search']);
 const search=useVModel(props,'modelValue',emit);
 const searchkey=ref('name');
 const clear=(e)=>{
