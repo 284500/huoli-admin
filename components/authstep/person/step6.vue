@@ -1,17 +1,13 @@
 <template>
   <div class="w-full flex flex-col items-center">
     <Separator class="sm:my-10 my-5" />
-    <div class="flex flex-col py-10" v-if="0">
-      <div class="w-[100px] h-[100px]"><img src="/public/img/auth/status-loading.png" alt="" class="w-full h-full "></div>
-      <div class="title !text-center">认证审核中</div>
-    </div>
-    <div class="flex flex-col py-10" v-else>
-      <div class="w-[100px] h-[100px]"><img src="/public/img/auth/status-false.png" alt="" class="w-full h-full "></div>
-      <div class="title !text-center">认证失败</div>
+    <div class="flex flex-col py-10">
+      <div class="w-[100px] h-[100px]"><img src="/public/img/auth/status-true.png" alt="" class="w-full h-full "></div>
+      <div class="title">认证审核中</div>
     </div>
     <div class="mb-4">
-      <Button class="w-[80px] rounded-[4px] bg-[#ffffff] text-muted-foreground mr-3 hover:bg-white" @click="prevStep">撤回</Button>
-      <Button class="w-[80px] rounded-[4px] bg-[#2277ff] text-white">认证通过</Button>
+      <Button class="w-[80px] rounded-[4px] bg-[#ffffff] text-muted-foreground mr-3 hover:bg-white">重新认证</Button>
+
     </div>
   </div>
 </template>
@@ -21,7 +17,7 @@ const nextStep=()=>{
   emit('change',)
 };
 const prevStep=()=>{
-  emit('change',3)
+  emit('change',)
 };
 </script>
 <style scoped>

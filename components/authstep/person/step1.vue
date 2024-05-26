@@ -105,7 +105,7 @@
         <Separator class="mt-10 mb-3" />
         <div class="mb-4">
         <Button
-          class="w-[80px] rounded-[4px] bg-[#ffffff] text-muted-foreground mr-3 hover:bg-white"
+          class="w-[80px] rounded-[4px] bg-[#ffffff] text-muted-foreground mr-3 hover:bg-white" @click="prevStep"
           >不同意</Button
         >
         <Button class="w-[80px] rounded-[4px] bg-[#2277ff] text-white" @click="nextStep">同意</Button>
@@ -114,10 +114,11 @@
 </template>
 <script setup>
 import {FristAuth} from '@/server/apis/auth/index.js'
+
 const emit=defineEmits(['change']);
 const nextStep=async ()=>{
-  // const data=await FristAuth({adId:12,adType:0}).catch(e=>{console.log(e)})
   emit('change',1);
+  await FristAuth({adid:11,adType:0});
 };
 const prevStep=()=>{
   emit('change',)

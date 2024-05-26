@@ -13,34 +13,41 @@
   </Myheader>
   <ScrollArea class="flex-1 overflow-auto">
     <div
-      class="w-[100vw] px-4 relative md:px-4 lg:px-12 box-border md:w-full min-h-[calc(100vh-76px)] flex flex-col items-center"
-    >
+      class="w-[100vw] px-4 relative md:px-4 lg:px-12 box-border md:w-full min-h-[calc(100vh-76px)] flex flex-col items-center">
       <div class="w-full xl:w-[1000px]">
-        <MyStep :tab="stepTab" :activeNumber="stepNumber"></MyStep>
+        <MyStep v-if=" tabactive === 0" :tab="EnterpriseStep" :activeNumber="stepNumber"></MyStep>
+        <MyStep v-else :tab="PersonStep" :activeNumber="stepNumber"></MyStep>
       </div>
-      <!-- <Step1></Step1> -->
-      <!-- <Step2></Step2> -->
-      <!-- <Step3></Step3> -->
-      <!-- <Step4></Step4> -->
-      <Step5></Step5>
+      <div v-if=" tabactive === 0" class="w-full">
+        <component :is="StepList[stepNumber]" @change="StepChange" />
+      </div>
+      <div v-else class="w-full">
+        <component :is="PersonStepList[stepNumber]" @change="StepChange" />
+      </div>
     </div>
   </ScrollArea>
 </template>
 <script setup>
 import Myheader from '@/components/navbar/header.vue';
 import Step1 from '@/components/authstep/step1.vue';
+import PersonStep1 from '@/components/authstep/person/step1.vue';
 import Step2 from '@/components/authstep/step2.vue';
+import PersonStep2 from '@/components/authstep/person/step2.vue';
 import Step3 from '@/components/authstep/step3.vue';
+import PersonStep3 from '@/components/authstep/person/step3.vue';
 import Step4 from '@/components/authstep/step4.vue';
+import PersonStep4 from '@/components/authstep/person/step4.vue';
 import Step5 from '@/components/authstep/step5.vue';
+import PersonStep5 from '@/components/authstep/person/step5.vue';
 import Step6 from '@/components/authstep/step6.vue';
+import PersonStep6 from '@/components/authstep/person/step6.vue';
 
 
 
 
 import { onMounted } from 'vue';
 const tabactive = ref(0);
-const stepTab = ref([
+const EnterpriseStep = ref([
   '广告制作和投放协议',
   '填写企业基本信息',
   '企业资质',
@@ -48,13 +55,42 @@ const stepTab = ref([
   '平台审核',
   '完成',
 ]);
+const PersonStep = ref([
+  '广告制作和投放协议',
+  '填写个人基本信息',
+  '身份证认证',
+  '绑定银行卡',
+  '平台审核',
+  '完成',
+]);
 const stepNumber = ref(0);
+const StepList={
+  0:Step1,
+  1:Step2,
+  2:Step3,
+  3:Step4,
+  4:Step5,
+  5:Step6,
+}
+const PersonStepList={
+  0:PersonStep1,
+  1:PersonStep2,
+  2:PersonStep3,
+  3:PersonStep4,
+  4:PersonStep5,
+  5:PersonStep6,
+}
+const StepChange= (e) => {
+  stepNumber.value =e;
+  console.log(e)
+}
 </script>
 <style scoped>
 .header-left {
   border-radius: 4px;
   overflow: hidden;
 }
+
 .header-title {
   @apply px-4 py-2 bg-[#F6F7F9] text-[#666666];
   font-size: 14px;
@@ -64,9 +100,11 @@ const stepNumber = ref(0);
   font-weight: 500;
   line-height: 20px;
 }
+
 .isActive {
   @apply !bg-[#2277FF] !text-white;
 }
+
 .title {
   font-size: 24px;
   font-family:
@@ -76,6 +114,7 @@ const stepNumber = ref(0);
   color: #333333;
   line-height: 32px;
 }
+
 .text {
   text-align: left;
   font-size: 14px;
@@ -86,6 +125,7 @@ const stepNumber = ref(0);
   color: #333333;
   line-height: 24px;
 }
+
 .user {
   font-size: 16px;
   font-family:
@@ -95,5 +135,4 @@ const stepNumber = ref(0);
   text-align: left;
   color: #333333;
   line-height: 24px;
-}
-</style>
+}</style>

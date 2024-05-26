@@ -125,9 +125,13 @@
 </template>
 <script setup>
 import MyTable from '@/components/my-table/table.vue';
+import {  getOrderDetail } from '@/server/apis/modelorder/index.js';
 definePageMeta({
   layout: 'center',
 });
+const route=useRoute();
+const router=useRouter();
+const material=ref({});
 const BreadcrumbList = ref([
   {
     name: '物料订单',
@@ -158,6 +162,10 @@ const TabItems = ref([
     productType: '名片',
   },
 ]);
+const init=async ()=>{
+  material.value=await getOrderDetail({id:Number(route.query.id)})
+};
+onBeforeMount(init);
 </script>
 <style scoped>
 .title {

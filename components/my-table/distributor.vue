@@ -9,33 +9,31 @@
     </TableHeader>
     <TableBody>
       <TableRow v-for="(item, index) in tabItems" :key="index" :class="item.selected ? 'bg-muted' : ''">
-        <TableCell class="flex items-center lg:!w-[270px] ">
+        <TableCell class="flex items-center">
           <div class="flex">
             <div class="flex items-center"><img class="w-12 h-12" :src="item.cover" />
             </div>
             <div class="ml-2">
-              <div class=" table-title">{{ item.orderType}}</div>
+              <div class=" table-title">{{ item.vendorName}}</div>
               <div class="text-sm !text-[12px]  text-[#999999]">{{ item.content }}</div>
               <div class="text-sm !text-[12px] text-[#999999]">{{ item.name }}</div>
             </div>
           </div>
         </TableCell>
-        <TableCell class="text">{{item.quantity +item.unit}}</TableCell>
-        <TableCell class="text">是</TableCell>
-        <TableCell class="text">￥{{ item.unitPrice }}</TableCell>
-        <TableCell class="text">￥{{ item.payAmount }}</TableCell>
-        <TableCell class="text">{{ $dayjs(item.payTime).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
+        <TableCell class="text">{{item.quantity}}</TableCell>
+        <TableCell class="text">{{ item.logisticsAddress}}</TableCell>
         <TableCell>
           <div class="flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-[#FFA024]"></span><span>{{ item.payMethod }}</span>
+            <span class="w-2 h-2 rounded-full bg-[#FFA024]"></span><span>{{ item.logisticsStatus}}</span>
           </div>
         </TableCell>
-        <TableCell class="text sm:!w-[240px]">
+        <TableCell class="text">{{ item.unitPrice }}</TableCell>
+        <TableCell class="text">{{ item.payAmount }}</TableCell>
+        <TableCell class="text">{{  }}</TableCell>
+
+        <TableCell class="text">
           <div class="flex gap-4 w-[fit-content]">
-            <NuxtLink :to="`/modelorder/detail?id=${item.id}`">
-            <div class="text-[#2277FF] cursor-pointer">查看详情</div></NuxtLink>
-            <div class="text-[#2277FF] cursor-pointer">立即付款</div>
-            <div class="text-[#FF5030] cursor-pointer" @click="del(item.id)">取消订单</div>
+            <div class="text-[#2277FF] cursor-pointer" @click="getdetail(item.id)">投放明细</div>
           </div>
         </TableCell>
       </TableRow>
@@ -46,7 +44,7 @@
 const props = defineProps({
   tableTitle: {
     typeof: Array,
-    default: ['订单信息', '总数量', '是否投放', '订单总价格', '实际付款', '付款时间', '状态', '操作']
+    default: ['商户信息', '接单数', '收货地址', '接单状态', '商户接单设置', '分发数', '消耗金额', '操作']
   },
   tabItems: {
     typeof: Array,
@@ -67,11 +65,14 @@ const props = defineProps({
     ]
   },
 });
-const emit = defineEmits(['delete', 'checkchange']);
+const emit = defineEmits(['delete', 'checkchange','detail']);
 
 const del = (e) => {
   emit('delete', e)
 };
+const getdetail = (e) => {
+  emit('detail', e)
+}
 </script>
 <style scoped>
 .title {

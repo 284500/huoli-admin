@@ -67,7 +67,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="text-[#2277FF]">
+                <div class="text-[#2277FF]" @click="JumpToDetail(material.id)">
                   详情
                 </div>
               </div>
@@ -121,20 +121,32 @@
       </div>
       <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
         <h1 class="title">分发商户</h1>
-        <MyTable :hasCheck="false"></MyTable>
+        <MyTable :tab-items="distributorList.lists" @detail="getList"></MyTable>
       </div>
     </div>
+    <MyDrawer v-model="isShow">
+      <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
+        <h1 class="title">投放明细</h1>
+        <ReleaseTable :tab-items="ReleaseList.lists"></ReleaseTable>
+      </div></MyDrawer>
   </NuxtLayout>
 </template>
 <script setup>
-import MyTable from '@/components/my-table/table.vue';
+import MyDrawer from '@/components/drawer/index.vue';
+
+import MyTable from '@/components/my-table/distributor.vue';
+import ReleaseTable from '@/components/my-table/releaseDetail.vue';
+
 import {  getReleaseOrderDetail } from '@/server/apis/placeorder/index.js';
 import {  getOrderDetail } from '@/server/apis/modelorder/index.js';
-
+import {getDistributorList,getDistributorDetail} from '@/server/apis/order/distributor.js';
+import { getReleaseList} from '@/server/apis/order/release.js';
 definePageMeta({
   layout: 'center',
 });
 const route=useRoute();
+const router=useRouter();
+const isShow=ref(false);
 const BreadcrumbList = ref([
   {
     name: '投放订单',
@@ -147,11 +159,24 @@ const BreadcrumbList = ref([
 ]);
 const Orderdetail=ref({});
 const material=ref({});
+const distributorList=ref([]);
+const ReleaseList=ref([]);
 const init=async ()=>{
   Orderdetail.value=await getReleaseOrderDetail({id:Number(route.query.id)})
   material.value=await  getOrderDetail({id:Orderdetail.value.orderId})
+  distributorList.value=await getDistributorList({orderId:Orderdetail.value.id})
 }
 onMounted(init);
+const distributoringo=(e)=>{
+
+}
+const getList=async (e)=>{
+  isShow.value=true;
+  ReleaseList.value= await getReleaseList({vendorId:e,releaseOrderId:Orderdetail.value.orderId})
+};
+const JumpToDetail = (id) => {
+router.push({ path: '/modelorder/detail', query: { id } });
+};
 </script>
 <style scoped>
 .title {

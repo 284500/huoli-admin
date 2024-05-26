@@ -35,7 +35,11 @@ export default defineNuxtConfig({
   nitro: {
     devProxy: {
       '/api': {
-        target: 'http://192.168.10.102:8084',
+        target: 'http://192.168.10.103:8084',
+        changeOrigin: true,
+      },
+      '/admin': {
+        target: 'http://192.168.10.103:8082',
         changeOrigin: true,
       },
       '/test': {

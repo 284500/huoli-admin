@@ -23,7 +23,7 @@
           <TableCell class="text">是</TableCell>
           <TableCell class="text">￥1200.00</TableCell>
           <TableCell class="text">￥1200.00</TableCell>
-        <TableCell class="text">{{$dayjs(item.createdTime).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
+        <TableCell class="text">{{$dayjs(item.createdTime*1000).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
         <TableCell>
           <div class="flex items-center gap-1.5">
             <span class="w-2 h-2 rounded-full bg-[#FFA024]"></span><span>投放中</span>
@@ -40,7 +40,8 @@
         </TableCell>
         <TableCell class="text sm:!w-[200px]">
           <div class="flex gap-4 w-[fit-content]">
-            <div class="text-[#2277FF] cursor-pointer">查看详情</div>
+            <NuxtLink :to="`/placedorder/detail?id=${item.id}`">
+            <div class="text-[#2277FF] cursor-pointer">查看详情</div></NuxtLink>
             <div class="text-[#FF5030] cursor-pointer" @click="del(item.id)">停止投放</div>
           </div>
         </TableCell>

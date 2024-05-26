@@ -2,83 +2,87 @@
   <div class="w-full flex flex-col items-center">
     <Separator class="sm:my-10 my-5" />
     <div class="w-full lg:w-[640px]">
-      <div class="title">绑定账户</div>
-      <div class="flex flex-col gap-1.5 mt-5 mb-7">
-        <div><span class="apply-text">账户类型</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
-        <RadioGroup default-value="comfortable" :orientation="'vertical'" class="flex gap-6">
-          <div class="flex items-center space-x-2">
-            <RadioGroupItem id="r1" value="default" />
-            <Label for="r1" class="apply-text">企业对公账户</Label>
-          </div>
-          <div class="flex items-center space-x-2">
-            <RadioGroupItem id="r2" value="comfortable" />
-            <Label for="r2" class="apply-text">法人个人银行卡</Label>
-          </div>
-        </RadioGroup>
-      </div>
-      <Separator class="my-8" />
-      <div class="title">结算银行卡照片</div>
+      <div class="title">身份认证</div>
       <div class="flex flex-col gap-1.5 my-5">
-        <div class="apply-text">请上传银行卡正面、银行卡背面，需图片、文字清晰、边框完整真实性</div>
+        <div class="apply-text">请上传身份证正面、身份证背面、需图片、文字清晰、边框完整真实性</div>
         <div class="grid sm:grid-cols-2 md:gap-10 gap-5">
           <div class=" dashed-border relative pt-[60%]">
-            <img src="/public/img/auth/yhk-1.png" alt="" class="w-full h-full absolute top-0">
+            <img src="/public/img/auth/sfz-2.png" alt="" class="w-full h-full absolute top-0">
             <div
               class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col gap-2 items-center">
               <div class="bg-[#2277FF] w-10 h-10 rounded-full flex justify-center items-center"><img
                   src="/public/img/auth/input.png" alt=""></div>
-              <div class="input-text">请上传银行卡正面</div>
+              <div class="input-text">请上传身份证正面</div>
             </div>
             <input type="file" class=" absolute top-0 left-0 right-0 bottom-0 opacity-0" />
           </div>
           <div class=" dashed-border relative pt-[60%]">
-            <img src="/public/img/auth/yhk-2.png" alt="" class="w-full h-full absolute top-0">
+            <img src="/public/img/auth/sfz-1.png" alt="" class="w-full h-full absolute top-0">
             <div
               class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col gap-2 items-center">
               <div class="bg-[#2277FF] w-10 h-10 rounded-full flex justify-center items-center"><img
                   src="/public/img/auth/input.png" alt=""></div>
-              <div class="input-text">请上传银行卡背面</div>
+              <div class="input-text">请上传身份证反面</div>
             </div>
             <input type="file" class=" absolute top-0 left-0 right-0 bottom-0 opacity-0" />
           </div>
+
         </div>
       </div>
       <div class="grid md:grid-cols-2 md:gap-x-10 gap-x-5 gap-y-4">
-
         <div class="flex flex-col gap-1.5">
-          <div><span class="apply-text">法人姓名</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
+          <div><span class="apply-text">姓名</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
             <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
-          <div><span class="apply-text">银行账号</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
+          <div><span class="apply-text">身份证号</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
+          <div>
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+          </div>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <div><span class="apply-text">办证机关</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
+          <div>
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+          </div>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <div><span class="apply-text">有效期限</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
+          <div>
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+          </div>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <div><span class="apply-text">法人手机</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
+          <div class="w-full flex gap-3">
+            <Input class="w-full  rounded-[4px]" id="phone" type="phone" placeholder="请输入手机号" required />
+            <Button class="h-full px-3 text-[#2277ff]" variant="outline">获取验证码</Button>
+          </div>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <div><span class="apply-text">验证码</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
             <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
           </div>
         </div>
       </div>
-      <div class="flex flex-col gap-1.5 mt-4">
-          <div><span class="apply-text">开户支行</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
-          <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
-          </div>
-        </div>
     </div>
     <Separator class="mt-10 mb-3" />
     <div class="mb-4">
       <Button class="w-[80px] rounded-[4px] bg-[#ffffff] text-muted-foreground mr-3 hover:bg-white" @click="prevStep">上一步</Button>
-      <Button class="w-[80px] rounded-[4px] bg-[#2277ff] text-white" @click="nextStep">提交凭证</Button>
+      <Button class="w-[80px] rounded-[4px] bg-[#2277ff] text-white" @click="nextStep">下一步</Button>
     </div>
   </div>
 </template>
 <script setup>
 const emit=defineEmits(['change']);
 const nextStep=()=>{
-  emit('change',4)
+  emit('change',3)
 };
 const prevStep=()=>{
-  emit('change',2)
+  emit('change',1)
 };
 </script>
 <style scoped>

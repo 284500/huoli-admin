@@ -127,7 +127,7 @@
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">法人手机</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div class="w-full flex gap-3">
-            <Input class="w-full  rounded-[4px]" id="phone" type="phone" placeholder="请输入验证码" required />
+            <Input class="w-full  rounded-[4px]" id="phone" type="phone" placeholder="请输入手机号" required />
             <Button class="h-full px-3 text-[#2277ff]" variant="outline">获取验证码</Button>
           </div>
         </div>
@@ -141,11 +141,20 @@
     </div>
     <Separator class="mt-10 mb-3" />
     <div class="mb-4">
-      <Button class="w-[80px] rounded-[4px] bg-[#ffffff] text-muted-foreground mr-3 hover:bg-white">上一步</Button>
-      <Button class="w-[80px] rounded-[4px] bg-[#2277ff] text-white">下一步</Button>
+      <Button class="w-[80px] rounded-[4px] bg-[#ffffff] text-muted-foreground mr-3 hover:bg-white" @click="prevStep">上一步</Button>
+      <Button class="w-[80px] rounded-[4px] bg-[#2277ff] text-white" @click="nextStep">下一步</Button>
     </div>
   </div>
 </template>
+<script setup>
+const emit=defineEmits(['change']);
+const nextStep=()=>{
+  emit('change',3)
+};
+const prevStep=()=>{
+  emit('change',1)
+};
+</script>
 <style scoped>
 .title {
   font-size: 20px;

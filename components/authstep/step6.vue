@@ -11,6 +11,15 @@
     </div>
   </div>
 </template>
+<script setup>
+const emit=defineEmits(['change']);
+const nextStep=()=>{
+  emit('change',)
+};
+const prevStep=()=>{
+  emit('change',)
+};
+</script>
 <style scoped>
 .title {
   font-size: 20px;

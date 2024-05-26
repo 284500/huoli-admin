@@ -24,7 +24,7 @@
           <MySelectDate class=""></MySelectDate>
         </div>
         <div v-if="Order.pager.lists.length">
-        <MyTable :tab-items="Order.pager.lists" > </MyTable>
+        <MyTable :tab-items="Order.pager.lists" ></MyTable>
          <MyPagination v-model="Order.pager" @change="Order.getLists"></MyPagination></div>
         <div v-else class="flex flex-col items-center py-20">
           <svg width="184" height="152" viewBox="0 0 184 152" xmlns="http://www.w3.org/2000/svg">
@@ -94,12 +94,6 @@ const list = ref([
 ]);
 const Orderparams = reactive({});
 const Order = usePaging({ fetchFun: getOrderList, params: Orderparams });
-// const CreateInfo=usePaging({ fetchFun:getCreateInfoList});
-// const tabData=computed(()=>{
-//   return Order.pager.lists.map((item,index)=>{
-//     return {...item,...CreateInfo.pager.lists[index]}
-//   })
-// })
 const init = () => {
   Order.getLists();
 };

@@ -31,8 +31,9 @@ request.interceptors.response.use(
       router.push({
         name: '/login',
       });
-    } else if (response.data.code == 503) {
-
+    } else if (response.data.code == 404) {
+      // alert('请求地址不存在')
+      return Promise.reject(response.data.msg);
     }
     return response.data.data;
     // return response

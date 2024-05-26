@@ -1,8 +1,5 @@
 <template>
-  <NuxtLoadingIndicator  class="!h-[12px]" :duration="2000" color="red" />
-
   <Toaster />
-
   <div>
     <div class="flex h-screen w-full">
       <Aside :tab-List="tabList"></Aside>

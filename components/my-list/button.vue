@@ -36,7 +36,7 @@
 	const listChange = (page,id) => {
     ActiveList.value=page;
     emit('update:modelValue',id)
-		emit('change')
+		emit('change',id)
 	};
 </script>
 <style scoped lang="scss">

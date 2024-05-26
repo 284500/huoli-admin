@@ -9,35 +9,28 @@
     </TableHeader>
     <TableBody>
       <TableRow v-for="(item, index) in tabItems" :key="index" :class="item.selected ? 'bg-muted' : ''">
-        <TableCell class="flex items-center lg:!w-[270px] ">
+        <TableCell class="flex items-center">
           <div class="flex">
             <div class="flex items-center"><img class="w-12 h-12" :src="item.cover" />
             </div>
             <div class="ml-2">
-              <div class=" table-title">{{ item.orderType}}</div>
+              <div class=" table-title">{{ item.vendorName}}</div>
               <div class="text-sm !text-[12px]  text-[#999999]">{{ item.content }}</div>
               <div class="text-sm !text-[12px] text-[#999999]">{{ item.name }}</div>
             </div>
           </div>
         </TableCell>
-        <TableCell class="text">{{item.quantity +item.unit}}</TableCell>
-        <TableCell class="text">是</TableCell>
-        <TableCell class="text">￥{{ item.unitPrice }}</TableCell>
-        <TableCell class="text">￥{{ item.payAmount }}</TableCell>
-        <TableCell class="text">{{ $dayjs(item.payTime).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
+        <TableCell class="text">{{item.createdTime}}</TableCell>
+        <TableCell class="text">{{ item.releaseScrip}}</TableCell>
         <TableCell>
           <div class="flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-[#FFA024]"></span><span>{{ item.payMethod }}</span>
+            <span class="w-2 h-2 rounded-full bg-[#FFA024]"></span><span>{{ item.logisticsStatus}}</span>
           </div>
         </TableCell>
-        <TableCell class="text sm:!w-[240px]">
-          <div class="flex gap-4 w-[fit-content]">
-            <NuxtLink :to="`/modelorder/detail?id=${item.id}`">
-            <div class="text-[#2277FF] cursor-pointer">查看详情</div></NuxtLink>
-            <div class="text-[#2277FF] cursor-pointer">立即付款</div>
-            <div class="text-[#FF5030] cursor-pointer" @click="del(item.id)">取消订单</div>
-          </div>
-        </TableCell>
+        <TableCell class="text">{{ item.isTargeted?'是':'否' }}</TableCell>
+        <TableCell class="text">{{ item.payAmount }}</TableCell>
+        <TableCell class="text">{{ item.isEffective?'是':'否' }}</TableCell>
+        <TableCell class="text">{{ item.fee }}</TableCell>
       </TableRow>
     </TableBody>
   </Table>
@@ -46,18 +39,18 @@
 const props = defineProps({
   tableTitle: {
     typeof: Array,
-    default: ['订单信息', '总数量', '是否投放', '订单总价格', '实际付款', '付款时间', '状态', '操作']
+    default: ['分发商户', '分发时间', '凭证', '提取数据', '是否条件用户', '用户访问时间', '是否有效用户', '获得佣金']
   },
   tabItems: {
     typeof: Array,
     default: [
       {
-        id: 1, remarks: 'Alice',
-        orderType: '名片',
-        isShelves: 1, selected: false, productType: '名片',
+        id: 1,
+        fee:'',
         createdTime: '',
+        isEffective:'',
         updatedTime: '',
-        payMethod: '已支付',
+        payMethod: '',
         quantity:'',
         unit:"",
         payTime:'',
@@ -67,11 +60,6 @@ const props = defineProps({
     ]
   },
 });
-const emit = defineEmits(['delete', 'checkchange']);
-
-const del = (e) => {
-  emit('delete', e)
-};
 </script>
 <style scoped>
 .title {

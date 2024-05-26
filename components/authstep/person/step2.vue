@@ -5,26 +5,13 @@
       <div class="title">基本信息</div>
       <div class="flex flex-col gap-4 mt-5">
         <div class="flex flex-col gap-1.5">
-        <div><span class="apply-text">商户简称</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
+        <div><span class="apply-text">运营者</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
         <div>
             <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
           </div>
        </div>
         <div class="flex flex-col gap-1.5">
-          <div><span class="apply-text">企业图标</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
-          <div class="flex gap-3 items-center">
-            <div class="w-[100px] h-[100px] input-border flex justify-center items-center relative">
-              <input type="file" class=" absolute top-0 left-0 right-0 bottom-0 opacity-0" />
-              <div class="w-6 h-6  dashed-border flex justify-center items-center">
-                <div class="w-[14px] h-[14px]  dashed-border">
-                  <img src="/public/add.png" alt="" class="w-full h-full">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="flex flex-col gap-1.5">
-          <div><span class="apply-text">经营地址</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
+          <div><span class="apply-text">居住地址</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div class="grid grid-cols-3 gap-3">
 
               <Select v-for="item in 3" :key="item">
@@ -39,12 +26,6 @@
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">详细地址</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
-          <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
-          </div>
-        </div>
-        <div class="flex flex-col gap-1.5">
-          <div><span class="apply-text">运营者</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
             <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
           </div>
@@ -75,9 +56,6 @@
   </div>
 </template>
 <script setup>
-const FromData=ref({
-
-});
 const emit=defineEmits(['change']);
 const nextStep=()=>{
   emit('change',2)

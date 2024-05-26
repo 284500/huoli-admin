@@ -1,19 +1,31 @@
 <template>
-  <Table class=" ">
+  <Table>
+    <TableHeader>
+      <TableRow class="!bg-[#f9fafb]">
+        <TableHead class="w-6">
+          <Checkbox v-model:checked="allCheck" @update:checked="allCheckChange" />
+        </TableHead>
+        <TableHead v-for="title in totalTile" class="title">
+          {{ title }}
+        </TableHead>
+      </TableRow>
+    </TableHeader>
+  </Table>
+  <Table v-for="(item, index) in tabItems" :key="index" >
     <TableHeader>
       <TableRow class="!bg-[#f9fafb]">
         <TableHead v-if="hasCheck" class="w-6">
-          <Checkbox v-model:checked="allCheck" @update:checked="allCheckChange" />
+          <Checkbox v-model:checked="item.selected" @update:checked="CheckboxChange" />
         </TableHead>
-        <TableHead v-for="(item, index) in tableTitle" class="title">
-          {{ item }}
+        <TableHead v-for="title in tableTitle" class="title">
+          {{ title }}
         </TableHead>
       </TableRow>
     </TableHeader>
     <TableBody>
-      <TableRow v-for="(item, index) in tabItems" :key="index" :class="item.selected ? 'bg-muted' : ''">
+      <TableRow :class="item.selected ? 'bg-muted' : ''">
         <TableCell v-if="hasCheck" class="w-6">
-          <Checkbox v-model:checked="item.selected" @update:checked="CheckboxChange" />
+
         </TableCell>
         <TableCell class="flex items-center">
           <div class="flex">
@@ -30,13 +42,14 @@
         <TableCell>{{$dayjs(item.updatedTime).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
         <TableCell class="text sm:!w-[240px]">
           <div class="flex gap-4 w-[fit-content]">
+            <div class="text-[#2277FF] cursor-pointer">立即下单</div>
+            <div class="text-[#2277FF] cursor-pointer">继续创作</div>
             <div class="text-[#FF5030] cursor-pointer" @click="del(item.id)">删除</div>
           </div>
         </TableCell>
       </TableRow>
     </TableBody>
   </Table>
-
 </template>
 <script setup>
 const props = defineProps({
@@ -55,32 +68,9 @@ const props = defineProps({
       },
       {
         id: 1, remarks: 'Alice',
-        isShelves: 0, selected: false, productType: '名片'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
+        isShelves: 1, selected: false, productType: '名片',
+        createdTime: '',
+        updatedTime: ''
       },
     ]
   },
@@ -90,6 +80,7 @@ const props = defineProps({
   }
 });
 const emit = defineEmits(['delete', 'checkchange']);
+const totalTile=ref(['退款订单','退款订单','退货原因','审核方','退款金额','退款说明','退款时间','售后状态','状态'])
 const allCheck = ref(false);
 const checkItem = computed(() => {
   return props.tabItems.filter(item => {
@@ -142,3 +133,4 @@ const del = (e) => {
   line-height: 24px;
 }
 </style>
+

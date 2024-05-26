@@ -2,21 +2,6 @@
   <div class="w-full flex flex-col items-center">
     <Separator class="sm:my-10 my-5" />
     <div class="w-full lg:w-[640px]">
-      <div class="title">绑定账户</div>
-      <div class="flex flex-col gap-1.5 mt-5 mb-7">
-        <div><span class="apply-text">账户类型</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
-        <RadioGroup default-value="comfortable" :orientation="'vertical'" class="flex gap-6">
-          <div class="flex items-center space-x-2">
-            <RadioGroupItem id="r1" value="default" />
-            <Label for="r1" class="apply-text">企业对公账户</Label>
-          </div>
-          <div class="flex items-center space-x-2">
-            <RadioGroupItem id="r2" value="comfortable" />
-            <Label for="r2" class="apply-text">法人个人银行卡</Label>
-          </div>
-        </RadioGroup>
-      </div>
-      <Separator class="my-8" />
       <div class="title">结算银行卡照片</div>
       <div class="flex flex-col gap-1.5 my-5">
         <div class="apply-text">请上传银行卡正面、银行卡背面，需图片、文字清晰、边框完整真实性</div>
