@@ -110,7 +110,7 @@ const TabItems = ref([
   },
 ]);
 </script>
-<style>
+<style scoped>
 .main {
   background: #ffffff;
   /* border-radius: 8px 0px 0px 8px; */

@@ -26,8 +26,15 @@
         <TableCell class="text">￥{{ item.payAmount }}</TableCell>
         <TableCell class="text">{{ $dayjs(item.payTime).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
         <TableCell>
-          <div class="flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-[#FFA024]"></span><span>{{ item.payMethod }}</span>
+
+          <div v-if="item.status==='已完成'">
+            <span class="w-2 h-2 rounded-full bg-[#12D137]"></span><span>{{ item.status }}</span>
+          </div>
+          <div v-else-if="item.status==='已取消'">
+            <span class="w-2 h-2 rounded-full bg-[#CCCCCC]"></span><span>{{ item.status }}</span>
+          </div>
+          <div class="flex items-center gap-1.5" v-else>
+            <span class="w-2 h-2 rounded-full bg-[#FFA024]"></span><span>{{ item.status }}</span>
           </div>
         </TableCell>
         <TableCell class="text sm:!w-[240px]">

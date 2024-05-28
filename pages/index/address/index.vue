@@ -92,7 +92,7 @@ const del=async (id)=>{
  toast({
   title: '删除成功',
  })
- getLists()
+ getLists();
 }
 const editfinish=async (data)=>{
   editpop.value=false;

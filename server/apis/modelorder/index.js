@@ -15,3 +15,4 @@ export function addOrder(data) {
 export function getCreateInfoList(data) {
     return getAxios('/api/app-api/ffd/v1/order/design/list', data);
 }
+// 删除订单

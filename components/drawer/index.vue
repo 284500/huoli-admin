@@ -1,16 +1,19 @@
 <template>
-  <div class="" style="z-index: 10000;" v-if="modelValue">
+  <Transition>
+  <div v-if="modelValue"  style="z-index:10000" class=" relative">
     <!-- 遮罩层 -->
     <div
       ref="mask"
       @click="clickhide"
       :class="props.color"
-      style="z-index:10000"
       class="fixed top-0 right-0 left-0 bottom-0 flex  justify-center items-center"
     >
+
       <slot></slot>
+
+
     </div>
-  </div>
+  </div></Transition>
 </template>
 <script setup>
 const isShow = ref(true);
@@ -33,3 +36,14 @@ const clickhide = (e) => {
   // console.log(mask.value,e.target)
 };
 </script>
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>

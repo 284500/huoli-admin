@@ -8,3 +8,7 @@ export function getReleaseOrderList(data) {
 export function getReleaseOrderDetail(data) {
   return getAxios('/api/app-api/ffd/v1/order/release/detail', data);
 }
+// 获取物料订单
+export function getMaterialOrder(data) {
+  return getAxios('/api/app-api/ffd/v1/order/release/detailByOrderId', data);
+}

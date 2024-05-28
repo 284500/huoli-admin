@@ -16,11 +16,15 @@
   </div>
 </template>
 <script setup>
+import {RevokewAuth} from '@/server/apis/auth/index.js'
+
 const emit=defineEmits(['change']);
-const nextStep=()=>{
+const nextStep=async ()=>{
   emit('change',)
 };
-const prevStep=()=>{
+const prevStep=async ()=>{
+  await RevokewAuth({adId:13,adType:0})
+
   emit('change',3)
 };
 </script>

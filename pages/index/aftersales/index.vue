@@ -9,17 +9,17 @@
       class="w-[100vw] px-4 relative md:px-8 lg:px-12 box-border md:w-full min-h-[calc(100vh-76px)] flex flex-col justify-between"
     >
       <div>
-        <MyListButton :lists="list"  @change="SearchList"></MyListButton>
+        <MyListButton :lists="list" v-model="Params.status" @change="SearchList"></MyListButton>
         <Separator class="my-5" />
         <div class="header flex mt-1 flex-wrap gap-y-2">
-          <Button variant="outline" class="h-9 text-[#666666] mr-8" @click="delH5Array"
+          <Button variant="outline" class="h-9 text-[#666666] mr-8" @click="delArray"
             >批量删除</Button
           >
-          <MySelect v-model="params" class="mr-10"></MySelect>
-          <MySelectDate v-model="H5params" ></MySelectDate>
+          <MySelect class="mr-10" v-model="Params" @Search="AfterSale.getLists"></MySelect>
+          <MySelectDate v-model="Params"></MySelectDate>
         </div>
         <div v-if="AfterSale.pager.lists.length">
-        <MyTable :tab-items="AfterSale.pager.lists" ></MyTable>
+        <MyTable :tab-items="AfterSale.pager.lists" @checkchange="getCheckList" @delete="deleteOrder"></MyTable>
          <MyPagination v-model="AfterSale.pager" @change="AfterSale.getLists"></MyPagination></div>
         <div v-else class="flex flex-col items-center py-20">
           <svg width="184" height="152" viewBox="0 0 184 152" xmlns="http://www.w3.org/2000/svg">
@@ -83,10 +83,29 @@ const list = ref([
   { name: '已关闭', status: 3 },
 ]);
 const SearchList = (e)=>{
-  console.log(e);
+  AfterSale.getLists();
 };
+const delList=ref([]);
 const init=async ()=>{
   await AfterSale.getLists();
+};
+const getCheckList=(e)=>{
+  delList.value=e;
+}
+const delArray=async ()=>{
+  let data=[];
+  delList.value.forEach((item)=>{
+    const {id}=item;
+    data.push(id)
+  });
+ await deleteAfterSale({ids:data});
+ delList.value=[];
+ AfterSale.getLists();
+}
+const deleteOrder=async (e)=>{
+  await deleteAfterSale({ids:[e]});
+  init();
+  alert('删除成功');
 };
 onBeforeMount(() => {
 init();

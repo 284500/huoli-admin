@@ -1,11 +1,11 @@
 <template>
   <Myheader>
-    <template #left>
+    <template #left v-if="stepNumber===0">
       <div class="flex header-left w-[fit-content]">
-        <div class="header-title" :class="{ isActive: tabactive === 0 }" @click="tabactive = 0">
+        <div class="header-title" :class="{ isActive: tabactive !== 2 }" @click="tabactive = 0">
           企业
         </div>
-        <div class="header-title" :class="{ isActive: tabactive === 1 }" @click="tabactive = 1">
+        <div class="header-title" :class="{ isActive: tabactive === 2 }" @click="tabactive = 2">
           个人
         </div>
       </div>
@@ -18,7 +18,7 @@
         <MyStep v-if=" tabactive === 0" :tab="EnterpriseStep" :activeNumber="stepNumber"></MyStep>
         <MyStep v-else :tab="PersonStep" :activeNumber="stepNumber"></MyStep>
       </div>
-      <div v-if=" tabactive === 0" class="w-full">
+      <div v-if=" tabactive !== 2" class="w-full">
         <component :is="StepList[stepNumber]" @change="StepChange" />
       </div>
       <div v-else class="w-full">
@@ -41,12 +41,16 @@ import Step5 from '@/components/authstep/step5.vue';
 import PersonStep5 from '@/components/authstep/person/step5.vue';
 import Step6 from '@/components/authstep/step6.vue';
 import PersonStep6 from '@/components/authstep/person/step6.vue';
-
-
-
-
 import { onMounted } from 'vue';
+import {AuthList ,AuthDetail} from '@/server/apis/auth/index.js'
+import { usePaging } from '@/hooks/usePaging';
+import { useDetail } from '@/hooks/useDetail';
+
+
 const tabactive = ref(0);
+const {pager,getLists}=usePaging({fetchFun:AuthList,params:{adId:12,adType:0}});
+const {detail,getDetail} = useDetail(AuthDetail,{adId:12,adType:0});
+
 const EnterpriseStep = ref([
   '广告制作和投放协议',
   '填写企业基本信息',
@@ -83,7 +87,12 @@ const PersonStepList={
 const StepChange= (e) => {
   stepNumber.value =e;
   console.log(e)
-}
+};
+onMounted(async() => {
+await getDetail();
+stepNumber.value = detail.data?.process || 0;
+tabactive.value = detail.data?.vendorType || 0;
+});
 </script>
 <style scoped>
 .header-left {

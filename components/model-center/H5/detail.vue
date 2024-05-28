@@ -3,7 +3,7 @@
     <div class="flex flex-wrap gap-8 justify-center w-[100vw] md:w-full p-5 sm:p-10">
       <div class="flex flex-col gap-4 w-full md:w-auto">
         <div class="md:w-[720px] bg-[#F0F1F5] h-[800px] w-full flex justify-center">
-          <img :src="props.data.templateCover"  class="w-full h-full object-cover"alt="">
+          <img :src="props.data.templateCover"  class="w-full h-full object-cover">
 
         </div>
       </div>
@@ -63,7 +63,7 @@ const props=defineProps({
 })
 const emits=defineEmits(['close']);
 </script>
-<style>
+<style scoped>
 .code-border{
   width: 140px;
 height: 140px;

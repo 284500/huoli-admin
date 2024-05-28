@@ -2,36 +2,15 @@
   <Table class=" ">
     <TableHeader>
       <TableRow class="!bg-[#f9fafb]">
-        <TableHead v-if="hasCheck" class="w-6">
-          <Checkbox v-model:checked="allCheck" @update:checked="allCheckChange" />
-        </TableHead>
         <TableHead v-for="(item, index) in tableTitle" class="title">
           {{ item }}
         </TableHead>
       </TableRow>
     </TableHeader>
     <TableBody>
-      <TableRow v-for="(item, index) in tabItems" :key="index" :class="item.selected ? 'bg-muted' : ''">
-        <TableCell v-if="hasCheck" class="w-6">
-          <Checkbox v-model:checked="item.selected" @update:checked="CheckboxChange" />
-        </TableCell>
-        <TableCell class="flex items-center">
-          <div class="flex">
-            <div class="flex items-center"><img class="w-12 h-12" />
-            </div>
-            <div class="ml-2">
-              <div class=" table-title">{{ item.name }}</div>
-              <div class="text-sm !text-[12px]  text-[#999999]">{{ item.content }}</div>
-              <div class="text-sm !text-[12px] text-[#999999]">{{ item.name }}</div>
-            </div>
-          </div>
-        </TableCell>
-        <TableCell class="text">{{$dayjs(item.createdTime).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
-        <TableCell>{{$dayjs(item.updatedTime).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
-        <TableCell class="text sm:!w-[240px]">
-          <div class="flex gap-4 w-[fit-content]">
-            <div class="text-[#FF5030] cursor-pointer" @click="del(item.id)">删除</div>
-          </div>
+      <TableRow v-for="(item, index) in tabItems" :key="index">
+        <TableCell v-for="(value,key) in item" :key="key">
+          {{ value }}
         </TableCell>
       </TableRow>
     </TableBody>
@@ -49,44 +28,8 @@ const props = defineProps({
     default: [
       {
         id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '名片',
-        createdTime: '',
-        updatedTime: ''
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 0, selected: false, productType: '名片'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-    ]
-  },
-  hasCheck: {
-    typeof: Boolean,
-    default: true
+        isShelves: 1, selected: false
+      }]
   }
 });
 const emit = defineEmits(['delete', 'checkchange']);

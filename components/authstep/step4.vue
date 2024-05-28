@@ -5,13 +5,13 @@
       <div class="title">绑定账户</div>
       <div class="flex flex-col gap-1.5 mt-5 mb-7">
         <div><span class="apply-text">账户类型</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
-        <RadioGroup default-value="comfortable" :orientation="'vertical'" class="flex gap-6">
+        <RadioGroup default-value="comfortable" :orientation="'vertical'" class="flex gap-6" v-model="FromData.accountType">
           <div class="flex items-center space-x-2">
-            <RadioGroupItem id="r1" value="default" />
+            <RadioGroupItem id="r1" :value="0" />
             <Label for="r1" class="apply-text">企业对公账户</Label>
           </div>
           <div class="flex items-center space-x-2">
-            <RadioGroupItem id="r2" value="comfortable" />
+            <RadioGroupItem id="r2" :value="1" />
             <Label for="r2" class="apply-text">法人个人银行卡</Label>
           </div>
         </RadioGroup>
@@ -48,20 +48,20 @@
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">法人姓名</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="FromData.accountName" />
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">银行账号</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="FromData.accountNumber" />
           </div>
         </div>
       </div>
       <div class="flex flex-col gap-1.5 mt-4">
           <div><span class="apply-text">开户支行</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="FromData.bankBranch" />
           </div>
         </div>
     </div>
@@ -73,12 +73,28 @@
   </div>
 </template>
 <script setup>
+import {FourAuth,SubmitAuth} from '@/server/apis/auth/index.js'
+
+const FromData=ref({
+    accountName: "in labore reprehenderit",
+    accountNumber: "deserunt consequat consectetur",
+    accountType: 0,
+    adId: 13,
+    adType: 0,
+    bankBranch: "amet",
+    bankcardBack: "cillum commodo sint",
+    bankcardFront: "Duis"
+})
 const emit=defineEmits(['change']);
-const nextStep=()=>{
-  emit('change',4)
+const nextStep=async ()=>{
+  try{
+  const data=await FourAuth(FromData.value).catch(e=>{console.log(e)});
+  await  SubmitAuth({adId:12,adType:0});
+  emit('change',4);
+  }catch(e){alert(e)}
 };
 const prevStep=()=>{
-  emit('change',2)
+  emit('change',2);
 };
 </script>
 <style scoped>

@@ -13,5 +13,5 @@ export const addAfterSale = (data) => {
 };
 //删除售后单
 export const deleteAfterSale = (data) => {
-  return postAxios('/api/app-api/ffd/v1/order/aftersale/delete', data);
+  return postAxios('/api/app-api/ffd/v1/order/aftersale/del', data);
 };

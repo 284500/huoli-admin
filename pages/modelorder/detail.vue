@@ -5,11 +5,11 @@
       <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
         <div class="flex items-center gap-3 mb-3 justify-between">
           <div class="flex items-center">
-            <div class="title mr-2">投放统计</div>
+            <div class="title mr-2">订单状态</div>
             <div
-              class="px-2 py-1 rounded-[12px] bg-[#FFA024] text-center text-white font-medium font-[14px] leading-[16px]"
+              class="px-2 py-1 rounded-[12px] bg-[#FFA024] text-center text-white font-medium text-[14px] leading-[16px]"
             >
-              待付款
+             {{ material.status }}
             </div>
           </div>
           <Button>立即付款</Button>
@@ -28,53 +28,38 @@
       <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
         <div class="grid md:grid-cols-2 relative gap-x-10 md:gap-x-20 gap-y-5">
           <Separator class="absolute left-[50%] hidden md:block" orientation="vertical" />
-
           <div>
-            <h1 class="title">投放订单信息</h1>
-            <div class="mt-5 mb-8 gap-3 flex flex-col">
-              <div class="flex gap-3">
-                <div class="muted-text">收货信息：</div>
-                <div class="text">投放订单类型收货地址请查看分发商户地址</div>
-              </div>
-              <div class="flex gap-3">
-                <div class="muted-text">订单状态：</div>
-                <div class="text">待接单</div>
-              </div>
-
-              <div class="flex gap-3">
-                <div class="muted-text">付款信息：</div>
-                <div class="text">微信支付</div>
-              </div>
-
-              <div class="flex gap-3">
-                <div class="muted-text">订单信息：</div>
-                <div class="text">392794546085685-654</div>
-              </div>
-            </div>
-          </div>
-          <div>
-            <h1 class="title">投放信息</h1>
+            <h1 class="title">订单信息</h1>
             <div class="mt-5 gap-3 flex flex-col">
               <div class="flex gap-3">
-                <div class="muted-text">收货信息：</div>
+                <div class="muted-text">收费信息：</div>
                 <div class="text">投放订单类型收货地址请查看分发商户地址</div>
               </div>
               <div class="flex gap-3">
-                <div class="muted-text">订单状态：</div>
-                <div class="text">待接单</div>
-              </div>
-
-              <div class="flex gap-3">
                 <div class="muted-text">付款信息：</div>
-                <div class="text">微信支付</div>
+                <div class="text">{{ material.payMethod }}</div>
               </div>
 
               <div class="flex gap-3">
                 <div class="muted-text">订单信息：</div>
-                <div class="text">392794546085685-654</div>
+                <div class="text">{{ material.orderNo }}</div>
               </div>
             </div>
           </div>
+          <div>
+            <h1 class="title">寄样信息</h1>
+            <div class="mt-5 mb-8 gap-3 flex flex-col">
+              <div class="flex gap-3">
+                <div class="muted-text">是否寄样：</div>
+                <div class="text">投放订单类型收货地址请查看分发商户地址</div>
+              </div>
+              <div class="flex gap-3">
+                <div class="muted-text">寄样地址：</div>
+                <div class="text">待接单</div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
       <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
@@ -126,12 +111,14 @@
 <script setup>
 import MyTable from '@/components/my-table/table.vue';
 import {  getOrderDetail } from '@/server/apis/modelorder/index.js';
+import {  getMaterialOrder } from '@/server/apis/placeorder/index.js';
 definePageMeta({
   layout: 'center',
 });
 const route=useRoute();
 const router=useRouter();
 const material=ref({});
+const placeorder=ref({});
 const BreadcrumbList = ref([
   {
     name: '物料订单',
@@ -152,7 +139,7 @@ const stepTab = ref([
   '制作商发货',
   '完成',
 ]);
-const stepNumber = ref(0);
+const stepNumber = ref(1);
 const TabItems = ref([
   {
     id: 1,
@@ -164,6 +151,7 @@ const TabItems = ref([
 ]);
 const init=async ()=>{
   material.value=await getOrderDetail({id:Number(route.query.id)})
+  placeorder.value=await getMaterialOrder({orderId:Number(route.query.id)})
 };
 onBeforeMount(init);
 </script>
@@ -227,9 +215,6 @@ onBeforeMount(init);
   text-align: left;
   color: #999999;
   line-height: 20px;
-}
-.table-number{
-
 }
 .total-number {
   font-size: 20px;

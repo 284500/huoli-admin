@@ -31,6 +31,10 @@ export const FourAuthDetail = (data) => {
 export const ConfirmAuth = (data) => {
   return postAxios('/admin/admin-api/ffd/v1/authentication/confirm', data);
 };
+//提交认证
+export const SubmitAuth = (data) => {
+  return postAxios('/admin/admin-api/ffd/v1/authentication/submit/review', data);
+};
 //查看认证状态
 export const AuthStatus = (data) => {
   return getAxios('/admin/admin-api/ffd/v1/authentication/status', data);
@@ -38,4 +42,12 @@ export const AuthStatus = (data) => {
 //查看认证详情
 export const AuthDetail = (data) => {
   return getAxios('/admin/admin-api/ffd/v1/authentication/detail', data);
+};
+//获取认证列表
+export const AuthList = (data) => {
+  return getAxios('/admin/admin-api/ffd/v1/authentication/list', data);
+};
+//撤回认证
+export const RevokewAuth = (data) => {
+  return postAxios('/admin/admin-api/ffd/v1/authentication/revoke', data);
 };

@@ -5,13 +5,13 @@
       <div class="title">上传资质</div>
       <div class="flex flex-col gap-1.5 mt-5 mb-7">
         <div><span class="apply-text">企业类型</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
-        <RadioGroup default-value="comfortable" :orientation="'vertical'" class="flex gap-6">
+        <RadioGroup v-model="FromData.vendorType" :orientation="'vertical'" class="flex gap-6">
           <div class="flex items-center space-x-2">
-            <RadioGroupItem id="r1" value="default" />
+            <RadioGroupItem id="r1" :value="0" />
             <Label for="r1" class="apply-text">企业法人</Label>
           </div>
           <div class="flex items-center space-x-2">
-            <RadioGroupItem id="r2" value="comfortable" />
+            <RadioGroupItem id="r2" :value="1" />
             <Label for="r2" class="apply-text">个体工商户</Label>
           </div>
         </RadioGroup>
@@ -34,25 +34,25 @@
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">公司名称</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="FromData.companyName" />
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">统一信用代码</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="FromData.creditCode" />
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">住所/经营场所</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]"  v-model="FromData.businessAddress" />
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">经营范围</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]"  v-model="FromData.businessField"/>
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
@@ -103,38 +103,38 @@
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">姓名</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="FromData.name" />
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">身份证号</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]"  v-model="FromData.idCard" />
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">办证机关</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]"  v-model="FromData.establishment" />
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">有效期限</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]"  v-model="FromData.effectiveTime"/>
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">法人手机</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div class="w-full flex gap-3">
-            <Input class="w-full  rounded-[4px]" id="phone" type="phone" placeholder="请输入手机号" required />
+            <Input class="w-full  rounded-[4px]" id="phone" type="phone" placeholder="请输入手机号"  v-model="FromData.phone" />
             <Button class="h-full px-3 text-[#2277ff]" variant="outline">获取验证码</Button>
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">验证码</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]"  v-model="FromData.phoneCode"  />
           </div>
         </div>
       </div>
@@ -147,9 +147,36 @@
   </div>
 </template>
 <script setup>
+import {ThirdAuth} from '@/server/apis/auth/index.js'
+import{every,values,isEmpty} from 'lodash'
+const FromData=ref({
+    adId: 13,
+    adType: 0,
+    businessAddress: "ex",
+    businessField: "dolore",
+    businessLicense: "laboris anim aliquip",
+    companyName: "sit amet nostrud dolor",
+    corporateIdcardBack: "proident Ut sunt cillum",
+    corporateIdcardFront: "nostrud",
+    creditCode: "consequat nulla nisi cupidatat reprehenderit",
+    effectiveTime: "1956-08-16T22:25:50.0Z",
+    establishment: "exercitation eu magna",
+    idCard: "fugiat cillum",
+    name: "fugiat ut incididunt deserunt et",
+    phone: "ex",
+    phoneCode: "nostrud qui ut Ut",
+    vendorType: 0
+});
+const other=ref({
+  otherQualifications:'adad'
+})
 const emit=defineEmits(['change']);
-const nextStep=()=>{
+const nextStep=async ()=>{
+  try{
+  const data=await ThirdAuth(FromData.value).catch(e=>{console.log(e)});
   emit('change',3)
+  }catch(e){alert(e)}
+
 };
 const prevStep=()=>{
   emit('change',1)

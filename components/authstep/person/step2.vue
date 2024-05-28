@@ -7,19 +7,35 @@
         <div class="flex flex-col gap-1.5">
         <div><span class="apply-text">运营者</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
         <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="FromData.name"/>
           </div>
        </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">居住地址</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div class="grid grid-cols-3 gap-3">
 
-              <Select v-for="item in 3" :key="item">
+            <Select v-model="FromData.province">
                 <SelectTrigger id="framework" class="w-full px-3 py-2 rounded-[4px]">
                   <SelectValue placeholder="申请退款" class="apply-text" />
                 </SelectTrigger>
                 <SelectContent position="popper">
-                  <SelectItem value="车上"> 车上 </SelectItem>
+                  <SelectItem value="福建省"> 福建省 </SelectItem>
+                </SelectContent>
+              </Select>
+              <Select v-model="FromData.city">
+                <SelectTrigger id="framework" class="w-full px-3 py-2 rounded-[4px]">
+                  <SelectValue placeholder="申请退款" class="apply-text" />
+                </SelectTrigger>
+                <SelectContent position="popper">
+                  <SelectItem value="厦门市"> 厦门市 </SelectItem>
+                </SelectContent>
+              </Select>
+              <Select v-model="FromData.county">
+                <SelectTrigger id="framework" class="w-full px-3 py-2 rounded-[4px]">
+                  <SelectValue placeholder="申请退款" class="apply-text" />
+                </SelectTrigger>
+                <SelectContent position="popper">
+                  <SelectItem value="思明区"> 思明区 </SelectItem>
                 </SelectContent>
               </Select>
           </div>
@@ -27,7 +43,7 @@
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">详细地址</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="FromData.address" />
           </div>
         </div>
         <div class="grid md:grid-cols-2 md:gap-x-10 gap-x-5 gap-y-4">
@@ -56,6 +72,19 @@
   </div>
 </template>
 <script setup>
+const FromData=ref({
+  adId:13,
+  adType:0,
+  address:'adad',
+  county:'思明区',
+  city:'厦门市',
+  province:'福建省',
+  enterpriseIcon:'a',
+  industryId:-15710457,
+  name:'ada',
+  phone:'ada',
+  phoneCode:'ada',
+});
 const emit=defineEmits(['change']);
 const nextStep=()=>{
   emit('change',2)

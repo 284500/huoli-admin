@@ -29,7 +29,7 @@
         </div>
       </div>
       <Wuliao class="mt-8 mb-5" v-model="tabactive" :tab="tabList"></Wuliao>
-      <MyTable :hasCheck="false"></MyTable>
+      <MyTable></MyTable>
       <MyPagination></MyPagination></div>
       <Footer></Footer>
     </div>
@@ -38,9 +38,8 @@
 <script setup>
 import Wuliao from '@/components/my-tab/wuliao.vue';
 import Myheader from '@/components/navbar/header.vue';
-import MyTable from '@/components/my-table/table.vue';
+import MyTable from '@/components/my-table/wallet.vue';
 import MyPagination from '@/components/my-pagination/index.vue';
-
 import { onMounted } from 'vue';
 const tabactive = ref(0);
 const tabList = ref(['收支明细', '锁定明细']);
