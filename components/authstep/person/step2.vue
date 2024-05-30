@@ -50,14 +50,14 @@
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">运营者手机</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div class="w-full flex gap-3">
-            <Input class="w-full  rounded-[4px]" id="phone" type="phone" placeholder="请输入验证码" required />
-            <Button class="h-full px-3 text-[#2277ff]" variant="outline">获取验证码</Button>
+            <Input class="w-full  rounded-[4px]" id="phone" type="phone" placeholder="请输入验证码"  v-model="FromData.phone" />
+            <Button class="h-full px-3 text-[#2277ff]" variant="outline" >获取验证码</Button>
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">验证码</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]"  v-model="FromData.phoneCode" />
           </div>
         </div>
         </div>
@@ -72,22 +72,29 @@
   </div>
 </template>
 <script setup>
+import {SecondAuth} from '@/server/apis/auth/index.js'
+import{ every,values,isEmpty} from 'lodash'
 const FromData=ref({
-  adId:13,
+  adId:11,
   adType:0,
   address:'adad',
   county:'思明区',
   city:'厦门市',
   province:'福建省',
-  enterpriseIcon:'a',
-  industryId:-15710457,
   name:'ada',
   phone:'ada',
   phoneCode:'ada',
+  enterpriseIcon:'ada'
 });
 const emit=defineEmits(['change']);
-const nextStep=()=>{
-  emit('change',2)
+const nextStep=async ()=>{
+  if(!values(FromData.value).every(isEmpty)){
+    const data=await SecondAuth(FromData.value).catch(e=>{console.log(e)});
+    emit('change',2);
+  }else{
+    alert('请填写完整');
+    console.log(FromData.value);
+  }
 };
 const prevStep=()=>{
   emit('change',0)

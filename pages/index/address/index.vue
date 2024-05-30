@@ -11,8 +11,8 @@
       <div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div
-            v-for="item in pager.lists"
-            class="border-[1px] border-[#eeeeee] rounder-[4px] flex lg:p-6 justify-between items-center p-4"
+            v-for="item in pager.lists" :class="{'!bg-muted':item.isDefault}"
+            class="border-[1px] border-[#eeeeee] rounded-[4px] flex lg:p-6 justify-between items-center p-4"
           >
             <div class="flex items-center">
               <div
@@ -60,6 +60,7 @@
   <MyDrawer v-model="addpop" >
     <MyForm @finish="addfinish" @close="closeadd"></MyForm>
   </MyDrawer>
+  
 </template>
 <script setup>
 import Myheader from '@/components/navbar/header.vue';

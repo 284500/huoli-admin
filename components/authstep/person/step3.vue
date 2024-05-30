@@ -33,38 +33,38 @@
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">姓名</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="FromData.name" />
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">身份证号</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]"  v-model="FromData.idCard" />
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">办证机关</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]"  v-model="FromData.establishment" />
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">有效期限</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]"  v-model="FromData.effectiveTime"/>
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">法人手机</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div class="w-full flex gap-3">
-            <Input class="w-full  rounded-[4px]" id="phone" type="phone" placeholder="请输入手机号" required />
+            <Input class="w-full  rounded-[4px]" id="phone" type="phone" placeholder="请输入手机号"  v-model="FromData.phone" />
             <Button class="h-full px-3 text-[#2277ff]" variant="outline">获取验证码</Button>
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">验证码</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]"  v-model="FromData.phoneCode"  />
           </div>
         </div>
       </div>
@@ -77,10 +77,41 @@
   </div>
 </template>
 <script setup>
+import {ThirdAuth} from '@/server/apis/auth/index.js'
+import{isEmpty} from 'lodash'
+const FromData=ref({
+    adId: 11,
+    adType: 0,
+    businessAddress: "ex",
+    businessField: "dolore",
+    businessLicense: "laboris anim aliquip",
+    companyName: "sit amet nostrud dolor",
+    corporateIdcardBack: "proident Ut sunt cillum",
+    corporateIdcardFront: "nostrud",
+    creditCode: "consequat nulla nisi cupidatat reprehenderit",
+    effectiveTime: "1956-08-16T22:25:50.0Z",
+    establishment: "exercitation eu magna",
+    idCard: "fugiat cillum",
+    name: "fugiat ut incididunt deserunt et",
+    phone: "ada",
+    phoneCode: "nostrud qui ut Ut",
+    vendorType: 0
+});
 const emit=defineEmits(['change']);
-const nextStep=()=>{
+const nextStep=async ()=>{
+  if(!FromVaild(FromData.value)){
+  try{
+  const data=await ThirdAuth(FromData.value).catch(e=>{console.log(e)});
   emit('change',3)
+  }catch(e){alert(e)}}else{
+    alert('请填写完整信息')
+  }
+
 };
+const FromVaild=(obj)=>{
+let array= Object.values(obj)
+return array.some(value=>value===null||value===''||value===undefined)
+}
 const prevStep=()=>{
   emit('change',1)
 };

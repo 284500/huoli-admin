@@ -4,6 +4,9 @@
         <h1 class="title">投放配置</h1>
         <div class="flex gap-10 mt-5 mb-4">
           <div class="flex gap-2 items-center">
+            <Label for="isPlace">是否选择分发</Label><Switch id="isPlace" v-model:checked="isPlace" />
+          </div>
+          <div class="flex gap-2 items-center">
             <Label for="isMail">是否寄样</Label><Switch id="isMail" />
           </div>
           <div class="flex gap-2 items-center">
@@ -95,7 +98,8 @@
             </div>
           </div>
         </div>
-        <div class="flex flex-col gap-1.5">
+        <div v-if="isPlace">
+          <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">发放地区</span></div>
           <div class="relative">
             <div class="absolute right-3 top-0 bottom-0 flex items-center">
@@ -244,6 +248,7 @@
             </div>
           </div>
         </div>
+        </div>
       </div>
       <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
         <h1 class="title">确认订单信息</h1>
@@ -314,8 +319,12 @@ const TabItems = ref([
     productType: '名片',
   },
 ]);
-const isShow = ref(false);
+const FromData=reactive({
 
+})
+const isShow = ref(false);
+//是否投放
+const isPlace=ref(true);
 const rulenumber=ref(1);
 const ruleList=ref([['adad','testtsd'],['adad','teste']]);
 const delrule=(id,index)=>{

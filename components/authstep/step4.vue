@@ -79,7 +79,7 @@ const FromData=ref({
     accountName: "in labore reprehenderit",
     accountNumber: "deserunt consequat consectetur",
     accountType: 0,
-    adId: 13,
+    adId: 12,
     adType: 0,
     bankBranch: "amet",
     bankcardBack: "cillum commodo sint",

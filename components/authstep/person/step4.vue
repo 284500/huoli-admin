@@ -33,20 +33,20 @@
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">法人姓名</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="FromData.accountName" />
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">银行账号</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="FromData.accountNumber" />
           </div>
         </div>
       </div>
       <div class="flex flex-col gap-1.5 mt-4">
           <div><span class="apply-text">开户支行</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="FromData.bankBranch" />
           </div>
         </div>
     </div>
@@ -58,12 +58,28 @@
   </div>
 </template>
 <script setup>
+import {FourAuth,SubmitAuth} from '@/server/apis/auth/index.js'
+
+const FromData=ref({
+    accountName: "in labore reprehenderit",
+    accountNumber: "deserunt consequat consectetur",
+    accountType: 1,
+    adId: 11,
+    adType: 0,
+    bankBranch: "amet",
+    bankcardBack: "cillum commodo sint",
+    bankcardFront: "Duis"
+})
 const emit=defineEmits(['change']);
-const nextStep=()=>{
-  emit('change',4)
+const nextStep=async ()=>{
+  try{
+  const data=await FourAuth(FromData.value).catch(e=>{console.log(e)});
+  await  SubmitAuth({adId:11,adType:0});
+  emit('change',4);
+  }catch(e){alert(e)}
 };
 const prevStep=()=>{
-  emit('change',2)
+  emit('change',2);
 };
 </script>
 <style scoped>

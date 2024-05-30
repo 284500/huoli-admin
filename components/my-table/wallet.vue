@@ -12,22 +12,20 @@
         <TableCell v-if="hasCheck" class="w-6">
           <Checkbox v-model:checked="item.selected" @update:checked="CheckboxChange" />
         </TableCell>
-        <TableCell class="flex items-center">
-          <div class="flex">
-            <div class="flex items-center"><img class="w-12 h-12" />
-            </div>
-            <div class="ml-2">
-              <div class=" table-title">{{ item.name }}</div>
-              <div class="text-sm !text-[12px]  text-[#999999]">{{ item.content }}</div>
-              <div class="text-sm !text-[12px] text-[#999999]">{{ item.name }}</div>
-            </div>
+        <TableCell class="text">{{ item.seqNo }}
+        </TableCell>
+        <TableCell class="text">{{ item.orderId }}</TableCell>
+        <TableCell class="text">{{ item.orderType }}</TableCell>
+
+        <TableCell>{{$dayjs(item.createdTime*1000).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
+        <TableCell>
+          <div class="flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-[#12D137]"></span><span>{{ item.status }}</span>
           </div>
         </TableCell>
-        <TableCell class="text">{{$dayjs(item.createdTime).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
-        <TableCell>{{$dayjs(item.updatedTime).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
         <TableCell class="text sm:!w-[240px]">
           <div class="flex gap-4 w-[fit-content]">
-            <div class="text-[#FF5030] cursor-pointer" @click="del(item.id)">删除</div>
+            <div class="text-[#FF5030]">{{ item.amount }}</div>
           </div>
         </TableCell>
       </TableRow>
@@ -44,15 +42,23 @@ const props = defineProps({
   tabItems: {
     typeof: Array,
     default: [
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '名片',
-        createdTime: '',
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 0, selected: false, productType: '名片'
-      },
+    {
+                id: 22,
+                seqNo: "202405281751",
+                orderType: "充值账单",
+                orderId: "FFD2024052515000007",
+                buyerId: 1,
+                buyerName: "用户",
+                sellerId: 1,
+                sellerName: "厦门或黎科技有限公司",
+                tradeType: "充值流水",
+                payType: "投放充值",
+                payMethod: "微信支付",
+                amount: 1000.0,
+                status: "已充值",
+                createdTime: 1716889862,
+                updatedTime: 1716889862
+            },
     ]
   }
 });

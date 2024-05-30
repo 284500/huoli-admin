@@ -80,8 +80,8 @@
           <h1 class="title font-semibold !text-[#2277ff]">微信扫码</h1>
           <h1 class="title font-semibold">一键登录</h1>
         </div>
-        <div class="mt-10 w-[240px] h-[240px] p-4 weixing">
-          <iframe :src="codeurl" width="300" height="300"></iframe>
+        <div class="mt-10 w-[240px] h-[240px] p-4 weixing overflow-hidden">
+          <iframe :src="codeurl" width="300" height="400" class="wx-login"></iframe>
         </div>
         <div class="mt-auto flex justify-center items-center">
           <div class="flex gap-1.5">
@@ -425,7 +425,10 @@ const hasEmptyvalue = (obj) => {
   color: #666666;
   line-height: 24px;
 }
-
+.wx-login{
+  transform:scale(0.9) translate(-17%, -24%);
+  overflow: hidden;
+}
 input::placeholder {
   font-size: 14px;
   font-family:

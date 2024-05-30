@@ -27,10 +27,10 @@
         <TableCell class="text">{{ $dayjs(item.payTime).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
         <TableCell>
 
-          <div v-if="item.status==='已完成'">
+          <div v-if="item.status==='已完成'" class="flex items-center gap-1.5">
             <span class="w-2 h-2 rounded-full bg-[#12D137]"></span><span>{{ item.status }}</span>
           </div>
-          <div v-else-if="item.status==='已取消'">
+          <div v-else-if="item.status==='已取消'" class="flex items-center gap-1.5">
             <span class="w-2 h-2 rounded-full bg-[#CCCCCC]"></span><span>{{ item.status }}</span>
           </div>
           <div class="flex items-center gap-1.5" v-else>
@@ -41,7 +41,8 @@
           <div class="flex gap-4 w-[fit-content]">
             <NuxtLink :to="`/modelorder/detail?id=${item.id}`">
             <div class="text-[#2277FF] cursor-pointer">查看详情</div></NuxtLink>
-            <div class="text-[#2277FF] cursor-pointer">立即付款</div>
+            <nuxt-link to="/modelcenter/material/pay">
+            <div class="text-[#2277FF] cursor-pointer">立即付款</div></nuxt-link>
             <div class="text-[#FF5030] cursor-pointer" @click="del(item.id)">取消订单</div>
           </div>
         </TableCell>

@@ -2,9 +2,6 @@
   <Table class=" ">
     <TableHeader>
       <TableRow class="!bg-[#f9fafb]">
-        <TableHead v-if="hasCheck" class="w-6">
-          <Checkbox v-model:checked="allCheck" @update:checked="allCheckChange" />
-        </TableHead>
         <TableHead v-for="(item, index) in tableTitle" class="title">
           {{ item }}
         </TableHead>
@@ -30,11 +27,6 @@
         <TableCell>{{$dayjs(item.updatedTime).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
         <TableCell class="text sm:!w-[240px]">
           <div class="flex gap-4 w-[fit-content]">
-            <nuxt-link to="/modelcenter/material/order">
-            <div class="text-[#2277FF] cursor-pointer">立即下单</div></nuxt-link>
-            <nuxt-link to="/modelcenter/material/edit">
-            <div class="text-[#2277FF] cursor-pointer">继续创作</div>
-            </nuxt-link>
             <div class="text-[#FF5030] cursor-pointer" @click="del(item.id)">删除</div>
           </div>
         </TableCell>
@@ -47,7 +39,7 @@
 const props = defineProps({
   tableTitle: {
     typeof: Array,
-    default: ['作品信息', '创作时间', '最后修改时间', '状态']
+    default: ['关联订单','锁定金额', '锁定时间','状态','消耗金额','解锁金额']
   },
   tabItems: {
     typeof: Array,
@@ -56,71 +48,14 @@ const props = defineProps({
         id: 1, remarks: 'Alice',
         isShelves: 1, selected: false, productType: '名片',
         createdTime: '',
-        updatedTime: ''
       },
       {
         id: 1, remarks: 'Alice',
         isShelves: 0, selected: false, productType: '名片'
       },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
     ]
-  },
-  hasCheck: {
-    typeof: Boolean,
-    default: true
   }
 });
-const emit = defineEmits(['delete', 'checkchange']);
-const allCheck = ref(false);
-const checkItem = computed(() => {
-  return props.tabItems.filter(item => {
-   return item.selected === true;
-  })
-})
-const allCheckChange = (val) => {
-  props.tabItems.forEach(item => {
-    item.selected = val;
-  })
-  emit('checkchange', checkItem.value)
-}
-const CheckboxChange = () => {
-  let flag = true;
-  props.tabItems.forEach(item => {
-    if (item.selected === true) {
-    } else {
-      flag = false;
-    }
-  });
-  allCheck.value = flag;
-  emit('checkchange', checkItem.value)
-};
-const del = (e) => {
-  emit('delete', e)
-}
 </script>
 <style scoped>
 .title {

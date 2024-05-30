@@ -19,7 +19,7 @@
             </div>
           </div>
         </TableCell>
-        <TableCell class="text">1000张</TableCell>
+        <TableCell class="text">{{ item.releaseArea }}</TableCell>
           <TableCell class="text">是</TableCell>
           <TableCell class="text">￥1200.00</TableCell>
           <TableCell class="text">￥1200.00</TableCell>

@@ -3,33 +3,38 @@
     <div class="w-full lg:w-[640px]">
       <div class="title">收货地址</div>
       <div class="flex flex-col gap-4 mt-5">
+
+        <div class="flex  gap-3 items-center">
+          <Switch id="airplane-mode" v-model:checked="Default" @update:checked="changeDefault"/>
+          <Label for="airplane-mode" class="apply-text">设置为默认地址</Label>
+        </div>
         <div class="grid gap-4 sm:grid-cols-2 ">
           <div class="flex flex-col gap-1.5">
-          <div><span class="apply-text">国家</span></div>
-          <div>
-            <Select v-model="address.country">
-              <SelectTrigger id="framework" class="w-full px-3 py-2 rounded-[4px]">
-                <SelectValue placeholder="请选择国家" class="apply-text" />
-              </SelectTrigger>
-              <SelectContent position="popper">
-                <SelectItem value="中国">中国</SelectItem>
-              </SelectContent>
-            </Select>
+            <div><span class="apply-text">国家</span></div>
+            <div>
+              <Select v-model="address.country">
+                <SelectTrigger  class="w-full px-3 py-2 rounded-[4px]">
+                  <SelectValue placeholder="请选择国家" class="apply-text" />
+                </SelectTrigger>
+                <SelectContent position="popper">
+                  <SelectItem value="中国">中国</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
-        </div>
-        <div class="flex flex-col gap-1.5">
-          <div><span class="apply-text">手机号</span></div>
-          <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="address.phone" />
+          <div class="flex flex-col gap-1.5">
+            <div><span class="apply-text">手机号</span></div>
+            <div>
+              <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="address.phone" />
+            </div>
           </div>
-        </div>
         </div>
 
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">所在地区</span></div>
           <div class="grid grid-cols-3 gap-3">
 
-            <Select  v-model="address.province">
+            <Select v-model="address.province">
               <SelectTrigger id="framework" class="w-full px-3 py-2 rounded-[4px]">
                 <SelectValue placeholder="申请退款" class="apply-text" />
               </SelectTrigger>
@@ -37,7 +42,7 @@
                 <SelectItem value="车上"> 车上 </SelectItem>
               </SelectContent>
             </Select>
-            <Select  v-model="address.city">
+            <Select v-model="address.city">
               <SelectTrigger id="framework" class="w-full px-3 py-2 rounded-[4px]">
                 <SelectValue placeholder="申请退款" class="apply-text" />
               </SelectTrigger>
@@ -69,29 +74,29 @@
         </div>
         <div class="grid sm:grid-cols-2 gap-4">
           <div class="flex flex-col gap-1.5">
-          <div><span class="apply-text">邮编</span></div>
-          <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="address.postcode"/>
+            <div><span class="apply-text">邮编</span></div>
+            <div>
+              <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="address.postcode" />
+            </div>
           </div>
-        </div>
-        <div class="flex flex-col gap-1.5">
-          <div><span class="apply-text">固定电话</span></div>
-          <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="address.mobile" />
+          <div class="flex flex-col gap-1.5">
+            <div><span class="apply-text">固定电话</span></div>
+            <div>
+              <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="address.mobile" />
+            </div>
           </div>
-        </div>
         </div>
       </div>
-      <Button class="mt-4 mr-8" @click="emit('finish',address)">提交地址</Button>
+      <Button class="mt-4 mr-8" @click="emit('finish', address)">提交地址</Button>
       <Button class="mt-4" variant="outline" @click="emit('close')">取消保存</Button>
     </div>
   </div>
 </template>
 <script setup>
-const props=defineProps({
-  data:{
-    type:Object,
-    default:{
+const props = defineProps({
+  data: {
+    type: Object,
+    default: {
       country: '',
       province: '',
       city: '',
@@ -101,12 +106,23 @@ const props=defineProps({
       postcode: '',
       mobile: '',
       phone: '',
-      isDefault:0
+      isDefault: 0
     }
   }
 });
-const emit=defineEmits(['finish','close']);
-const address=props.data;
+const emit = defineEmits(['finish', 'close']);
+const address = props.data;
+const Default=ref(props.data.isDefault?true:false)
+// const Default=computed(()=>{
+//   return address.isDefault===true;
+// });
+const changeDefault=(e)=>{
+  if(e){
+    address.isDefault=1;
+  }else{
+    address.isDefault=0;
+  }
+};
 </script>
 <style scoped>
 .title {

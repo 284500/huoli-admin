@@ -1,7 +1,7 @@
 <template>
   <div class="w-full flex flex-col items-center">
     <Separator class="sm:my-10 my-5" />
-    <div class="flex flex-col py-10" v-if="0">
+    <div class="flex flex-col py-10" v-if="1">
       <div class="w-[100px] h-[100px]"><img src="/public/img/auth/status-loading.png" alt="" class="w-full h-full "></div>
       <div class="title !text-center">认证审核中</div>
     </div>
@@ -23,7 +23,7 @@ const nextStep=async ()=>{
   emit('change',)
 };
 const prevStep=async ()=>{
-  await RevokewAuth({adId:13,adType:0})
+  await RevokewAuth({adId:12,adType:0})
 
   emit('change',3)
 };

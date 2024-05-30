@@ -150,7 +150,7 @@
 import {ThirdAuth} from '@/server/apis/auth/index.js'
 import{every,values,isEmpty} from 'lodash'
 const FromData=ref({
-    adId: 13,
+    adId: 12,
     adType: 0,
     businessAddress: "ex",
     businessField: "dolore",
@@ -173,7 +173,7 @@ const other=ref({
 const emit=defineEmits(['change']);
 const nextStep=async ()=>{
   try{
-  const data=await ThirdAuth(FromData.value).catch(e=>{console.log(e)});
+  const data=await ThirdAuth({...FromData.value,...other}).catch(e=>{console.log(e)});
   emit('change',3)
   }catch(e){alert(e)}
 

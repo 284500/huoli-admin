@@ -11,7 +11,6 @@
         </div>
         <div v-if="tabactive===0" class="h-[300px] bg-[#F0F1F5] w-full"></div>
         <div v-else class="h-[600px] bg-[#F0F1F5] w-full"></div>
-
       </div>
       <div class="flex flex-col flex-1 min-w-[300px] max-w-[720px]">
         <h1 class="main-title">{{ props.data.name }} </h1>
@@ -46,7 +45,8 @@
               <div class="!text-[#666666]">节日：</div><div>端午节 夏至</div>
             </div>
           </div>
-          <Button class="mt-5">应用模板</Button>
+          <nuxt-link to="/modelcenter/material/edit" class="w-full">
+          <Button class="mt-5 w-full">应用模板</Button></nuxt-link>
           <Separator class="my-4 sep-shadow" />
           <div class="font-[600] text-[#333333] my-1">费用评估</div>
           <div class="flex flex-col gap-1.5">
@@ -81,7 +81,7 @@
           <div class="bg-[#2277FF] w-[3px] h-[12px] mr-2"></div>
           <div class="!text-[14px] font-[600]">订单列表</div>
           </div>
-          <MyTable :hasCheck="false" :tabItems="TabItems"></MyTable>
+          <MyTable  :tableData="tableData" :tableTitle="tableTile"></MyTable>
           <div class="descripe mt-3">以上评估仅从广告定制成本考虑，实际情况需要考虑，物流成本、有无样品、是否分发等综合条件略有浮动，仅供参考，最终价格以下单时支付金额为准。</div>
       </div>
     </div>
@@ -90,7 +90,7 @@
 </template>
 <script setup>
 import Wuliao from '@/components/my-tab/wuliao.vue'
-import MyTable from '@/components/my-table/table.vue';
+import MyTable from '@/components/my-table/main.vue';
 const props=defineProps({
   data:{
     type:Object,
@@ -100,15 +100,18 @@ const emits=defineEmits(['close']);
 const tabactive = ref(0);
 const tabList = ref(['模板详情', '客户分享']);
 const toggletext = ref(false);
-const TabItems = ref([
-  {
-    id: 1,
-    remarks: 'Alice',
-    isShelves: 1,
-    selected: false,
-    productType: '名片',
-  },
-]);
+const tableTile=ref(['材料','规格','数量','价格/元']);
+const tableData=ref([{
+  material:'100g',
+  specification:'100g',
+  number:1,
+  price:'100',
+},{
+  material:'100g',
+  specification:'100g',
+  number:1,
+  price:'100',
+}]);
 </script>
 <style scoped>
 .main {

@@ -41,7 +41,7 @@
      </div>
     </div>
   </div>
-  <Drawer v-model="isshow"><div class="bg-white w-[560px] md:h-[608px] max-w-[100vw] max-h-[100vh] rounded-[8px] h-[420px] relative  px-6 pb-3 pt-3.5">
+  <Drawer v-model="isshow"><div class="bg-white w-[560px] md:h-[608px] max-w-[100vw] max-h-[100vh] rounded-[8px] h-[500px] relative  px-6 pb-3 pt-3.5">
     <div class="w-full h-full flex flex-col justify-between items-center">
       <div class="flex justify-between w-full"><div class="table-title">扫码支付</div><div><img src="/public/img/login/close.png" class="w-6 h-6 "
         @click="isshow=false" /></div></div>

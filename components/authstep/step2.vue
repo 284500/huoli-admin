@@ -94,7 +94,7 @@
 import {SecondAuth} from '@/server/apis/auth/index.js'
 import{ every,values,isEmpty} from 'lodash'
 const FromData=ref({
-  adId:13,
+  adId:12,
   adType:0,
   address:'adad',
   county:'思明区',

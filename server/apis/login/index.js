@@ -71,7 +71,7 @@ export function getWechatCode(){
     method: 'get',
     url: '/api/app-api/ffd/v1/login/scanCodeUrl',
     params:{
-      url:'https://fafadan.cn'
+      url:'http://fafadan.cn'
     }
   })
 }
