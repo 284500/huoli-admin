@@ -21,18 +21,20 @@
                 <img src="/public/img/address/address.png" alt="" class="w-6 h-6" />
               </div>
               <div>
-                <div><span class="user">{{ item.consignee }}</span> <span class="user">{{ item.phone }}</span></div>
+                <div><span class="user">{{ item.consignee }}</span> <span class="user mr-2">{{ item.phone }}</span><span v-if="item.isDefault" class="text-[white] text-[12px] px-1 py-0.5 bg-[#FFA024] rounded-[8px]">默认</span></div>
                 <div>
                   <div class="text flex gap-1"><span>{{ item.province }}</span> <span>{{ item.city }}</span> <span>{{ item.county }}</span> <span>{{ item.address }}</span></div>
                 </div>
               </div>
             </div>
             <div class="flex gap-4">
+              <Lucide v-if="!item.isDefault" icon="MapPin" color="#999999" class="h-4 w-4" @click="setDefault(item.id)"></Lucide>
               <Lucide icon="PencilLine" color="#999999" class="h-4 w-4" @click="edit(item.id)"></Lucide>
 
               <Lucide icon="Trash2" color="#999999" class="h-4 w-4" @click="del(item.id)"></Lucide>
             </div>
           </div>
+          <MyAlert ref="Alert"></MyAlert>
           <div @click="add"
             class="border-[1px] border-[#eeeeee] rounder-[4px] flex lg:p-6 justify-between items-center p-4"
           >
@@ -60,12 +62,12 @@
   <MyDrawer v-model="addpop" >
     <MyForm @finish="addfinish" @close="closeadd"></MyForm>
   </MyDrawer>
-  
+
 </template>
 <script setup>
 import Myheader from '@/components/navbar/header.vue';
 import MyDrawer from '@/components/drawer/index.vue';
-import {getAddressList,getAddressDetail,addAddress,editAddress,deleteAddress} from '@/server/apis/address/index';
+import {getAddressList,getAddressDetail,addAddress,editAddress,deleteAddress,setDefaultAddress} from '@/server/apis/address/index';
 import { usePaging } from '@/hooks/usePaging';
 import { useDetail } from '@/hooks/useDetail';
 import { onBeforeMount} from 'vue';
@@ -73,9 +75,13 @@ import { toast } from '~/components/ui/toast';
 const Params=reactive({});
 const editpop = ref(false);
 const addpop = ref(false);
+const Alert = ref(null);
 const { pager, getLists } = usePaging({
     fetchFun: getAddressList
 })
+const showAlert=()=>{
+  Alert.value.AlertShow();
+}
 const {detail,getDetail} = useDetail(getAddressDetail,Params);
 const init=()=>{
   getLists()
@@ -118,6 +124,13 @@ const closeedit=()=>{
 }
 const closeadd=()=>{
   addpop.value=false;
+}
+const setDefault=async (id)=>{
+  await setDefaultAddress({id:id})
+  showAlert({
+    message:'成功设置地址'
+  });
+  getLists();
 }
 onBeforeMount(init);
 </script>

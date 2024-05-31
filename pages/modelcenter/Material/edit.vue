@@ -2,19 +2,34 @@
   <NuxtLayout >
 
 <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
-  <nuxt-link to="/modelcenter/material/order">
-  <Button>立即下单</Button></nuxt-link>
+
+  <Button @click="createOrder">立即下单</Button>
+  <Button @click="createWorks">保存</Button>
 </div>
 
   </NuxtLayout>
 </template>
 <script setup>
+import {addMaterialWork} from '@/server/apis/works/material.js'
 
+const route=useRoute();
 
 definePageMeta({
   layout: 'center',
 });
-
+const createWorks=async ()=>{
+await addMaterialWork({templateId:Number(route.query.id),content:{name:'鼠标垫'},name:'鼠标垫'});
+};
+const createOrder=async ()=>{
+  let data=await addMaterialWork({templateId:Number(route.query.id),content:{name:'鼠标垫'},name:'鼠标垫'});
+  navigateTo({
+    path: '/modelcenter/material/order',
+    query:{
+      id:data.id,
+      templateId:route.query.id
+    }
+  })
+};
 </script>
 <style scoped>
 .header-bg{

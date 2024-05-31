@@ -38,6 +38,10 @@ export default defineNuxtConfig({
         target: 'http://192.168.10.102:8084',
         changeOrigin: true,
       },
+      // '/api': {
+      //   target: 'http://fafadan.cn:8082',
+      //   changeOrigin: true,
+      // },
       '/admin': {
         target: 'http://192.168.10.101:8082',
         changeOrigin: true,

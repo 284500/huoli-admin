@@ -92,7 +92,7 @@
 
               <div class="flex gap-3">
                 <div class="muted-text w-[98px]">截止时间：</div>
-                <div class="text">{{$dayjs(Orderdetail.deadline).format('YYYY-MM-DD HH:mm:ss') }}</div>
+                <div class="text">{{$dayjs(Orderdetail.deadline*1000).format('YYYY-MM-DD HH:mm:ss') }}</div>
               </div>
               <div class="flex gap-3">
                 <div class="muted-text w-[98px]">分发商户数：</div>

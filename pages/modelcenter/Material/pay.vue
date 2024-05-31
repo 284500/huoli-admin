@@ -9,7 +9,6 @@
   </NuxtLayout>
 </template>
 <script setup>
-import Step2 from '@/components/model-center/Material/step2.vue';
 import Step3 from '@/components/model-center/Material/step3.vue';
 definePageMeta({
   layout: 'center',

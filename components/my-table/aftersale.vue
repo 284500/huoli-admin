@@ -51,7 +51,7 @@
         <TableCell class="text">{{ item.auditName?item.auditName:'-' }}</TableCell>
         <TableCell class="text">￥{{ item.returnAmount }}</TableCell>
         <TableCell class="text">{{ item.returnDesc?item.returnDesc:'-' }}</TableCell>
-        <TableCell>{{$dayjs(item.auditTime*1000).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
+        <TableCell>{{item.auditTime?$dayjs(item.auditTime*1000).format('YYYY-MM-DD HH:mm:ss'):'-' }}</TableCell>
         <TableCell>
           <div class="text flex items-center gap-1.5">
             <span class="w-2 h-2 rounded-full bg-[#FFA024]"></span><span>{{ item.status}}</span>

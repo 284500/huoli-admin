@@ -51,6 +51,10 @@
               </div>
             </div>
           </div>
+          <div class="mb-4">
+      <Button class="w-[80px] rounded-[4px] bg-[#ffffff] text-muted-foreground mr-12 hover:bg-white" @click="router.back">取消申请</Button>
+      <Button class="w-[80px] rounded-[4px] bg-[#2277ff] text-white" @click="nextStep">确认申请</Button>
+      </div>
         </div>
       </div>
     </div>
@@ -58,9 +62,16 @@
 </template>
 <script setup>
 import MyTable from '@/components/my-table/table.vue';
+import { addAfterSale } from '@/server/apis/aftersale/index.js';
+
 definePageMeta({
   layout: 'center',
 });
+const route = useRoute();
+const router = useRouter();
+const FromData=reactive({
+
+})
 const BreadcrumbList = ref([
   {
     name: '物料订单',
@@ -75,17 +86,6 @@ const BreadcrumbList = ref([
     url: '/modelorder/applyservice',
   },
 ]);
-const stepTab = ref([
-  '提交订单',
-  '等待付款',
-  '分发商接单',
-  '全部接单',
-  '制作商发样',
-  '确认收样',
-  '制作商发货',
-  '完成',
-]);
-const stepNumber = ref(0);
 const TabItems = ref([
   {
     id: 1,
@@ -95,6 +95,9 @@ const TabItems = ref([
     productType: '名片',
   },
 ]);
+const nextStep =async () => {
+  await addAfterSale(FromData);
+};
 </script>
 <style scoped>
 .title {

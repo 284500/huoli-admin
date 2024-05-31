@@ -14,11 +14,11 @@
         <div class="mt-5 mb-8 gap-3 flex flex-col">
           <div class="flex gap-3">
             <div class="table-title flex items-center">申请类型：</div>
-            <MySelectMain :selectType="selectType" class="!w-[240px]"></MySelectMain>
+            <MySelectMain :selectType="selectType" class="!w-[240px]" v-model="AfterSaleData.applyType"></MySelectMain>
           </div>
           <div class="flex gap-3">
             <div class="table-title flex items-center">申请理由：</div>
-            <Input type="email" placeholder="Email" class="w-[240px]" />
+            <Input type="email" placeholder="Email" class="w-[240px]" v-model="AfterSaleData.applyReason" />
           </div>
 
           <div class="flex gap-3">
@@ -42,7 +42,7 @@
         </div>
         <div class="mb-4">
       <Button class="w-[80px] rounded-[4px] bg-[#ffffff] text-muted-foreground mr-12 hover:bg-white" @click="router.back">取消申请</Button>
-      <Button class="w-[80px] rounded-[4px] bg-[#2277ff] text-white" @click="nextStep">确认申请</Button>
+      <Button class="w-[80px] rounded-[4px] bg-[#2277ff] text-white" @click="createAfterSalesOrder">确认申请</Button>
       </div>
       </div>
     </div>
@@ -50,12 +50,14 @@
 </template>
 <script setup>
 import MyTable from '@/components/my-table/table.vue';
-import { getAfterSaleDetail, deleteAfterSale } from '@/server/apis/aftersale/index.js';
+import { getAfterSaleDetail, addAfterSale } from '@/server/apis/aftersale/index.js';
+import {  getOrderDetail } from '@/server/apis/modelorder/index.js';
 definePageMeta({
   layout: 'center',
 });
-const route = useRoute();
-const router = useRouter();
+const route=useRoute();
+const router=useRouter();
+const material=ref({});
 const AfterSale = ref({});
 const selectType = ref([
   {
@@ -67,6 +69,15 @@ const selectType = ref([
     key: '申请换货',
   },
 ]);
+const AfterSaleData = reactive({
+    amount: 0,
+    applyReason: "质量太差",
+    applyScrip: "consectetur labore eu eiusmod ut",
+    applyTime: (new Date()).getTime(),
+    applyType: "elit culpa amet nostrud deserunt",
+    orderId:route.query.id,
+    orderType: "Lorem ipsum dolor sit amet",
+})
 const BreadcrumbList = ref([
   {
     name: '售后服务',
@@ -86,10 +97,19 @@ const TabItems = ref([
     productType: '名片',
   },
 ]);
-const init = async () => {
-  AfterSale.value = await getAfterSaleDetail({ id: Number(route.query.id) });
+const createAfterSalesOrder = async () => {
+  AfterSaleData.orderId=route.query.id;
+  AfterSaleData.orderType=material.value.orderType;
+  AfterSaleData.amount=material.value.amount;
+  await addAfterSale(AfterSaleData);
+  navigateTo('/aftersales');
 };
-onBeforeMount(init);
+const init = async () => {
+  material.value=await getOrderDetail({id:Number(route.query.id)})
+};
+onBeforeMount(()=>{
+  init();
+});
 </script>
 <style scoped>
 .title {

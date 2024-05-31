@@ -11,7 +11,7 @@
       <TableRow v-for="(item, index) in tabItems" :key="index" :class="item.selected ? 'bg-muted' : ''">
         <TableCell class="flex items-center lg:!w-[200px] ">
           <div class="flex">
-            <div class="flex items-center"><img class="w-12 h-12" />
+            <div class="flex items-center"><img class="w-12 h-12"  :src="item.ffdOrderDetailVo?.cover" />
             </div>
             <div class="ml-2">
               <div class=" table-title">{{ item.name }}</div>

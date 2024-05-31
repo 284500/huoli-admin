@@ -23,8 +23,8 @@
             </div>
           </div>
         </TableCell>
-        <TableCell class="text">{{$dayjs(item.createdTime).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
-        <TableCell>{{$dayjs(item.updatedTime).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
+        <TableCell class="text">{{$dayjs(item.createdTime*1000).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
+        <TableCell>{{$dayjs(item.updatedTime*1000).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
         <TableCell class="text sm:!w-[240px]">
           <div class="flex gap-4 w-[fit-content]">
             <div class="text-[#FF5030] cursor-pointer" @click="del(item.id)">删除</div>

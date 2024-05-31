@@ -45,7 +45,7 @@
               <div class="!text-[#666666]">节日：</div><div>端午节 夏至</div>
             </div>
           </div>
-          <nuxt-link to="/modelcenter/material/edit" class="w-full">
+          <nuxt-link :to="`/modelcenter/material/edit?id=${props.data.id}`" class="w-full">
           <Button class="mt-5 w-full">应用模板</Button></nuxt-link>
           <Separator class="my-4 sep-shadow" />
           <div class="font-[600] text-[#333333] my-1">费用评估</div>

@@ -19,4 +19,7 @@ export const editAddress = (params) => {
 export const deleteAddress = (params) => {
   return postAxios('/api/app-api/ffd/v1/ffd/vendor_address/del', params);
 };
-
+//设置为默认地址
+export const setDefaultAddress = (params) => {
+  return postAxios('/api/app-api/ffd/v1/ffd/vendor_address/defaultOrNot', params);
+};

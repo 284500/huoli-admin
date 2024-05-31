@@ -17,20 +17,20 @@
         </TableCell>
         <TableCell class="flex items-center">
           <div class="flex">
-            <div class="flex items-center"><img class="w-12 h-12" />
+            <div class="flex items-center"><img class="w-12 h-12" :src="item.cover"/>
             </div>
             <div class="ml-2">
               <div class=" table-title">{{ item.name }}</div>
-              <div class="text-sm !text-[12px]  text-[#999999]">{{ item.content }}</div>
-              <div class="text-sm !text-[12px] text-[#999999]">{{ item.name }}</div>
+              <div class="text-sm !text-[12px]  text-[#999999]">{{ item.specification }}</div>
+              <div class="text-sm !text-[12px] text-[#999999]">制作方:{{ item.name }}</div>
             </div>
           </div>
         </TableCell>
-        <TableCell class="text">{{$dayjs(item.createdTime).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
-        <TableCell>{{$dayjs(item.updatedTime).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
+        <TableCell class="text">{{$dayjs(item.createdTime*1000).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
+        <TableCell>{{$dayjs(item.updatedTime*1000).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
         <TableCell class="text sm:!w-[240px]">
           <div class="flex gap-4 w-[fit-content]">
-            <nuxt-link to="/modelcenter/material/order">
+            <nuxt-link :to="`/modelcenter/material/order?id=${item.id}&templateId=${item.templateId}`">
             <div class="text-[#2277FF] cursor-pointer">立即下单</div></nuxt-link>
             <nuxt-link to="/modelcenter/material/edit">
             <div class="text-[#2277FF] cursor-pointer">继续创作</div>
