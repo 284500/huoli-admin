@@ -71,7 +71,8 @@ import {getAddressList,getAddressDetail,addAddress,editAddress,deleteAddress,set
 import { usePaging } from '@/hooks/usePaging';
 import { useDetail } from '@/hooks/useDetail';
 import { onBeforeMount} from 'vue';
-import { toast } from '~/components/ui/toast';
+import { useToast } from '@/components/ui/toast/use-toast';
+const { toast } = useToast();
 const Params=reactive({});
 const editpop = ref(false);
 const addpop = ref(false);

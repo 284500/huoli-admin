@@ -3,8 +3,7 @@
     <template #center>
       <MyStep :tab="stepTab" :activeNumber="stepNumber" class="!w-[600px] lg:flex hidden"></MyStep>
     </template>
-    <!-- <Step2></Step2> -->
-    <Step3></Step3>
+    <Step3 @changeType="changeStep"></Step3>
 
   </NuxtLayout>
 </template>
@@ -15,15 +14,9 @@ definePageMeta({
 });
 const stepTab = ref(['定制设计', '确认订单', '支付订单', '完成']);
 const stepNumber = ref(2);
-const TabItems = ref([
-  {
-    id: 1,
-    remarks: 'Alice',
-    isShelves: 1,
-    selected: false,
-    productType: '名片',
-  },
-]);
+const changeStep = (number) => {
+  stepNumber.value = number;
+};
 </script>
 <style scoped>
 .address-text {

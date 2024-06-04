@@ -20,7 +20,7 @@
     <DropdownMenu>
       <DropdownMenuTrigger as-child>
         <Button variant="secondary" size="icon" class="rounded-full w-[38px] h-[38px]">
-          <CircleUser class="h-5 w-5" />
+          <Luicde class="h-5 w-5" />
           <span class="sr-only">Toggle user menu</span>
         </Button>
       </DropdownMenuTrigger>

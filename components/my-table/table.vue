@@ -32,7 +32,7 @@
           <div class="flex gap-4 w-[fit-content]">
             <nuxt-link :to="`/modelcenter/material/order?id=${item.id}&templateId=${item.templateId}`">
             <div class="text-[#2277FF] cursor-pointer">立即下单</div></nuxt-link>
-            <nuxt-link to="/modelcenter/material/edit">
+            <nuxt-link :to="`/modelcenter/material/edit?id=${item.templateId}`">
             <div class="text-[#2277FF] cursor-pointer">继续创作</div>
             </nuxt-link>
             <div class="text-[#FF5030] cursor-pointer" @click="del(item.id)">删除</div>

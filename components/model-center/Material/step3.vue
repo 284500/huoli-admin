@@ -1,19 +1,18 @@
 <template>
   <div class="flex flex-col gap-4 mt-3">
-    <div class="bg-white rounded-[8px] md:p-10 p-4 header-bg">
+    <div class="bg-white rounded-[8px] md:p-10 p-4 header-bg" v-if="!material.status">
       <div class="flex sm:justify-between flex-wrap justify-end gap-4">
         <div class="flex gap-4"><div class="w-12 h-12"><img src="/public/img/auth/status-true.png" class="w-full h-full object-cover"/></div>
         <div>
           <h1 class="title">订单提交成功，请尽快付款！</h1>
-
-         <div ><span class="text">请您在</span><span  class="text">2天内</span><span  class="text">2天内</span><span  class="text">支付完成，否则订单会被自动取消。</span></div>
-         <div><span class="text">剩余时间：</span><span  class="text">1</span><span  class="text">天</span><span  class="text">23</span><span  class="text">小时</span><span  class="text">53</span><span  class="text">分</span><span  class="text">05</span><span  class="text">秒</span></div>
-          <div><span  class="text">秒订单编号：2021120210261193</span></div>
+         <div ><span class="text">请您在</span><span  class="text">2天内</span><span  class="text">支付完成，否则订单会被自动取消。</span></div>
+         <div><span class="text">剩余时间：{{payTime}}</span><span  class="text">{{}}</span></div>
+          <div><span  class="text">秒订单编号：{{ material.orderNo}}</span></div>
         </div>
           </div>
         <div class="flex flex-col items-end gap-2">
           <div class="text">订单支付金额</div>
-          <div class="number !text-[#FF5030]">￥270.00</div>
+          <div class="number !text-[#FF5030]">￥{{ material.amount }}</div>
 
         </div>
 
@@ -31,13 +30,19 @@
 
       </div>
     </div>
-    <div class="bg-white rounded-[8px]  p-4">
+    <div class="bg-white rounded-[8px]  p-4"  v-if="!material.status">
       <div class=" bg-white flex justify-center items-center">
        <div class="w-full lg:w-[980px] xl:w-[1280px] flex justify-end items-center">
         <div class="apply-text">合计(含运费,投放费)：</div>
         <div class="number !text-[18px]">￥270.00</div>
         <Button class="ml-6" @click="payorder">提交订单</Button>
       </div>
+     </div>
+    </div>
+    <div class="bg-white rounded-[8px]  p-20"  v-if="material.status">
+      <div class=" bg-white flex justify-center items-center flex-col gap-10">
+        <div class="w-[100px] h-[100px]"><img src="/public/img/auth/status-true.png" alt="" class="w-full h-full "></div>
+      <div class="title !text-center">支付成功</div>
      </div>
     </div>
   </div>
@@ -54,20 +59,30 @@
       </div>
       <div class="flex justify-end items-center w-full">
         <span>支付成功请点击</span>
-        <Button class="ml-4" @click="isshow=false">已完成支付</Button>
+        <Button class="ml-4" @click="finishPay">已完成支付</Button>
       </div>
     </div>
   </div></Drawer>
+
 </template>
 <script setup>
 import Drawer from '@/components/drawer/index.vue';
 import QRCode from 'qrcode'
+import { useDayjs } from '#dayjs'
 import {prePay,payType,closeOrder} from '@/server/apis/pay/index.js';
+import {  getOrderDetail } from '@/server/apis/modelorder/index.js';
+const emit=defineEmits(['changeType']);
 const qr_data=ref('weixin://wxpay/bizpayurl?pr=gHQRprNz3')
-const qr_code=ref('')
+const qr_code=ref('');
 const payActive=ref(0);
 const isshow=ref(false);
+const material=ref({});
+const route=useRoute();
+const router=useRouter();
+//倒计时
+const payTime=ref();
 const payconfig=reactive({
+  amount: 0.01,
   attach: "支付订单",
   description: "测试下单用例3",
   orderAmount: 0.01,
@@ -75,13 +90,43 @@ const payconfig=reactive({
   outTradeNo: "ffd2024051617000012",
   payWay: 2,
   scene: "order",
-  userId: 1
 });
 const payorder=async ()=>{
-  // const data=await prePay(payconfig);
+  const data=await prePay(payconfig);
+  qr_data.value=data
   qr_code.value=await QRCode.toDataURL(qr_data.value);
   isshow.value=true;
 };
+const finishPay=async ()=>{
+await closeOrder({outTradeNo:material.value.orderNo});
+isshow.value=false;
+init();
+  if(!material.value.status){
+  setInterval(()=>{
+    let data=material.value.createdTime*1000+24*60*60*1000*2;
+    let  countdown=data - new Date().getTime();
+    const dayjs = useDayjs();
+    payTime.value=dayjs(countdown).format('DD天HH小时mm分ss秒');
+  },1000)}else{
+    emit('changeType',3);
+  }
+}
+const init=async ()=>{
+  material.value=await getOrderDetail({id:Number(route.query.id)});
+};
+onBeforeMount(()=>{
+  init();
+  if(!material.value.status){
+  setInterval(()=>{
+    let data=material.value.createdTime*1000+24*60*60*1000*2;
+    let  countdown=data - new Date().getTime();
+    const dayjs = useDayjs();
+    payTime.value=dayjs(countdown).format('DD天HH小时mm分ss秒');
+  },1000)}else{
+    emit('changeType',3);
+  }
+});
+
 </script>
 <style scoped>
 .header-bg{

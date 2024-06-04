@@ -154,6 +154,9 @@ const init = async () => {
 onBeforeMount(init);
 const delMaterialWork=async (e)=>{
  await deleteMaterialWork({ids:[e]});
+ toast({
+  title: '删除成功',
+ })
  Material.getLists();
 };
 const delH5Work=async (e)=>{

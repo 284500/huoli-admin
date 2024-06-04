@@ -116,7 +116,6 @@ definePageMeta({
   layout: 'center',
 });
 const route=useRoute();
-const router=useRouter();
 const material=ref({});
 const placeorder=ref({});
 const BreadcrumbList = ref([

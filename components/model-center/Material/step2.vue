@@ -179,10 +179,11 @@
           <div>
             <span class="apply-text">投放条件</span>
           </div>
+          <RadioGroup v-model="rulenumber" default-value="default" class="flex flex-col gap-1.5">
           <div class="table-border bg-[#F6F7F9] px-5 py-4">
             <div class="flex justify-between">
               <div class="flex items-center gap-2">
-                <Checkbox />
+                <RadioGroupItem class="rounded-[4px]"  :value="0" />
                 <div class="apply-text !font-[500]">无条件投放</div>
               </div>
               <div class="danger-text">每成功投放一次，收取1元</div>
@@ -191,13 +192,13 @@
           <div class="table-border bg-[#F6F7F9] px-5 py-4">
             <div class="flex justify-between">
               <div class="flex items-center gap-2">
-                <Checkbox />
+                <RadioGroupItem class="rounded-[4px]" :value="1" />
                 <div class="apply-text !font-[500]">符合任意一个条件投放</div>
               </div>
               <div class="danger-text">任意符合其中一个条件加价0.5元，总价1.5元</div>
             </div>
-            <Separator class="my-4" />
-            <div class="flex gap-2">
+            <Separator class="my-4"  v-if="rulenumber===1" />
+            <div class="flex gap-2" v-if="rulenumber===1">
               <div class="bg-[rgba(34,119,255,0.08)] flex justify-center items-center rounded-full gap-1 px-3 py-1.5">
                 <img src="/public/img/other/add.png" class="w-4 h-4" />
 
@@ -213,13 +214,13 @@
           <div class="table-border bg-[#F6F7F9] px-5 py-4">
             <div class="flex justify-between">
               <div class="flex items-center gap-2">
-                <Checkbox />
+                <RadioGroupItem class="rounded-[4px]"  :value="2" />
                 <div class="apply-text !font-[500]">符合任意二个条件投放</div>
               </div>
               <div class="danger-text">任意符合其中一组条件加价0.9元，总价1.9元</div>
             </div>
-            <Separator class="my-4" />
-            <div class="flex gap-2">
+            <Separator class="my-4" v-if="rulenumber===2"/>
+            <div class="flex gap-2" v-if="rulenumber===2">
               <div class="bg-[rgba(34,119,255,0.08)] flex justify-center items-center rounded-full gap-1 px-3 py-1.5">
                 <img src="/public/img/other/add.png" class="w-4 h-4" />
 
@@ -231,7 +232,7 @@
                 <Lucide icon="X" class="w-4 h-4" color="#AAAAAA" @click="delrule(1, index)"></Lucide>
               </div>
             </div>
-          </div>
+          </div></RadioGroup>
         </div>
       </div>
     </div>
@@ -372,7 +373,8 @@ const placeData = ref({});
 const isShow = ref(false);
 //是否投放
 const isPlace = ref(true);
-const rulenumber = ref(1);
+//投放条件
+const rulenumber = ref(0);
 const ruleList = ref([['adad', 'testtsd'], ['adad', 'teste']]);
 const delrule = (id, index) => {
   ruleList.value[id].splice(index, 1);

@@ -28,8 +28,8 @@
                 <div
                   class="w-[100px] h-[100px] input-border flex justify-center items-center relative"
                 >
-                  <input type="file" class="absolute top-0 left-0 right-0 bottom-0 opacity-0" />
-
+                  <input type="file" class="absolute top-0 z-50 left-0 right-0 bottom-0 opacity-0" @change="Upload"/>
+                  <img  class="w-full h-full absolute" :src="preImgList" />
                   <div class="w-6 h-6 dashed-border flex justify-center items-center">
                     <div class="w-[14px] h-[14px] dashed-border">
                       <img src="/public/add.png" alt="" class="w-full h-full" />
@@ -97,6 +97,16 @@ const TabItems = ref([
     productType: '名片',
   },
 ]);
+// 获取图片
+const preImgList = ref('')
+	const Upload = (e) => {
+		const file = e.target.files[0];
+		const reader = new FileReader();
+		reader.readAsDataURL(file)
+		reader.onload = function(data) {
+			preImgList.value=data.target.result;
+		}
+	}
 const createAfterSalesOrder = async () => {
   AfterSaleData.orderId=route.query.id;
   AfterSaleData.orderType=material.value.orderType;

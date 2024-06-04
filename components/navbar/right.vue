@@ -10,11 +10,11 @@
   <DropdownMenu v-else>
     <DropdownMenuTrigger as-child>
       <Button variant="secondary" size="icon" class="rounded-full">
-        <CircleUser class="h-5 w-5" />
+        <Lucide class="h-5 w-5" />
         <span class="sr-only">Toggle user menu</span>
       </Button>
     </DropdownMenuTrigger>
-    <DropdownMenuContent align="center">
+    <DropdownMenuContent align="center" >
       <DropdownMenuLabel>My Account</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuItem>Settings</DropdownMenuItem>

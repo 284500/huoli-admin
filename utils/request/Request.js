@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import { getToken, removeToken } from '@/utils/cookie';
+import { useToast } from '@/components/ui/toast/use-toast';
+const {toast} = useToast();
 let router = useRouter();
 const request = axios.create({
   timeout: 1000 * 30,
@@ -31,8 +33,12 @@ request.interceptors.response.use(
       router.push({
         name: '/login',
       });
-    } else if (response.data.code == 404) {
-      // alert('请求地址不存在')
+    } else if (response.data.code !== 200) {
+      toast({
+        title: '请求错误',
+        description: response.data.msg,
+        variant: 'destructive',
+      });
       return Promise.reject(response.data.msg);
     }
     return response.data.data;
