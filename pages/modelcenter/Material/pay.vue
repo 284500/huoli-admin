@@ -15,6 +15,7 @@ definePageMeta({
 const stepTab = ref(['定制设计', '确认订单', '支付订单', '完成']);
 const stepNumber = ref(2);
 const changeStep = (number) => {
+  console.log(number);
   stepNumber.value = number;
 };
 </script>

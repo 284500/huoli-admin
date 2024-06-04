@@ -78,7 +78,9 @@ import Myheader from '@/components/navbar/header.vue';
 import MyTable from '@/components/my-table/material.vue';
 import MyPagination from '@/components/my-pagination/index.vue';
 import { usePaging } from '@/hooks/usePaging';
-import { getOrderList, getCreateInfoList } from '@/server/apis/modelorder/index.js';
+import { getOrderList,cancelOrder } from '@/server/apis/modelorder/index.js';
+import { useToast } from '@/components/ui/toast/use-toast';
+const { toast } = useToast();
 const list = ref([
   { name: '待付款', status: 0 },
   { name: '投放待接单', status: 1 },
@@ -101,11 +103,12 @@ onMounted(() => {
   init();
 });
 const deleteOrder=async (e)=>{
-  await deleteAfterSale({ids:[e]});
-
+  await cancelOrder({id:Number(e)});
+  toast({
+  title: '取消订单',
+ })
   init();
-  alert('删除成功');
-}
+};
 </script>
 <style scoped>
 .header-left {

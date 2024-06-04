@@ -7,23 +7,31 @@
           <div class="flex items-center">
             <div class="title mr-2">订单状态</div>
             <div
+             v-if="material.status!==10"
+              :class="{'!bg-[#2277FF]':material.status>1}"
               class="px-2 py-1 rounded-[12px] bg-[#FFA024] text-center text-white font-medium text-[14px] leading-[16px]"
             >
-             {{ material.status }}
+             {{statusList[material.status]}}
+            </div>
+            <div
+              v-if="material.status===10"
+              class="px-2 py-1 rounded-[12px] bg-[#2277FF] text-center text-white font-medium text-[14px] leading-[16px]"
+            >
+             {{statusList[material.status]}}
             </div>
           </div>
-          <Button>立即付款</Button>
+          <nuxt-link :to="`/modelcenter/material/pay?id=${material.id}`">
+          <Button v-if="material.status===0">立即付款</Button></nuxt-link>
+          <Button v-if="material.status===1" @click="deleteOrder(material.id)">取消订单</Button>
         </div>
-        <div>
+        <div v-if="material.status<8">
           <div class="flex">
             <div class="text">该订单会为您保留</div>
             <div class="text !text-[#FF5030]">7天</div>
             <div class="text">（从下单之日算起），7天之后如果还未付款，系统将自动取消该订单。</div>
           </div>
         </div>
-        <MyStep :tab="stepTab" :activeNumber="stepNumber" class="mt-6"></MyStep>
-        <Button class="mt-4" @click="stepNumber--">上一步</Button>
-        <Button class="mt-4 ml-4" @click="stepNumber++">下一步</Button>
+        <MyStep v-if="material.status<8" :tab="stepTab" :activeNumber="stepNumber" class="mt-6"></MyStep>
       </div>
       <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
         <div class="grid md:grid-cols-2 relative gap-x-10 md:gap-x-20 gap-y-5">
@@ -51,11 +59,11 @@
             <div class="mt-5 mb-8 gap-3 flex flex-col">
               <div class="flex gap-3">
                 <div class="muted-text">是否寄样：</div>
-                <div class="text">投放订单类型收货地址请查看分发商户地址</div>
+                <div class="text">是</div>
               </div>
               <div class="flex gap-3">
                 <div class="muted-text">寄样地址：</div>
-                <div class="text">待接单</div>
+                <div class="text">投放订单类型收货地址请查看分发商户地址</div>
               </div>
             </div>
           </div>
@@ -112,6 +120,10 @@
 import MyTable from '@/components/my-table/table.vue';
 import {  getOrderDetail } from '@/server/apis/modelorder/index.js';
 import {  getMaterialOrder } from '@/server/apis/placeorder/index.js';
+import { cancelOrder } from '@/server/apis/modelorder/index.js';
+import { useToast } from '@/components/ui/toast/use-toast';
+const { toast } = useToast();
+
 definePageMeta({
   layout: 'center',
 });
@@ -137,6 +149,20 @@ const stepTab = ref([
   '确认收样',
   '制作商发货',
   '完成',
+
+]);
+const statusList = ref([
+  '待付款',
+  '投放待接单',
+  '待寄样',
+  '已寄样',
+  '待发货',
+  '部分发货',
+  '待收货',
+  '已完成',
+  '部分退款',
+  '已退款 ',
+  '已取消 ',
 ]);
 const stepNumber = ref(1);
 const TabItems = ref([
@@ -148,11 +174,19 @@ const TabItems = ref([
     productType: '名片',
   },
 ]);
+const deleteOrder=async (e)=>{
+  await cancelOrder({id:Number(e)});
+  toast({
+  title: '取消订单',
+ })
+  init();
+};
 const init=async ()=>{
   material.value=await getOrderDetail({id:Number(route.query.id)})
-  placeorder.value=await getMaterialOrder({orderId:Number(route.query.id)})
+  // placeorder.value=await getMaterialOrder({orderId:Number(route.query.id)})
+  stepNumber.value=material.value.status+1 || 0;
 };
-onBeforeMount(init);
+onMounted(init);
 </script>
 <style scoped>
 .title {

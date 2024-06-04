@@ -1,8 +1,8 @@
 <template>
   <div
-    class="h-[88px] bg-[#ffffff] fixed top-0 left-0 right-0 flex justify-between pl-6 pr-9 items-center z-[9999]"
+    class="h-[88px] bg-[#ffffff] fixed top-0 left-0 right-0 flex justify-between pl-6 pr-9 items-center z-[1]"
   >
-    <div class="flex h-14 items-center h-[88px] py-7">
+    <div class="flex  items-center h-[88px] py-7">
       <a href="/" class="flex items-center gap-2 font-semibold">
         <img src="/public/img/nav/logo.png" alt="" />
       </a>
@@ -20,7 +20,6 @@
     <DropdownMenu>
       <DropdownMenuTrigger as-child>
         <Button variant="secondary" size="icon" class="rounded-full w-[38px] h-[38px]">
-          <Luicde class="h-5 w-5" />
           <span class="sr-only">Toggle user menu</span>
         </Button>
       </DropdownMenuTrigger>

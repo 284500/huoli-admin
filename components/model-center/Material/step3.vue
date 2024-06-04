@@ -69,16 +69,15 @@
 import Drawer from '@/components/drawer/index.vue';
 import QRCode from 'qrcode'
 import { useDayjs } from '#dayjs'
-import {prePay,payType,closeOrder} from '@/server/apis/pay/index.js';
+import {prePay,queryOrder} from '@/server/apis/pay/index.js';
 import {  getOrderDetail } from '@/server/apis/modelorder/index.js';
-const emit=defineEmits(['changeType']);
 const qr_data=ref('weixin://wxpay/bizpayurl?pr=gHQRprNz3')
 const qr_code=ref('');
 const payActive=ref(0);
 const isshow=ref(false);
 const material=ref({});
 const route=useRoute();
-const router=useRouter();
+const emit=defineEmits(['changeType']);
 //倒计时
 const payTime=ref();
 const payconfig=reactive({
@@ -98,35 +97,26 @@ const payorder=async ()=>{
   isshow.value=true;
 };
 const finishPay=async ()=>{
-await closeOrder({outTradeNo:material.value.orderNo});
+await queryOrder({outTradeNo:payconfig.outTradeNo,attach:payconfig.attach,transactionId:payconfig.outTradeNo});
 isshow.value=false;
-init();
-  if(!material.value.status){
-  setInterval(()=>{
-    let data=material.value.createdTime*1000+24*60*60*1000*2;
-    let  countdown=data - new Date().getTime();
-    const dayjs = useDayjs();
-    payTime.value=dayjs(countdown).format('DD天HH小时mm分ss秒');
-  },1000)}else{
-    emit('changeType',3);
-  }
 }
 const init=async ()=>{
   material.value=await getOrderDetail({id:Number(route.query.id)});
+  payconfig.orderId=route.query.id;
+  payconfig.outTradeNo=material.value.orderNo;
 };
-onBeforeMount(()=>{
+onMounted(()=>{
   init();
-  if(!material.value.status){
+  if(!material.value.status) {
   setInterval(()=>{
     let data=material.value.createdTime*1000+24*60*60*1000*2;
-    let  countdown=data - new Date().getTime();
     const dayjs = useDayjs();
-    payTime.value=dayjs(countdown).format('DD天HH小时mm分ss秒');
-  },1000)}else{
-    emit('changeType',3);
-  }
+    payTime.value=dayjs(data).fromNow('HH:mm:ss');
+  },1000)
+}else{
+  emit('changeType',3);
+}
 });
-
 </script>
 <style scoped>
 .header-bg{

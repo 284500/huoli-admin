@@ -124,7 +124,8 @@ import { useDetail } from '@/hooks/useDetail';
 
 import {getMaterialWorks,getMaterialWorkDetail,deleteMaterialWork} from '@/server/apis/works/material.js'
 import {getH5Works,getH5WorkDetail,deleteH5Work} from '@/server/apis/works/h5.js'
-
+import { useToast } from '@/components/ui/toast/use-toast';
+const { toast } = useToast();
 const H5params=reactive({});
 const Materialparams=reactive({
 });

@@ -45,8 +45,8 @@
             <nuxt-link :to="`/aftersales/create?id=${item.id}`" v-if="item.status===7">
               <div class="text-[#2277FF] cursor-pointer">申请售后</div>
             </nuxt-link>
-            <nuxt-link :to="`/modelcenter/material/pay?id=${item.id}`">
-              <div class="text-[#2277FF] cursor-pointer" v-if="item.status < 1">立即付款</div>
+            <nuxt-link :to="`/modelcenter/material/pay?id=${item.id}`" v-if="item.status < 1">
+              <div class="text-[#2277FF] cursor-pointer" >立即付款</div>
             </nuxt-link>
             <div class="text-[#FF5030] cursor-pointer" @click="del(item.id)" v-if="item.status < 2">取消订单</div>
           </div>

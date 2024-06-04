@@ -4,18 +4,16 @@
       <MyStep :tab="stepTab" :activeNumber="stepNumber" class="!w-[600px] lg:flex hidden"></MyStep>
     </template>
     <Step2 @change="confirmOrder" v-if="stepNumber===1"></Step2>
-    <Step3 v-if="stepNumber===2"></Step3>
-
   </NuxtLayout>
 </template>
 <script setup>
 import Step2 from '@/components/model-center/Material/step2.vue';
-import Step3 from '@/components/model-center/Material/step3.vue';
 definePageMeta({
   layout: 'center',
 });
 const stepTab = ref(['定制设计', '确认订单', '支付订单', '完成']);
 const stepNumber = ref(1);
+const router = useRouter();
 const TabItems = ref([
   {
     id: 1,
@@ -25,8 +23,14 @@ const TabItems = ref([
     productType: '名片',
   },
 ]);
-const confirmOrder = () => {
-  stepNumber.value = 2;
+const confirmOrder = (e) => {
+ router.push({
+  path: '/modelcenter/material/pay',
+  query: {
+    id:e,
+  }
+
+ });
 };
 </script>
 <style scoped>

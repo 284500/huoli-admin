@@ -120,7 +120,7 @@ const CheckboxChange = () => {
 };
 const del = (e) => {
   emit('delete', e)
-}
+};
 </script>
 <style scoped>
 .title {
