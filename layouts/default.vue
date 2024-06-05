@@ -2,6 +2,7 @@
   <Toaster />
   <div>
     <div class="flex h-screen w-full">
+
       <Aside :tab-List="tabList"></Aside>
       <Appmain :tab-List="tabList">
         <slot></slot>

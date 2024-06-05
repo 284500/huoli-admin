@@ -1,7 +1,5 @@
-<script setup lang="ts">
-import { type Ref, ref } from 'vue'
+<script setup >
 import {
-  CalendarDate,
   DateFormatter,
   getLocalTimeZone,
 } from '@internationalized/date'
@@ -24,7 +22,7 @@ const emit=defineEmits(['start','update:modelValue'])
 const df = new DateFormatter('zh', {
   dateStyle: 'medium',
 })
-const value = useVModel(props,'modelValue',emit)
+const value = useVModel(props,'modelValue',emit);
 </script>
 
 <template>

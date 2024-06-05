@@ -43,7 +43,7 @@
         <MySelectDate v-model="Orderparams"></MySelectDate>
       </div>
       <div v-if="Order.pager.lists.length">
-        <MyTable :tab-items="Order.pager.lists" > </MyTable>
+        <MyTable :tab-items="Order.pager.lists" @delete="deleteOrder"> </MyTable>
          <MyPagination v-model="Order.pager" @change="Order.getLists"></MyPagination></div>
         <div v-else class="flex flex-col items-center py-20">
           <svg width="184" height="152" viewBox="0 0 184 152" xmlns="http://www.w3.org/2000/svg">
@@ -87,7 +87,6 @@
           </svg>
           <div>暂无数据</div>
         </div>
-        <div @click="getDetail(6)">跳转</div>
       <Footer></Footer>
     </div>
   </ScrollArea>
@@ -97,10 +96,11 @@ import Myheader from '@/components/navbar/header.vue';
 import MyTable from '@/components/my-table/place.vue';
 import MyDate from '@/components/my-date/date.vue';
 import MyPagination from '@/components/my-pagination/index.vue';
-import { getReleaseOrderList } from '@/server/apis/placeorder/index.js';
+import { getReleaseOrderList, StopRelease } from '@/server/apis/placeorder/index.js';
 import { onMounted } from 'vue';
 import { usePaging } from '@/hooks/usePaging';
-const router=useRouter();
+import { useToast } from '@/components/ui/toast/use-toast';
+const { toast } = useToast();
 const Orderparams = reactive({});
 const Order = usePaging({ fetchFun: getReleaseOrderList, params: Orderparams });
 const list1 = ref([
@@ -111,15 +111,19 @@ const list1 = ref([
   { name: '已完成', status: 4 },
   { name: '已停止', status: 5 },
 ]);
+const deleteOrder =async (id) => {
+await  StopRelease({ids:[Number(id)]});
+init();
+toast({
+  title: '取消投放成功',
+ })
+}
 const init = async () => {
   await Order.getLists();
 };
 onMounted(() => {
   init();
 });
-const getDetail = (id) => {
-router.push({ path: '/placedorder/detail', query: { id } });
-};
 </script>
 <style scoped>
 .isActive {

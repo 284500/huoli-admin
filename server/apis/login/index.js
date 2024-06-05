@@ -8,18 +8,6 @@ export function accountLogin(data){
     data
   })
 }
-//后台登陆
-// export function accountLogin(data){
-//   return axios({
-//     method: 'post',
-//     url: '/admin/admin-api/ffd/v1/system/login',
-//     data:{
-//       ...data,
-//       uuid:'8049c45b9661493c9983bf4a8a588c5e',
-//       code:'a6n3'
-//     }
-//   })
-// }
 //微信登录
 export function wechatLogin(data){
   return axios({

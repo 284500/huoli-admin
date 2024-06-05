@@ -33,7 +33,10 @@
           <div v-if="item.status>7" class="flex items-center gap-1.5">
             <span class="w-2 h-2 rounded-full bg-[#CCCCCC]"></span><span>{{ statusList[item.status]}}</span>
           </div>
-          <div class="flex items-center gap-1.5" v-if="item.status<7">
+          <div class="flex items-center gap-1.5" v-if="item.status<7&&item.status>2">
+            <span class="w-2 h-2 rounded-full bg-[#2277ff]"></span><span>{{ statusList[item.status] }}</span>
+          </div>
+          <div v-if="item.status<=2" class="flex items-center gap-1.5">
             <span class="w-2 h-2 rounded-full bg-[#FFA024]"></span><span>{{ statusList[item.status] }}</span>
           </div>
         </TableCell>
@@ -80,6 +83,9 @@ const props = defineProps({
     ]
   },
 });
+// const statusColor=computed(()=>{
+
+// })
 const emit = defineEmits(['delete', 'checkchange']);
 const statusList = ref([
   '待付款',

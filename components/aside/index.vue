@@ -3,11 +3,11 @@ import { ref } from 'vue';
 
 const props = defineProps(['tabList']);
 //选中按钮的索引
-const ActiveNumber = ref(0);
+const ActiveNumber = ref(-1);
 </script>
 
 <template>
-  <div class="hidden md:block overflow-hidden md:w-[216px] transition-all">
+  <div class="hidden lg:block overflow-hidden lg:w-[216px] transition-all">
     <div class="flex h-full max-h-screen flex-col bg-[#f9fafb]">
       <div class="flex items-center px-4 h-[76px] p-5">
         <a href="/" class="flex items-center gap-2 font-semibold">

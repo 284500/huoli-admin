@@ -64,4 +64,14 @@ export function postAxios(Url, data) {
     data: data,
   });
 }
+export function uploadFile(Url, data) {
+  return request({
+    url: Url,
+    method: 'post',
+    data: data,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+}
 export default request;

@@ -8,8 +8,8 @@
             <div class="title mr-2">订单状态</div>
             <div
              v-if="material.status!==10"
-              :class="{'!bg-[#2277FF]':material.status>1}"
-              class="px-2 py-1 rounded-[12px] bg-[#FFA024] text-center text-white font-medium text-[14px] leading-[16px]"
+              :class="{'!bg-[#2277FF]':material.status>2}"
+              class="px-2 pt-1 py-0.5 rounded-[12px] bg-[#FFA024] text-center text-white font-medium text-[14px] leading-[16px]"
             >
              {{statusList[material.status]}}
             </div>
@@ -59,11 +59,11 @@
             <div class="mt-5 mb-8 gap-3 flex flex-col">
               <div class="flex gap-3">
                 <div class="muted-text">是否寄样：</div>
-                <div class="text">是</div>
+                <div class="text">{{ material.isSendSample }}</div>
               </div>
               <div class="flex gap-3">
                 <div class="muted-text">寄样地址：</div>
-                <div class="text">投放订单类型收货地址请查看分发商户地址</div>
+                <div class="text">{{ material.sampleAddress }}</div>
               </div>
             </div>
           </div>

@@ -17,9 +17,33 @@
         </div>
         <Separator class="my-3" />
         <div class="grid gap-3 lg:grid-cols-7 grid-cols-4">
-          <div v-for="item in 7" class="bg-[#F6F7F9] rounded-[4px] sm:px-3 sm:py-5 p-2 flex flex-col sm:gap-2 gap-1">
-            <div class="number text-center">1000</div>
+          <div  class="bg-[#F6F7F9] rounded-[4px] sm:px-3 sm:py-5 p-2 flex flex-col sm:gap-2 gap-1">
+            <div class="number text-center !font-[600]">1000</div>
             <div class="text text-center">总分发数</div>
+          </div>
+          <div  class="bg-[#F6F7F9] rounded-[4px] sm:px-3 sm:py-5 p-2 flex flex-col sm:gap-2 gap-1">
+            <div class="number text-center !font-[600]">1000</div>
+            <div class="text text-center">预算金额</div>
+          </div>
+          <div  class="bg-[#F6F7F9] rounded-[4px] sm:px-3 sm:py-5 p-2 flex flex-col sm:gap-2 gap-1">
+            <div class="number text-center !font-[600]">1000</div>
+            <div class="text text-center">消耗金额</div>
+          </div>
+          <div  class="bg-[#F6F7F9] rounded-[4px] sm:px-3 sm:py-5 p-2 flex flex-col sm:gap-2 gap-1">
+            <div class="number text-center !font-[600]">1000</div>
+            <div class="text text-center">有效用户</div>
+          </div>
+          <div  class="bg-[#F6F7F9] rounded-[4px] sm:px-3 sm:py-5 p-2 flex flex-col sm:gap-2 gap-1">
+            <div class="number text-center !font-[600]">1000</div>
+            <div class="text text-center">条件用户</div>
+          </div>
+          <div  class="bg-[#F6F7F9] rounded-[4px] sm:px-3 sm:py-5 p-2 flex flex-col sm:gap-2 gap-1">
+            <div class="number text-center !font-[600]">1000</div>
+            <div class="text text-center">有效条件用户</div>
+          </div>
+          <div  class="bg-[#F6F7F9] rounded-[4px] sm:px-3 sm:py-5 p-2 flex flex-col sm:gap-2 gap-1">
+            <div class="number text-center !font-[600]">1000</div>
+            <div class="text text-center">完成投放率</div>
           </div>
         </div>
       </div>
@@ -46,7 +70,7 @@
 
               <div class="flex gap-3">
                 <div class="muted-text">订单信息：</div>
-                <div class="text">{{ material.remarks }}</div>
+                <div class="text">{{ material.orderNo }}</div>
               </div>
             </div>
             <div>
@@ -167,9 +191,6 @@ const init=async ()=>{
   distributorList.value=await getDistributorList({orderId:Orderdetail.value.id})
 }
 onMounted(init);
-const distributoringo=(e)=>{
-
-}
 const getList=async (e)=>{
   isShow.value=true;
   ReleaseList.value= await getReleaseList({vendorId:e,releaseOrderId:Orderdetail.value.orderId})

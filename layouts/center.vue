@@ -17,21 +17,6 @@
 
       </slot>
     </div>
-    <DropdownMenu>
-      <DropdownMenuTrigger as-child>
-        <Button variant="secondary" size="icon" class="rounded-full w-[38px] h-[38px]">
-          <span class="sr-only">Toggle user menu</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="center">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>Settings</DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>Logout</DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
   </div>
   <ScrollArea class="mt-[88px] h-[calc(100vh-88px)] overflow-auto bg-[#f6f7f9]">
     <div class="min-h-[calc(100vh-88px)] flex justify-center px-4">

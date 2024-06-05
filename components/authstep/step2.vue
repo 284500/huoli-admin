@@ -14,12 +14,13 @@
           <div><span class="apply-text">企业图标</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div class="flex gap-3 items-center">
             <div class="w-[100px] h-[100px] input-border flex justify-center items-center relative">
-              <input type="file" class=" absolute top-0 left-0 right-0 bottom-0 opacity-0" />
+              <input type="file" class=" absolute top-0 z-10 left-0 right-0 bottom-0 opacity-0" @change="upload" />
               <div class="w-6 h-6  dashed-border flex justify-center items-center">
                 <div class="w-[14px] h-[14px]  dashed-border">
                   <img src="/public/add.png" alt="" class="w-full h-full">
                 </div>
               </div>
+              <img v-if="FromData.enterpriseIcon" class="absolute w-full h-full" :src="FromData.enterpriseIcon" />
             </div>
           </div>
         </div>
@@ -70,7 +71,8 @@
           <div><span class="apply-text">运营者手机</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div class="w-full flex gap-3">
             <Input class="w-full  rounded-[4px]" id="phone" type="phone" placeholder="请输入验证码" v-model="FromData.phone" required />
-            <Button class="h-full px-3 text-[#2277ff]" variant="outline">获取验证码</Button>
+            <!-- <Button class="h-full px-3 text-[#2277ff]" variant="outline">获取验证码</Button> -->
+            <MyButtonSms ref='ButtonSms' class="h-full px-3 text-[#2277ff]" @click="getSms" />
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
@@ -91,8 +93,11 @@
   </div>
 </template>
 <script setup>
-import {SecondAuth} from '@/server/apis/auth/index.js'
+import {SecondAuth,getStep2Code} from '@/server/apis/auth/index.js'
 import{ every,values,isEmpty} from 'lodash'
+import {uploadImg} from '@/server/apis/upload/index.js'
+import {ref,onMounted} from "vue"
+const ButtonSms=ref();
 const FromData=ref({
   adId:12,
   adType:0,
@@ -118,6 +123,20 @@ const nextStep=async ()=>{
 };
 const prevStep=()=>{
   emit('change',0);
+};
+//发送图片
+const upload=async (e)=>{
+let file=e.target.files[0];
+let formData = new FormData();
+formData.append('file', file);
+let{data:{data:data}}=await uploadImg(formData)
+FromData.value.enterpriseIcon=data.path;
+};
+//获取验证码
+const getSms=async ()=>{
+  console.log(ButtonSms);
+ButtonSms.value.countDown();
+// await getStep2Code(FromData.value.phone)
 };
 </script>
 <style scoped>

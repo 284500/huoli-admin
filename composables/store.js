@@ -37,6 +37,21 @@ export const useMealsStore = defineStore('meals', {
     storage: sessionStorage,
   },
 });
+export const useNavStore = defineStore('nav', {
+  state: () => ({
+   ActiveNumber:0,
+   keyword:"as"
+  }),
+  getters: {
+
+  },
+  actions: {
+
+  },
+  persist: process.client && {
+    storage: sessionStorage,
+  },
+});
 export const useUserStore = defineStore('users', () => {
   const count = ref(12);
   return {

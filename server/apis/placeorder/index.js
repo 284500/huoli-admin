@@ -12,3 +12,7 @@ export function getReleaseOrderDetail(data) {
 export function getMaterialOrder(data) {
   return getAxios('/api/app-api/ffd/v1/order/release/detailByOrderId', data);
 }
+//停止投放
+export function StopRelease(data) {
+  return postAxios('/api/app-api/ffd/v1/order/release/stop', data);
+}

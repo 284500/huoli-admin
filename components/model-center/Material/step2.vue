@@ -103,12 +103,12 @@
             <span class="apply-text">选择意向分发商户分类领域</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span>
           </div>
           <div>
-            <Select>
+            <Select v-model="FromData.classificationDomain">
               <SelectTrigger id="framework" class="w-full px-3 py-2 rounded-[4px]">
                 <SelectValue placeholder="餐饮、美发" class="apply-text" />
               </SelectTrigger>
               <SelectContent position="popper">
-                <SelectItem value="车上"> 车上 </SelectItem>
+                <SelectItem value="餐饮、美发"> 餐饮、美发</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -164,7 +164,7 @@
             <span class="apply-text">截止时间</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span>
           </div>
           <div>
-            <MyDate></MyDate>
+            <MyDate @check="getTime"></MyDate>
           </div>
           <div>
             <span class="danger-text !text-[#666666]">广告定制商物料生产</span><span class="danger-text">交付周期为4天</span>
@@ -322,7 +322,7 @@
   </MyDrawer>
 </template>
 <script setup>
-import MyDate from '@/components/my-date/date.vue';
+import MyDate from '@/components/my-date/radio.vue';
 import MyDrawer from '@/components/drawer/index.vue';
 import { addOrder } from '@/server/apis/modelorder/index.js';
 import { toast } from '~/components/ui/toast';
@@ -341,6 +341,10 @@ const TabItems = ref([
     productType: '名片',
   },
 ]);
+//获取时间
+const getTime=(e)=>{
+ FromData.deadline=e;
+}
 const tableTitle = ref(['浙江印刷厂订单', '规格参数', '数量', '金额'])
 //基础表单数据
 const FromData = reactive({

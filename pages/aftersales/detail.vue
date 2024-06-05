@@ -63,7 +63,7 @@
               </div>
               <div class="flex gap-3">
                 <div class="muted-text">处理时间：</div>
-                <div class="text">{{$dayjs(AfterSale.auditTime*1000).format('YYYY-MM-DD HH:mm:ss') }}</div>
+                <div class="text">{{AfterSale.auditTime?$dayjs(AfterSale.auditTime*1000).format('YYYY-MM-DD HH:mm:ss'):'' }}</div>
               </div>
             </div>
           </div>
