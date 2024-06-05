@@ -54,7 +54,7 @@ export const RevokewAuth = (data) => {
   return postAxios('/api/admin-api/ffd/v1/authentication/revoke', data);
 };
 //获取法人验证码
-export function getStep4Code(data){
+export function getStep3Code(data){
   return axios({
     method: 'post',
     url: '/api/app-api/ffd/v1/index/sendSms',

@@ -20,14 +20,7 @@
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">营业执照</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div class="flex gap-3 items-center">
-            <div class="w-[100px] h-[100px] input-border flex justify-center items-center relative">
-              <input type="file" class=" absolute top-0 left-0 right-0 bottom-0 opacity-0" />
-              <div class="w-6 h-6  dashed-border flex justify-center items-center">
-                <div class="w-[14px] h-[14px]  dashed-border">
-                  <img src="/public/add.png" alt="" class="w-full h-full">
-                </div>
-              </div>
-            </div>
+            <MyUploadImg v-model="FromData.businessLicense"></MyUploadImg>
             <div class="table-text">需图片、文字清晰、边框完整真实性</div>
           </div>
         </div>
@@ -58,15 +51,7 @@
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">其他资质（卫生许可证等）</span></div>
           <div class="flex gap-3 items-center">
-            <div class="w-[100px] h-[100px] input-border flex justify-center items-center relative">
-              <input type="file" class=" absolute top-0 left-0 right-0 bottom-0 opacity-0" />
-
-              <div class="w-6 h-6  dashed-border flex justify-center items-center">
-                <div class="w-[14px] h-[14px]  dashed-border">
-                  <img src="/public/add.png" alt="" class="w-full h-full">
-                </div>
-              </div>
-            </div>
+            <MyUploadImg v-model="other.otherQualifications"></MyUploadImg>
             <div class="table-text">需图片、文字清晰、边框完整真实性</div>
           </div>
         </div>
@@ -77,26 +62,11 @@
         <div class="apply-text">请上传身份证正面、身份证背面、需图片、文字清晰、边框完整真实性</div>
         <div class="grid sm:grid-cols-2 md:gap-10 gap-5">
           <div class=" dashed-border relative pt-[60%]">
-            <img src="/public/img/auth/sfz-2.png" alt="" class="w-full h-full absolute top-0">
-            <div
-              class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col gap-2 items-center">
-              <div class="bg-[#2277FF] w-10 h-10 rounded-full flex justify-center items-center"><img
-                  src="/public/img/auth/input.png" alt=""></div>
-              <div class="input-text">请上传身份证正面</div>
-            </div>
-            <input type="file" class=" absolute top-0 left-0 right-0 bottom-0 opacity-0" />
+           <MyUploadSfz v-model="FromData.corporateIdcardBack"></MyUploadSfz>
           </div>
           <div class=" dashed-border relative pt-[60%]">
-            <img src="/public/img/auth/sfz-1.png" alt="" class="w-full h-full absolute top-0">
-            <div
-              class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col gap-2 items-center">
-              <div class="bg-[#2277FF] w-10 h-10 rounded-full flex justify-center items-center"><img
-                  src="/public/img/auth/input.png" alt=""></div>
-              <div class="input-text">请上传身份证反面</div>
-            </div>
-            <input type="file" class=" absolute top-0 left-0 right-0 bottom-0 opacity-0" />
+            <MyUploadSfz v-model="FromData.corporateIdcardFront"></MyUploadSfz>
           </div>
-
         </div>
       </div>
       <div class="grid md:grid-cols-2 md:gap-x-10 gap-x-5 gap-y-4">
@@ -128,7 +98,7 @@
           <div><span class="apply-text">法人手机</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div class="w-full flex gap-3">
             <Input class="w-full  rounded-[4px]" id="phone" type="phone" placeholder="请输入手机号"  v-model="FromData.phone" />
-            <Button class="h-full px-3 text-[#2277ff]" variant="outline">获取验证码</Button>
+            <MyButtonSms ref='ButtonSms' class="h-full px-3 text-[#2277ff]" @click="getSms" />
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
@@ -147,14 +117,16 @@
   </div>
 </template>
 <script setup>
-import {ThirdAuth} from '@/server/apis/auth/index.js'
-import{every,values,isEmpty} from 'lodash'
+import {ThirdAuth,getStep3Code} from '@/server/apis/auth/index.js'
+import {ref} from "vue"
+import { useToast } from '@/components/ui/toast/use-toast'
+const { toast } = useToast();
 const FromData=ref({
     adId: 12,
     adType: 0,
     businessAddress: "ex",
     businessField: "dolore",
-    businessLicense: "laboris anim aliquip",
+    businessLicense:'http://cdn.fafadan.cn/image/20240605/b05a65a9-fd91-4559-97ec-dc4dfc41cb5b.jpg',
     companyName: "sit amet nostrud dolor",
     corporateIdcardBack: "proident Ut sunt cillum",
     corporateIdcardFront: "nostrud",
@@ -176,10 +148,23 @@ const nextStep=async ()=>{
   const data=await ThirdAuth({...FromData.value,...other}).catch(e=>{console.log(e)});
   emit('change',3)
   }catch(e){alert(e)}
-
 };
 const prevStep=()=>{
   emit('change',1)
+};
+//获取验证
+const getSms=async ()=>{
+let {data:data}= await getStep3Code(FromData.value.phone)
+if(data.code!==200){
+  toast({
+      title: '获取验证码出错',
+      description:data.msg,
+      variant: 'destructive',
+      duration: '2000',
+    });
+}else{
+  ButtonSms.value.countDown();
+}
 };
 </script>
 <style scoped>

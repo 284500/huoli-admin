@@ -27,7 +27,6 @@
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">经营地址</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div class="grid grid-cols-3 gap-3">
-
               <Select v-model="FromData.province">
                 <SelectTrigger id="framework" class="w-full px-3 py-2 rounded-[4px]">
                   <SelectValue placeholder="申请退款" class="apply-text" />
@@ -94,32 +93,29 @@
 </template>
 <script setup>
 import {SecondAuth,getStep2Code} from '@/server/apis/auth/index.js'
-import{ every,values,isEmpty} from 'lodash'
 import {uploadImg} from '@/server/apis/upload/index.js'
 import {ref,onMounted} from "vue"
+import { useToast } from '@/components/ui/toast/use-toast'
+const { toast } = useToast();
 const ButtonSms=ref();
 const FromData=ref({
   adId:12,
   adType:0,
-  address:'adad',
+  address:'望海路',
   county:'思明区',
   city:'厦门市',
   province:'福建省',
-  enterpriseIcon:'a',
-  industryId:-15710457,
-  name:'ada',
-  phone:'ada',
-  phoneCode:'ada',
+  enterpriseIcon:'http://cdn.fafadan.cn/image/20240605/e27deec2-e7b5-4c6a-8cc0-4ba110deda72.jpg',
+  industryId:11,
+  name:'测试名称',
+  phone:null,
+  phoneCode:null,
 });
 const emit=defineEmits(['change']);
 const nextStep=async ()=>{
-  if(!values(FromData.value).every(isEmpty)){
-    const data=await SecondAuth(FromData.value).catch(e=>{console.log(e)});
+
+    const data=await SecondAuth(FromData.value);
     emit('change',2);
-  }else{
-    alert('请填写完整');
-    console.log(FromData.value);
-  }
 };
 const prevStep=()=>{
   emit('change',0);
@@ -134,9 +130,17 @@ FromData.value.enterpriseIcon=data.path;
 };
 //获取验证码
 const getSms=async ()=>{
-  console.log(ButtonSms);
-ButtonSms.value.countDown();
-// await getStep2Code(FromData.value.phone)
+let {data:data}= await getStep2Code(FromData.value.phone)
+if(data.code!==200){
+  toast({
+      title: '获取验证码出错',
+      description:data.msg,
+      variant: 'destructive',
+      duration: '2000',
+    });
+}else{
+  ButtonSms.value.countDown();
+}
 };
 </script>
 <style scoped>
