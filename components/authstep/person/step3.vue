@@ -58,7 +58,7 @@
           <div><span class="apply-text">法人手机</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div class="w-full flex gap-3">
             <Input class="w-full  rounded-[4px]" id="phone" type="phone" placeholder="请输入手机号"  v-model="FromData.phone" />
-            <Button class="h-full px-3 text-[#2277ff]" variant="outline">获取验证码</Button>
+            <MyButtonSms ref='ButtonSms' class="h-full px-3 text-[#2277ff]" @click="getSms" />
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
@@ -77,8 +77,11 @@
   </div>
 </template>
 <script setup>
-import {ThirdAuth} from '@/server/apis/auth/index.js'
-import{isEmpty} from 'lodash'
+import {ThirdAuth,getStep3Code} from '@/server/apis/auth/index.js'
+import {ref} from "vue"
+import { useToast } from '@/components/ui/toast/use-toast'
+const { toast } = useToast();
+const ButtonSms=ref();
 const FromData=ref({
     adId: 11,
     adType: 0,
@@ -114,6 +117,19 @@ return array.some(value=>value===null||value===''||value===undefined)
 }
 const prevStep=()=>{
   emit('change',1)
+};
+const getSms=async ()=>{
+let {data:data}= await getStep3Code(FromData.value.phone)
+if(data.code!==200){
+  toast({
+      title: '获取验证码出错',
+      description:data.msg,
+      variant: 'destructive',
+      duration: '2000',
+    });
+}else{
+  ButtonSms.value.countDown();
+}
 };
 </script>
 <style scoped>

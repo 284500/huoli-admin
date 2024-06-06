@@ -1,11 +1,13 @@
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import { getToken, removeToken } from '@/utils/cookie';
+import configs from '@/config'
 import { useToast } from '@/components/ui/toast/use-toast';
 const {toast} = useToast();
 let router = useRouter();
 const request = axios.create({
-  timeout: 1000 * 30,
+  timeout: configs.timeout,
+  baseURL: configs.baseUrl,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json; charset=utf-8',
@@ -38,6 +40,7 @@ request.interceptors.response.use(
         title: '请求错误',
         description: response.data.msg,
         variant: 'destructive',
+        duration: '2000',
       });
       return Promise.reject(response.data.msg);
     }
@@ -45,6 +48,12 @@ request.interceptors.response.use(
     // return response
   },
   (error) => {
+    toast({
+      title: '请求错误',
+      description: error.message,
+      variant: 'destructive',
+      duration: '2000',
+    });
     return Promise.reject(error);
   },
 );

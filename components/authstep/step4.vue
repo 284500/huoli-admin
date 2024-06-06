@@ -22,10 +22,10 @@
         <div class="apply-text">请上传银行卡正面、银行卡背面，需图片、文字清晰、边框完整真实性</div>
         <div class="grid sm:grid-cols-2 md:gap-10 gap-5">
           <div class=" dashed-border relative pt-[60%]">
-            <MyUploadSfz v-model="FromData.bankcardFront"></MyUploadSfz>
+            <MyUploadSfz v-model="FromData.bankcardFront" title="请上传银行卡正面" icon-Url="/img/auth/yhk-1.png"></MyUploadSfz>
           </div>
           <div class=" dashed-border relative pt-[60%]">
-            <MyUploadSfz v-model="FromData.bankcardFront"></MyUploadSfz>
+            <MyUploadSfz v-model="FromData.bankcardBack" title="请上传银行卡反面" icon-Url="/img/auth/yhk-2.png"></MyUploadSfz>
           </div>
         </div>
       </div>
@@ -68,16 +68,18 @@ const FromData=ref({
     adId: 12,
     adType: 0,
     bankBranch: "amet",
-    bankcardBack: "cillum commodo sint",
-    bankcardFront: "Duis"
+    bankcardBack: null,
+    bankcardFront:null
 })
 const emit=defineEmits(['change']);
 const nextStep=async ()=>{
   try{
-  const data=await FourAuth(FromData.value).catch(e=>{console.log(e)});
+  const data=await FourAuth(FromData.value);
   await  SubmitAuth({adId:12,adType:0});
   emit('change',4);
-  }catch(e){alert(e)}
+  }catch(e){
+
+  }
 };
 const prevStep=()=>{
   emit('change',2);
@@ -123,7 +125,6 @@ const prevStep=()=>{
   color: #333333;
   line-height: 32px;
 }
-
 .table-border {
   border: 1px solid #eeeeee;
   border-radius: 4px;

@@ -17,6 +17,7 @@
 
       </slot>
     </div>
+    <RightButton></RightButton>
   </div>
   <ScrollArea class="mt-[88px] h-[calc(100vh-88px)] overflow-auto bg-[#f6f7f9]">
     <div class="min-h-[calc(100vh-88px)] flex justify-center px-4">
@@ -35,6 +36,8 @@
   <slot name="footer"></slot>
 </template>
 <script setup>
+import RightButton from '@/components/navbar/right.vue';
+
 const props = defineProps({
   title: {
     typeof: String,

@@ -62,10 +62,10 @@
         <div class="apply-text">请上传身份证正面、身份证背面、需图片、文字清晰、边框完整真实性</div>
         <div class="grid sm:grid-cols-2 md:gap-10 gap-5">
           <div class=" dashed-border relative pt-[60%]">
-           <MyUploadSfz v-model="FromData.corporateIdcardBack"></MyUploadSfz>
+            <MyUploadSfz v-model="FromData.corporateIdcardFront" title="请上传身份证正面" icon-Url="/img/auth/sfz-2.png"></MyUploadSfz>
           </div>
           <div class=" dashed-border relative pt-[60%]">
-            <MyUploadSfz v-model="FromData.corporateIdcardFront"></MyUploadSfz>
+           <MyUploadSfz v-model="FromData.corporateIdcardBack" title="请上传身份证反面" icon-Url="/img/auth/sfz-1.png"></MyUploadSfz>
           </div>
         </div>
       </div>
@@ -121,6 +121,7 @@ import {ThirdAuth,getStep3Code} from '@/server/apis/auth/index.js'
 import {ref} from "vue"
 import { useToast } from '@/components/ui/toast/use-toast'
 const { toast } = useToast();
+const ButtonSms=ref();
 const FromData=ref({
     adId: 12,
     adType: 0,
@@ -128,8 +129,8 @@ const FromData=ref({
     businessField: "dolore",
     businessLicense:'http://cdn.fafadan.cn/image/20240605/b05a65a9-fd91-4559-97ec-dc4dfc41cb5b.jpg',
     companyName: "sit amet nostrud dolor",
-    corporateIdcardBack: "proident Ut sunt cillum",
-    corporateIdcardFront: "nostrud",
+    corporateIdcardBack:null,
+    corporateIdcardFront:null,
     creditCode: "consequat nulla nisi cupidatat reprehenderit",
     effectiveTime: "1956-08-16T22:25:50.0Z",
     establishment: "exercitation eu magna",
@@ -140,7 +141,7 @@ const FromData=ref({
     vendorType: 0
 });
 const other=ref({
-  otherQualifications:'adad'
+  otherQualifications:null
 })
 const emit=defineEmits(['change']);
 const nextStep=async ()=>{

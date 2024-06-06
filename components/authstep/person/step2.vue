@@ -51,7 +51,7 @@
           <div><span class="apply-text">运营者手机</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div class="w-full flex gap-3">
             <Input class="w-full  rounded-[4px]" id="phone" type="phone" placeholder="请输入验证码"  v-model="FromData.phone" />
-            <Button class="h-full px-3 text-[#2277ff]" variant="outline" >获取验证码</Button>
+            <MyButtonSms ref='ButtonSms' class="h-full px-3 text-[#2277ff]" @click="getSms" />
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
@@ -72,8 +72,11 @@
   </div>
 </template>
 <script setup>
-import {SecondAuth} from '@/server/apis/auth/index.js'
-import{ every,values,isEmpty} from 'lodash'
+import {SecondAuth,getStep2Code} from '@/server/apis/auth/index.js'
+import {ref} from "vue"
+import { useToast } from '@/components/ui/toast/use-toast'
+const { toast } = useToast();
+const ButtonSms=ref();
 const FromData=ref({
   adId:11,
   adType:0,
@@ -88,16 +91,24 @@ const FromData=ref({
 });
 const emit=defineEmits(['change']);
 const nextStep=async ()=>{
-  if(!values(FromData.value).every(isEmpty)){
-    const data=await SecondAuth(FromData.value).catch(e=>{console.log(e)});
+  const data=await SecondAuth(FromData.value);
     emit('change',2);
-  }else{
-    alert('请填写完整');
-    console.log(FromData.value);
-  }
 };
 const prevStep=()=>{
   emit('change',0)
+};
+const getSms=async ()=>{
+let {data:data}= await getStep2Code(FromData.value.phone)
+if(data.code!==200){
+  toast({
+      title: '获取验证码出错',
+      description:data.msg,
+      variant: 'destructive',
+      duration: '2000',
+    });
+}else{
+  ButtonSms.value.countDown();
+}
 };
 </script>
 <style scoped>

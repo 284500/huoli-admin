@@ -6,8 +6,6 @@
   </div>
 </template>
 <script setup>
-import { ScrollArea } from '@/components/ui/scroll-area';
-
 const props = defineProps(['tabList']);
 </script>
 <style>
