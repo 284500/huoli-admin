@@ -60,7 +60,9 @@
 </template>
 <script setup>
 import {FourAuth,SubmitAuth} from '@/server/apis/auth/index.js'
-
+import { ref } from "vue"
+import { useToast } from '@/components/ui/toast/use-toast'
+const { toast } = useToast();
 const FromData=ref({
     accountName: "in labore reprehenderit",
     accountNumber: "deserunt consequat consectetur",

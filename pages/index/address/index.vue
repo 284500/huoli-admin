@@ -81,7 +81,12 @@ const { pager, getLists } = usePaging({
     fetchFun: getAddressList
 })
 const showAlert=()=>{
-  Alert.value.AlertShow();
+  // Alert.value.AlertShow();
+  toast({
+      title: '设置成功',
+      description:'成功修改默认地址',
+      duration: '2000',
+    });
 }
 const {detail,getDetail} = useDetail(getAddressDetail,Params);
 const init=()=>{

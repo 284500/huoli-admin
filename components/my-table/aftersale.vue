@@ -84,13 +84,6 @@ const props = defineProps({
         updatedTime: '',
         orderId: '123456789',
         orderType: '退款',
-      },{
-        id: 2, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '名片',
-        createdTime: '',
-        updatedTime: '',
-        orderId: '123456789',
-        orderType: '退款',
       }
     ]
   },

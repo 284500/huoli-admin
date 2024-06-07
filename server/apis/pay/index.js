@@ -8,9 +8,12 @@ export const queryPayStatus = (data) => {
   return getAxios('/api/app-api/ffd/v1/pay/payStatus', data);
 };
 //查询订单
-
 export const queryOrder = (data) => {
   return getAxios('/api/app-api/ffd/v1/pay/queryOrder', data);
+};
+//查询阿里订单
+export const queryAliOrder = (data) => {
+  return getAxios('/api/app-api/ffd/v1/pay/aliQueryOrder', data);
 };
 //关闭订单
 export const closeOrder = (data) => {

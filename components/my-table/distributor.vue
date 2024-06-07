@@ -2,7 +2,7 @@
   <Table class="">
     <TableHeader>
       <TableRow class="!bg-[#f9fafb]">
-        <TableHead v-for="(item, index) in tableTitle" class="title">
+        <TableHead v-for="(item, index) in tableTitle" class="title" :key="index">
           {{ item }}
         </TableHead>
       </TableRow>

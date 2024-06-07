@@ -71,7 +71,7 @@
         </div>
       </div>
       <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
-        <h1 class="title">订单信息</h1>
+        <h1 class="title">购买信息</h1>
         <MyTable :hasCheck="false" :tabItems="TabItems"></MyTable>
         <div class="py-4">
           <div class="gap-3 flex flex-col items-end">

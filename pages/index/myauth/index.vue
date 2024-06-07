@@ -43,12 +43,12 @@ import Step6 from '@/components/authstep/step6.vue';
 import PersonStep6 from '@/components/authstep/person/step6.vue';
 import { onMounted } from 'vue';
 import {AuthList ,AuthDetail} from '@/server/apis/auth/index.js'
-import { usePaging } from '@/hooks/usePaging';
+// import { usePaging } from '@/hooks/usePaging';
 import { useDetail } from '@/hooks/useDetail';
 
 
 const tabactive = ref(0);
-const {pager,getLists}=usePaging({fetchFun:AuthList,params:{adId:12,adType:0}});
+// const {pager,getLists}=usePaging({fetchFun:AuthList,params:{adId:12,adType:0}});
 const {detail,getDetail} = useDetail(AuthDetail,{adId:12,adType:0});
 
 const EnterpriseStep = ref([

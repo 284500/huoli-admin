@@ -7,24 +7,13 @@
         <div class="apply-text">请上传身份证正面、身份证背面、需图片、文字清晰、边框完整真实性</div>
         <div class="grid sm:grid-cols-2 md:gap-10 gap-5">
           <div class=" dashed-border relative pt-[60%]">
-            <img src="/public/img/auth/sfz-2.png" alt="" class="w-full h-full absolute top-0">
-            <div
-              class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col gap-2 items-center">
-              <div class="bg-[#2277FF] w-10 h-10 rounded-full flex justify-center items-center"><img
-                  src="/public/img/auth/input.png" alt=""></div>
-              <div class="input-text">请上传身份证正面</div>
-            </div>
-            <input type="file" class=" absolute top-0 left-0 right-0 bottom-0 opacity-0" />
+            <MyUploadSfz v-model="FromData.corporateIdcardFront" title="请上传身份证正面" icon-Url="/img/auth/sfz-2.png">
+            </MyUploadSfz>
+
           </div>
           <div class=" dashed-border relative pt-[60%]">
-            <img src="/public/img/auth/sfz-1.png" alt="" class="w-full h-full absolute top-0">
-            <div
-              class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col gap-2 items-center">
-              <div class="bg-[#2277FF] w-10 h-10 rounded-full flex justify-center items-center"><img
-                  src="/public/img/auth/input.png" alt=""></div>
-              <div class="input-text">请上传身份证反面</div>
-            </div>
-            <input type="file" class=" absolute top-0 left-0 right-0 bottom-0 opacity-0" />
+            <MyUploadSfz v-model="FromData.corporateIdcardBack" title="请上传身份证反面" icon-Url="/img/auth/sfz-1.png">
+            </MyUploadSfz>
           </div>
 
         </div>
@@ -39,97 +28,87 @@
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">身份证号</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]"  v-model="FromData.idCard" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="FromData.idCard" />
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">办证机关</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]"  v-model="FromData.establishment" />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="FromData.establishment" />
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">有效期限</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]"  v-model="FromData.effectiveTime"/>
+            <MyDateRadio @check="(e) =>FromData.effectiveTime=e" class="!w-full rounded-[4px]"></MyDateRadio>
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">法人手机</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div class="w-full flex gap-3">
-            <Input class="w-full  rounded-[4px]" id="phone" type="phone" placeholder="请输入手机号"  v-model="FromData.phone" />
+            <Input class="w-full  rounded-[4px]" id="phone" type="phone" placeholder="请输入手机号" v-model="FromData.phone" />
             <MyButtonSms ref='ButtonSms' class="h-full px-3 text-[#2277ff]" @click="getSms" />
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">验证码</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]"  v-model="FromData.phoneCode"  />
+            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]" v-model="FromData.phoneCode" />
           </div>
         </div>
       </div>
     </div>
     <Separator class="mt-10 mb-3" />
     <div class="mb-4">
-      <Button class="w-[80px] rounded-[4px] bg-[#ffffff] text-muted-foreground mr-3 hover:bg-white" @click="prevStep">上一步</Button>
+      <Button class="w-[80px] rounded-[4px] bg-[#ffffff] text-muted-foreground mr-3 hover:bg-white"
+        @click="prevStep">上一步</Button>
       <Button class="w-[80px] rounded-[4px] bg-[#2277ff] text-white" @click="nextStep">下一步</Button>
     </div>
   </div>
 </template>
 <script setup>
-import {ThirdAuth,getStep3Code} from '@/server/apis/auth/index.js'
-import {ref} from "vue"
+import { ThirdAuth, getStep3Code } from '@/server/apis/auth/index.js'
+import { ref } from "vue"
 import { useToast } from '@/components/ui/toast/use-toast'
 const { toast } = useToast();
-const ButtonSms=ref();
-const FromData=ref({
-    adId: 11,
-    adType: 0,
-    businessAddress: "ex",
-    businessField: "dolore",
-    businessLicense: "laboris anim aliquip",
-    companyName: "sit amet nostrud dolor",
-    corporateIdcardBack: "proident Ut sunt cillum",
-    corporateIdcardFront: "nostrud",
-    creditCode: "consequat nulla nisi cupidatat reprehenderit",
-    effectiveTime: "1956-08-16T22:25:50.0Z",
-    establishment: "exercitation eu magna",
-    idCard: "fugiat cillum",
-    name: "fugiat ut incididunt deserunt et",
-    phone: "ada",
-    phoneCode: "nostrud qui ut Ut",
-    vendorType: 0
+const ButtonSms = ref();
+const FromData = ref({
+  adId: 11,
+  adType: 0,
+  corporateIdcardBack: null,
+  corporateIdcardFront: null,
+  effectiveTime: null,
+  establishment: null,
+  idCard: null,
+  name: null,
+  phone: null,
+  phoneCode: null,
+  vendorType: 0
 });
-const emit=defineEmits(['change']);
-const nextStep=async ()=>{
-  if(!FromVaild(FromData.value)){
-  try{
-  const data=await ThirdAuth(FromData.value).catch(e=>{console.log(e)});
-  emit('change',3)
-  }catch(e){alert(e)}}else{
-    alert('请填写完整信息')
-  }
-
+const emit = defineEmits(['change']);
+const nextStep = async () => {
+      const data = await ThirdAuth(FromData.value);
+      emit('change', 3)
 };
-const FromVaild=(obj)=>{
-let array= Object.values(obj)
-return array.some(value=>value===null||value===''||value===undefined)
+const FromVaild = (obj) => {
+  let array = Object.values(obj)
+  return array.some(value => value === null || value === '' || value === undefined)
 }
-const prevStep=()=>{
-  emit('change',1)
+const prevStep = () => {
+  emit('change', 1)
 };
-const getSms=async ()=>{
-let {data:data}= await getStep3Code(FromData.value.phone)
-if(data.code!==200){
-  toast({
+const getSms = async () => {
+  let { data: data } = await getStep3Code(FromData.value.phone)
+  if (data.code !== 200) {
+    toast({
       title: '获取验证码出错',
-      description:data.msg,
+      description: data.msg,
       variant: 'destructive',
       duration: '2000',
     });
-}else{
-  ButtonSms.value.countDown();
-}
+  } else {
+    ButtonSms.value.countDown();
+  }
 };
 </script>
 <style scoped>
@@ -243,5 +222,4 @@ input::placeholder {
   font-weight: 400;
   color: #333333;
   line-height: 24px;
-}
-</style>
+}</style>

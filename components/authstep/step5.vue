@@ -24,7 +24,6 @@ const nextStep=async ()=>{
 };
 const prevStep=async ()=>{
   await RevokewAuth({adId:12,adType:0})
-
   emit('change',3)
 };
 </script>

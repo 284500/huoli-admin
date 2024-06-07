@@ -91,7 +91,7 @@
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">有效期限</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
-            <Input type="text" placeholder="请输入" class=" w-full rounded-[4px]"  v-model="FromData.effectiveTime"/>
+            <MyDateRadio @check="(e) =>FromData.effectiveTime=e" class="!w-full rounded-[4px]"></MyDateRadio>
           </div>
         </div>
         <div class="flex flex-col gap-1.5">

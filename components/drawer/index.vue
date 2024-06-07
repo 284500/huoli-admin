@@ -28,10 +28,11 @@ const props = defineProps({
     default: 'bg-[rgba(0,0,0,0.45)]',
   },
 });
-const emits = defineEmits(['update:modelValue']);
+const emits = defineEmits(['update:modelValue','close']);
 const clickhide = (e) => {
   if (e.target === mask.value) {
     emits('update:modelValue', false);
+    emits('close');
   }
   // console.log(mask.value,e.target)
 };

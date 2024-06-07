@@ -7,24 +7,10 @@
         <div class="apply-text">请上传银行卡正面、银行卡背面，需图片、文字清晰、边框完整真实性</div>
         <div class="grid sm:grid-cols-2 md:gap-10 gap-5">
           <div class=" dashed-border relative pt-[60%]">
-            <img src="/public/img/auth/yhk-1.png" alt="" class="w-full h-full absolute top-0">
-            <div
-              class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col gap-2 items-center">
-              <div class="bg-[#2277FF] w-10 h-10 rounded-full flex justify-center items-center"><img
-                  src="/public/img/auth/input.png" alt=""></div>
-              <div class="input-text">请上传银行卡正面</div>
-            </div>
-            <input type="file" class=" absolute top-0 left-0 right-0 bottom-0 opacity-0" />
+            <MyUploadSfz v-model="FromData.bankcardFront" title="请上传银行卡正面" icon-Url="/img/auth/yhk-1.png"></MyUploadSfz>
           </div>
           <div class=" dashed-border relative pt-[60%]">
-            <img src="/public/img/auth/yhk-2.png" alt="" class="w-full h-full absolute top-0">
-            <div
-              class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col gap-2 items-center">
-              <div class="bg-[#2277FF] w-10 h-10 rounded-full flex justify-center items-center"><img
-                  src="/public/img/auth/input.png" alt=""></div>
-              <div class="input-text">请上传银行卡背面</div>
-            </div>
-            <input type="file" class=" absolute top-0 left-0 right-0 bottom-0 opacity-0" />
+            <MyUploadSfz v-model="FromData.bankcardBack" title="请上传银行卡反面" icon-Url="/img/auth/yhk-2.png"></MyUploadSfz>
           </div>
         </div>
       </div>
@@ -59,21 +45,23 @@
 </template>
 <script setup>
 import {FourAuth,SubmitAuth} from '@/server/apis/auth/index.js'
-
+import { ref } from "vue"
+import { useToast } from '@/components/ui/toast/use-toast'
+const { toast } = useToast();
 const FromData=ref({
-    accountName: "in labore reprehenderit",
-    accountNumber: "deserunt consequat consectetur",
+    accountName: null,
+    accountNumber:null,
     accountType: 1,
     adId: 11,
     adType: 0,
-    bankBranch: "amet",
-    bankcardBack: "cillum commodo sint",
-    bankcardFront: "Duis"
+    bankBranch: null,
+    bankcardBack: null,
+    bankcardFront: null
 })
 const emit=defineEmits(['change']);
 const nextStep=async ()=>{
   try{
-  const data=await FourAuth(FromData.value).catch(e=>{console.log(e)});
+  const data=await FourAuth(FromData.value)
   await  SubmitAuth({adId:11,adType:0});
   emit('change',4);
   }catch(e){alert(e)}

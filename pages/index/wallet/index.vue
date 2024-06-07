@@ -51,7 +51,8 @@
         </div>
       </div>
       <Footer></Footer>
-      <Drawer v-model="isPay">
+      <!-- 充值弹窗 -->
+      <Drawer v-model="isPay" @close="initDrawer">
         <div
           class="bg-white w-[560px]  max-w-[100vw] max-h-[100vh] rounded-[8px]  relative px-6 pb-3 pt-3.5"
         >
@@ -73,16 +74,16 @@
               <div class="grid gap-4 grid-cols-2 mt-4 w-full">
                 <div
                   class="table-border p-2"
-                  :class="{ '!border-[#2277FF] !bg-[rgba(34,119,255,0.06)]':payconfig.payWay === 3 }"
+                  :class="{ '!border-[#2277FF] !bg-[rgba(34,119,255,0.06)]' :payconfig.payWay === 3 }"
                 >
-                  <div class="flex gap-3 items-center" @click="payWay = 3">
+                  <div class="flex gap-3 items-center" @click="payconfig.payWay = 3">
                     <div class="w-8 h-8"><img src="/public/img/pay/zfb.png" /></div>
                     <div class="text">支付宝支付</div>
                   </div>
                 </div>
                 <div
                   class="table-border p-2"
-                  :class="{ '!border-[#2277FF] !bg-[rgba(34,119,255,0.06)]': payconfig.payWay === 2 }"
+                  :class="{ '!border-[#2277FF] !bg-[rgba(34,119,255,0.06)]' :payconfig.payWay === 2 }"
                 >
                   <div class="flex gap-3 items-center" @click="payconfig.payWay = 2">
                     <div class="w-8 h-8"><img src="/public/img/pay/wx.png" /></div>
@@ -107,7 +108,8 @@
             </div>
           </div>
         </div></Drawer>
-        <Drawer v-model="isExtract">
+        <!-- 提现弹窗 -->
+      <Drawer v-model="isExtract">
         <div
           class="bg-white w-[560px]  max-w-[100vw] max-h-[100vh] rounded-[8px]  relative px-6 pb-3 pt-3.5"
         >
@@ -172,7 +174,9 @@ const isExtract = ref(false);
 const isPay = ref(false);
 const tabactive = ref(0);
 const tabList = ref(['收支明细', '锁定明细']);
-const Wallet = usePaging({ fetchFun: getWalletList });
+const WalletParams=ref({
+})
+const Wallet = usePaging({ fetchFun: getWalletList,params: WalletParams });
 const paychange = ref(false);
 //充值数据
 const payconfig=reactive({
@@ -183,11 +187,14 @@ const payconfig=reactive({
   redirectUrl: "http://localhost:8084/app-api/ffd/v1/pay/notifyMnp",
   payWay:3,
   scene: "recharge",
-  userId: 1
 });
+
 const init = async () => {
   await Wallet.getLists();
 };
+const initDrawer=()=>{
+  paychange.value=false;
+}
 onMounted(() => {
   init();
 });
@@ -195,8 +202,16 @@ const payorder=async ()=>{
   let {orderId}=await getWalletOrder({orderAmount:payconfig.orderAmount});
   payconfig.orderId=orderId;
   const data=await prePay(payconfig);
+  //微信支付逻辑
+  if(payconfig.payWay ===2){
   qr_data.value=data;
   qr_code.value=await QRCode.toDataURL(qr_data.value);
+  }else{
+    //支付宝支付逻辑
+    qr_data.value=data.qrCode;
+    qr_code.value=await QRCode.toDataURL(qr_data.value);
+  }
+
   paychange.value=true;
 };
 const payfinish=()=>{

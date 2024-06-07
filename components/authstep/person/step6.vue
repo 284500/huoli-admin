@@ -3,7 +3,7 @@
     <Separator class="sm:my-10 my-5" />
     <div class="flex flex-col py-10">
       <div class="w-[100px] h-[100px]"><img src="/public/img/auth/status-true.png" alt="" class="w-full h-full "></div>
-      <div class="title">认证审核中</div>
+      <div class="title">认证成功</div>
     </div>
     <div class="mb-4">
       <Button class="w-[80px] rounded-[4px] bg-[#ffffff] text-muted-foreground mr-3 hover:bg-white">重新认证</Button>

@@ -29,7 +29,6 @@ const confirmOrder = (e) => {
   query: {
     id:e,
   }
-
  });
 };
 </script>

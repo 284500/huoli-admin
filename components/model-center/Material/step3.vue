@@ -21,11 +21,11 @@
       <h1 class="table-title">订单支付</h1>
 
       <div class="grid gap-4 grid-cols-2 mt-4">
-        <div class="table-border sm:p-4 p-2" :class="{'!border-[#2277FF] !bg-[rgba(34,119,255,0.06)]':payActive===0}">
-          <div class="flex gap-3 items-center" @click="payActive=0"><div class="w-8 h-8 "><img src="/public/img/pay/zfb.png"/></div><div class="text">支付宝支付</div></div>
+        <div class="table-border sm:p-4 p-2" :class="{'!border-[#2277FF] !bg-[rgba(34,119,255,0.06)]':payconfig.payWay===3}">
+          <div class="flex gap-3 items-center" @click="payconfig.payWay=3"><div class="w-8 h-8 "><img src="/public/img/pay/zfb.png"/></div><div class="text">支付宝支付</div></div>
         </div>
-        <div class="table-border sm:p-4 p-2" :class="{'!border-[#2277FF] !bg-[rgba(34,119,255,0.06)]':payActive===1}">
-          <div class="flex gap-3 items-center" @click="payActive=1" ><div class="w-8 h-8"><img src="/public/img/pay/wx.png"/></div><div class="text">微信支付</div></div>
+        <div class="table-border sm:p-4 p-2" :class="{'!border-[#2277FF] !bg-[rgba(34,119,255,0.06)]':payconfig.payWay===2}">
+          <div class="flex gap-3 items-center" @click="payconfig.payWay=2" ><div class="w-8 h-8"><img src="/public/img/pay/wx.png"/></div><div class="text">微信支付</div></div>
         </div>
 
       </div>
@@ -46,16 +46,16 @@
      </div>
     </div>
   </div>
-  <Drawer v-model="isshow"><div class="bg-white w-[560px] md:h-[608px] max-w-[100vw] max-h-[100vh] rounded-[8px] h-[500px] relative  px-6 pb-3 pt-3.5">
+  <Drawer v-model="isShow"><div class="bg-white w-[560px] md:h-[608px] max-w-[100vw] max-h-[100vh] rounded-[8px] h-[500px] relative  px-6 pb-3 pt-3.5">
     <div class="w-full h-full flex flex-col justify-between items-center">
       <div class="flex justify-between w-full"><div class="table-title">扫码支付</div><div><img src="/public/img/login/close.png" class="w-6 h-6 "
-        @click="isshow=false" /></div></div>
+        @click="isShow=false" /></div></div>
       <div class="flex flex-col items-center">
         <div class="table-title !font-[400]">订单支付金额</div>
         <div class="pop-number my-1">￥270.00</div>
         <div class="pop-code my-4"><img :src="qr_code" class="w-full h-full"/></div>
 
-        <div class="apply-text !text-[#666666] ">请使用支付宝扫一扫，扫描二维码支付</div>
+        <div class="apply-text !text-[#666666] ">请使用{{payconfig.payWay===3?'支付宝':'微信'}}扫一扫，扫描二维码支付</div>
       </div>
       <div class="flex justify-end items-center w-full">
         <span>支付成功请点击</span>
@@ -69,12 +69,12 @@
 import Drawer from '@/components/drawer/index.vue';
 import QRCode from 'qrcode'
 import { useDayjs } from '#dayjs'
-import {prePay,queryOrder} from '@/server/apis/pay/index.js';
+import {prePay,queryOrder,queryAliOrder} from '@/server/apis/pay/index.js';
 import {  getOrderDetail } from '@/server/apis/modelorder/index.js';
 const qr_data=ref('weixin://wxpay/bizpayurl?pr=gHQRprNz3')
 const qr_code=ref('');
 const payActive=ref(0);
-const isshow=ref(false);
+const isShow=ref(false);
 const material=ref({});
 const route=useRoute();
 const emit=defineEmits(['changeType']);
@@ -87,18 +87,29 @@ const payconfig=reactive({
   orderAmount: 0.01,
   orderId: 1,
   outTradeNo: "ffd2024051617000012",
-  payWay: 2,
+  payWay: 3,
   scene: "order",
 });
 const payorder=async ()=>{
   const data=await prePay(payconfig);
-  qr_data.value=data
-  qr_code.value=await QRCode.toDataURL(qr_data.value);
-  isshow.value=true;
+  if(payconfig.payWay ===2){
+    qr_data.value=data;
+    qr_code.value=await QRCode.toDataURL(qr_data.value);
+  }else if(payconfig.payWay ===3){
+    //支付宝支付逻辑
+    qr_data.value=data.qrCode;
+    qr_code.value=await QRCode.toDataURL(qr_data.value);
+  };
+  isShow.value=true;
 };
 const finishPay=async ()=>{
-await queryOrder({outTradeNo:payconfig.outTradeNo,attach:payconfig.attach,transactionId:payconfig.outTradeNo});
-isshow.value=false;
+  if(payconfig.payWay ===2){
+    await queryOrder({outTradeNo:payconfig.outTradeNo,attach:payconfig.attach,transactionId:payconfig.outTradeNo});
+  }else if(payconfig.payWay ===3){
+    await queryAliOrder({outTradeNo:payconfig.outTradeNo,attach:payconfig.attach,transactionId:payconfig.outTradeNo});
+  }
+
+isShow.value=false;
 }
 const init=async ()=>{
   material.value=await getOrderDetail({id:Number(route.query.id)});

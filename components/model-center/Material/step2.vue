@@ -5,11 +5,12 @@
       <div class="flex gap-10 mt-5 mb-4">
         <div class="flex gap-2 items-center">
           <Label for="isPlace">是否选择分发</Label>
-          <Switch id="isPlace" v-model:checked="isPlace" />
+          <MySwitch v-model="isPlace"  id="isPlace"></MySwitch>
+          <!-- <Switch id="isPlace" v-model:checked="isPlace" /> -->
         </div>
         <div class="flex gap-2 items-center">
           <Label for="isMail">是否寄样</Label>
-          <Switch id="isMail" />
+          <MySwitch v-model="FormData.isSendSample"  id="isMail"></MySwitch>
         </div>
         <div class="flex gap-2 items-center">
           <Label for="isComfirmation">是否可视频确认样品</Label>
@@ -103,7 +104,7 @@
             <span class="apply-text">选择意向分发商户分类领域</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span>
           </div>
           <div>
-            <Select v-model="FromData.classificationDomain">
+            <Select v-model="FormData.classificationDomain">
               <SelectTrigger id="framework" class="w-full px-3 py-2 rounded-[4px]">
                 <SelectValue placeholder="餐饮、美发" class="apply-text" />
               </SelectTrigger>
@@ -179,7 +180,7 @@
           <div>
             <span class="apply-text">投放条件</span>
           </div>
-          <RadioGroup v-model="rulenumber" default-value="default" class="flex flex-col gap-1.5">
+          <RadioGroup v-model="rulenumber" default-value="0" @update:model-value="(e)=>placeData.targetedCondition=ruleList[rulenumber]" class="flex flex-col gap-1.5">
             <div class="table-border bg-[#F6F7F9] px-5 py-4">
               <div class="flex justify-between">
                 <div class="flex items-center gap-2">
@@ -204,7 +205,7 @@
 
                   <div class="text !text-[#2277FF]" @click="addrules(1)">添加条件</div>
                 </div>
-                <div v-for="(item, index) in ruleList[0]" :key="index"
+                <div v-for="(item, index) in ruleList[1]" :key="index"
                   class="bg-[#EEEEEE] flex justify-center items-center rounded-full gap-1 px-3 py-1.5">
                   <div class="muted-text">{{ item }}</div>
                   <Lucide icon="X" class="w-4 h-4" color="#AAAAAA" @click="delrule(0, index)"></Lucide>
@@ -226,7 +227,7 @@
 
                   <div class="text !text-[#2277FF]" @click="addrules(2)">添加条件</div>
                 </div>
-                <div v-for="(item, index) in ruleList[1]" :key="index"
+                <div v-for="(item, index) in ruleList[2]" :key="index"
                   class="bg-[#EEEEEE] flex justify-center items-center rounded-full gap-1 px-3 py-1.5">
                   <div class="muted-text">{{ item }}</div>
                   <Lucide icon="X" class="w-4 h-4" color="#AAAAAA" @click="delrule(1, index)"></Lucide>
@@ -343,16 +344,16 @@ const TabItems = ref([
 ]);
 //获取时间
 const getTime=(e)=>{
- FromData.deadline=e;
+ FormData.deadline=e;
 }
 const tableTitle = ref(['浙江印刷厂订单', '规格参数', '数量', '金额'])
 //基础表单数据
-const FromData = reactive({
+const FormData = reactive({
   amount: 240,
   classificationDomain: "velit anim non occaecat",
   config: "anim non",
   content: {},
-  deadline: 1868686868,
+  deadline: null,
   harvestAddress: "tempor",
   isSendSample: 1,
   merchantsNumber: 1,
@@ -374,14 +375,16 @@ const FromData = reactive({
   workId: 1
 })
 //投放数据
-const placeData = ref({});
+const placeData = ref({
+  targetedCondition: "et sunt eu Lorem ex",
+});
 //弹窗展示
 const isShow = ref(false);
 //是否投放
-const isPlace = ref(true);
+const isPlace = ref(1);
 //投放条件
 const rulenumber = ref(0);
-const ruleList = ref([['adad', 'testtsd'], ['adad', 'teste']]);
+const ruleList = ref([[],['adad', 'testtsd'], ['adad', 'teste']]);
 const delrule = (id, index) => {
   ruleList.value[id].splice(index, 1);
 };
@@ -398,8 +401,9 @@ const add = (e) => {
   ruleList.value[e.number].push(e.data);
 };
 const sendOrder = async () => {
+
   try {
-    let { id } = await addOrder(FromData);
+    let { id } = await addOrder(FormData);
     emit('change', id);
   }
   catch (e) {
