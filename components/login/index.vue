@@ -168,9 +168,8 @@
 <script setup>
 import { useToast } from '@/components/ui/toast/use-toast';
 import { reactive, ref, watch } from 'vue';
-import { debounce } from 'lodash'
-import { accountLogin, mobileLogin, getResetCode, wechatLogin, getLoginCode, getSignupCode, getWechatCode, register,forgetPassword } from '@/server/apis/login/index';
-const Token = useCookie('token');
+import { accountLogin, mobileLogin, getResetCode,  getLoginCode, getSignupCode, getWechatCode, register,forgetPassword } from '@/server/apis/login/index';
+const Token = useCookie('huoli-token');
 const IsLogin = useCookie('isLogin')
 const props = defineProps({
   logintype: {

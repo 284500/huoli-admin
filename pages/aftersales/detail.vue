@@ -7,7 +7,7 @@
         <MyTable :hasCheck="false" :tabItems="TabItems"></MyTable>
         <div class="flex justify-end mt-4 items-center">
           <div class="title !text-[14px] !leading-[20px]">订单合计：</div>
-          <div class="total-number ml-2 pl-3">￥270.00</div>
+          <div class="total-number ml-2 pl-3">￥{{ AfterSale.amount }}</div>
         </div>
       </div>
       <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
@@ -34,7 +34,7 @@
               </div>
             </div>
           </div>
-          <div>
+          <div v-if="AfterSale.status!=='待处理'">
             <h1 class="title">处理结果</h1>
             <div class="mt-5  gap-3 flex flex-col">
               <div class="flex gap-3">
@@ -67,6 +67,9 @@
               </div>
             </div>
           </div>
+          <div v-else>
+            <h1 class="title">待处理</h1>
+          </div>
         </div>
       </div>
     </div>
@@ -74,7 +77,7 @@
 </template>
 <script setup>
 import MyTable from '@/components/my-table/table.vue';
-import { getAfterSaleDetail, deleteAfterSale } from '@/server/apis/aftersale/index.js';
+import { getAfterSaleDetail} from '@/server/apis/aftersale/index.js';
 definePageMeta({
   layout: 'center',
 });

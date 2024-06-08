@@ -73,7 +73,9 @@ import Myheader from '@/components/navbar/header.vue';
 import MyTable from '@/components/my-table/aftersale.vue';
 
 import { usePaging } from '@/hooks/usePaging';
-import { getAfterSaleList,deleteAfterSale } from '@/server/apis/aftersale/index.js';
+import { getAfterSaleList,deleteAfterSale,cancelAfterSale} from '@/server/apis/aftersale/index.js';
+import { useToast } from '@/components/ui/toast/use-toast'
+const { toast } = useToast();
 const Params = reactive({});
 const AfterSale = usePaging({ fetchFun: getAfterSaleList, params: Params });
 const list = ref([
@@ -103,9 +105,12 @@ const delArray=async ()=>{
  AfterSale.getLists();
 }
 const deleteOrder=async (e)=>{
-  await deleteAfterSale({ids:[e]});
+  await cancelAfterSale({ids:[e]});
   init();
-  alert('删除成功');
+  toast({
+      title: '取消成功',
+      duration: 2000,
+    });
 };
 onBeforeMount(() => {
 init();

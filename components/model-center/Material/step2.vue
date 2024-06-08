@@ -5,16 +5,16 @@
       <div class="flex gap-10 mt-5 mb-4">
         <div class="flex gap-2 items-center">
           <Label for="isPlace">是否选择分发</Label>
-          <MySwitch v-model="isPlace"  id="isPlace"></MySwitch>
+          <MySwitch v-model="isPlace" id="isPlace"></MySwitch>
           <!-- <Switch id="isPlace" v-model:checked="isPlace" /> -->
         </div>
         <div class="flex gap-2 items-center">
           <Label for="isMail">是否寄样</Label>
-          <MySwitch v-model="FormData.isSendSample"  id="isMail"></MySwitch>
+          <MySwitch v-model="FormData.isSendSample" id="isMail"></MySwitch>
         </div>
         <div class="flex gap-2 items-center">
           <Label for="isComfirmation">是否可视频确认样品</Label>
-          <Switch id="isComfirmation" />
+          <MySwitch v-model="FormData.isVideoSendSample" id="isVideoSendSample"></MySwitch>
         </div>
       </div>
       <div class="flex gap-4 items-center flex-wrap">
@@ -35,11 +35,11 @@
             </div>
           </div>
           <div class="flex gap-4">
-            <Lucide icon="ChevronRight" color="#CCCCCC" class="h-5 w-5"></Lucide>
+            <Lucide icon="ChevronRight" color="#CCCCCC" class="h-5 w-5" ></Lucide>
           </div>
         </div>
         <div><img src="/public/img/address/chevron.png" alt="" /></div>
-        <div class="border-[1px] border-[#eeeeee] rounder-[4px] flex justify-between items-center p-4 flex-1">
+        <div class="border-[1px] border-[#eeeeee] rounder-[4px] flex justify-between items-center p-4 flex-1 h-[80px]">
           <div class="flex items-center">
             <div
               class="w-8 h-8 address-text overflow-hidden flex justify-center items-center mr-3 rounded-full bg-[#FFA024]">
@@ -47,16 +47,16 @@
             </div>
             <div>
               <div>
-                <span class="table-title !text-[18px]">卢杰荣</span>
-                <span class="table-title !text-[18px]">17679984282</span>
+                <span class="table-title !text-[18px]">{{deliveryAddress.name }}</span>
               </div>
               <div>
-                <div class="muted-text">福建省 厦门市 湖里区 金山街道后坑社区149号</div>
+                <div class="muted-text">{{deliveryAddress.address }}</div>
+
               </div>
             </div>
           </div>
           <div class="flex gap-4">
-            <Lucide icon="ChevronRight" color="#CCCCCC" class="h-5 w-5"></Lucide>
+            <Lucide icon="ChevronRight" color="#CCCCCC" class="h-5 w-5" @click="isShow2=true"></Lucide>
           </div>
         </div>
       </div>
@@ -65,26 +65,25 @@
           <div><span class="apply-text">选择自行分发</span></div>
           <div class="relative">
             <div class="absolute right-3 top-0 bottom-0 flex items-center apply-text">张</div>
-
-            <Input type="text" placeholder="请输入" class="w-full rounded-[4px]" />
+            <Input type="number" placeholder="请输入" class="w-full rounded-[4px]" v-model="FormData.selfIssuedQuantity" />
           </div>
         </div>
-        <div class="flex flex-col gap-1.5">
+        <div class="flex flex-col gap-1.5" v-if="isPlace">
           <div>
             <span class="apply-text">广告分发总数</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span>
           </div>
           <div class="relative">
             <div class="absolute right-3 top-0 bottom-0 flex items-center apply-text">张</div>
-            <Input type="text" placeholder="请输入" class="w-full rounded-[4px]" />
+            <Input type="number" placeholder="请输入" class="w-full rounded-[4px]" v-model="placeData.quantity" />
           </div>
         </div>
-        <div class="flex flex-col gap-1.5 col-span-2">
+        <div class="flex flex-col gap-1.5 col-span-2" v-if="isPlace">
           <div>
             <span class="apply-text">分发商户数</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span>
           </div>
           <div class="flex gap-2 items-center">
-            <Input type="text" placeholder="请输入" class="flex-1 rounded-[4px]" /><span class="apply-text">每</span>
-            <Input type="text" placeholder="请输入" class="flex-1 rounded-[4px]" /><span class="apply-text">为一份</span>
+            <Input type="text" placeholder="请输入" class="flex-1 rounded-[4px]" v-model="placeData.merchantsNumber"/><span class="apply-text">每</span>
+            <Input type="text" placeholder="请输入" class="flex-1 rounded-[4px]" disabled  :value="Number(placeData.quantity/placeData.merchantsNumber)||Number(0)"/><span class="apply-text">为一份</span>
           </div>
         </div>
       </div>
@@ -95,16 +94,20 @@
             <div class="absolute right-3 top-0 bottom-0 flex items-center">
               <Lucide icon="Search" color="#AAAAAA" class="w-3.5 h-3.5"></Lucide>
             </div>
-            <Input type="text" placeholder="请输入" class="w-full rounded-[4px]" />
+            <Input type="text" placeholder="请输入" class="w-full rounded-[4px]" v-model="placeData.releaseArea"  @keyup.enter="searchAddress" />
           </div>
-          <div class="w-full h-[240px] bg-[#D8D8D8] mt-3.5 mb-6"><img /></div>
+          <div class="w-full bg-[#D8D8D8] mt-3.5 mb-6 aspect-[2/1]">
+            <img class="w-full h-full object-cover"
+							:src="`https://restapi.amap.com/v3/staticmap?location=${position}&zoom=13&size=750*300&markers=mid,,A:116.481485,39.990464&key=8219338422e1b5d6f87a986c6c257697`"
+							mode="widthFix">
+          </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <div>
             <span class="apply-text">选择意向分发商户分类领域</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span>
           </div>
           <div>
-            <Select v-model="FormData.classificationDomain">
+            <Select v-model="placeData.classificationDomain">
               <SelectTrigger id="framework" class="w-full px-3 py-2 rounded-[4px]">
                 <SelectValue placeholder="餐饮、美发" class="apply-text" />
               </SelectTrigger>
@@ -134,7 +137,7 @@
                   </div>
                   <div class="flex gap-2 items-center">
                     <div>意向</div>
-                    <Switch />
+                    <Switch  @update:checked="setVendor(index)"/>
                   </div>
                 </div>
                 <div class="flex gap-6">
@@ -170,8 +173,8 @@
           <div>
             <span class="danger-text !text-[#666666]">广告定制商物料生产</span><span class="danger-text">交付周期为4天</span>
             <span class="danger-text !text-[#666666]">，从广告制作商</span><span class="danger-text">快递到各广告分发商需要3天</span>
-            <span class="danger-text !text-[#666666]">，如果今天</span><span class="danger-text">2024-4-21</span>
-            <span class="danger-text !text-[#666666]">下单，预计</span><span class="danger-text">2024-4-29</span>
+            <span class="danger-text !text-[#666666]">，如果今天</span><span class="danger-text">{{ $dayjs().format('YYYY-MM-DD') }}</span>
+            <span class="danger-text !text-[#666666]">下单，预计</span><span class="danger-text">{{ $dayjs().add(3,'day').format('YYYY-MM-DD') }}</span>
             <span class="danger-text !text-[#666666]">物料会分发到广告分发商哪里。</span>
           </div>
         </div>
@@ -180,7 +183,8 @@
           <div>
             <span class="apply-text">投放条件</span>
           </div>
-          <RadioGroup v-model="rulenumber" default-value="0" @update:model-value="(e)=>placeData.targetedCondition=ruleList[rulenumber]" class="flex flex-col gap-1.5">
+          <RadioGroup v-model="rulenumber" default-value="0"
+            @update:model-value="(e) => placeData.targetedCondition = ruleList[rulenumber]" class="flex flex-col gap-1.5">
             <div class="table-border bg-[#F6F7F9] px-5 py-4">
               <div class="flex justify-between">
                 <div class="flex items-center gap-2">
@@ -208,7 +212,7 @@
                 <div v-for="(item, index) in ruleList[1]" :key="index"
                   class="bg-[#EEEEEE] flex justify-center items-center rounded-full gap-1 px-3 py-1.5">
                   <div class="muted-text">{{ item }}</div>
-                  <Lucide icon="X" class="w-4 h-4" color="#AAAAAA" @click="delrule(0, index)"></Lucide>
+                  <Lucide icon="X" class="w-4 h-4" color="#AAAAAA" @click="delrule(1, index)"></Lucide>
                 </div>
               </div>
             </div>
@@ -230,7 +234,7 @@
                 <div v-for="(item, index) in ruleList[2]" :key="index"
                   class="bg-[#EEEEEE] flex justify-center items-center rounded-full gap-1 px-3 py-1.5">
                   <div class="muted-text">{{ item }}</div>
-                  <Lucide icon="X" class="w-4 h-4" color="#AAAAAA" @click="delrule(1, index)"></Lucide>
+                  <Lucide icon="X" class="w-4 h-4" color="#AAAAAA" @click="delrule(2, index)"></Lucide>
                 </div>
               </div>
             </div>
@@ -314,12 +318,16 @@
   <div class="fixed left-0 right-0 bottom-0 bg-white h-16 flex justify-center items-center px-8">
     <div class="w-full lg:w-[980px] xl:w-[1280px] flex justify-end items-center">
       <div class="apply-text">合计(含运费,投放费)：</div>
-      <div class="number !text-[18px]">￥270.00</div>
+      <div class="number !text-[18px]">￥{{  FormData.amount }}</div>
       <Button class="ml-6" @click="sendOrder">提交订单</Button>
     </div>
   </div>
   <MyDrawer v-model="isShow">
     <MyFormRule :rulenumber="rulenumber" @finish="add" @close="closepop"></MyFormRule>
+  </MyDrawer>
+  <!-- 地址选择弹窗 -->
+  <MyDrawer v-model="isShow2">
+    <MyAddress @finish="setDeliveryAddress" @cancel="isShow2=false"></MyAddress>
   </MyDrawer>
 </template>
 <script setup>
@@ -329,6 +337,7 @@ import { addOrder } from '@/server/apis/modelorder/index.js';
 import { toast } from '~/components/ui/toast';
 import { getMaterialTemplateDetail } from '@/server/apis/template/material.js';
 import { useDetail } from '@/hooks/useDetail';
+import {getMapAddress} from '@/server/apis/map/index.js';
 const emit = defineEmits(['change']);
 const route = useRoute();
 const MaterialDetailparams = reactive({});
@@ -342,49 +351,82 @@ const TabItems = ref([
     productType: '名片',
   },
 ]);
-//获取时间
-const getTime=(e)=>{
- FormData.deadline=e;
-}
 const tableTitle = ref(['浙江印刷厂订单', '规格参数', '数量', '金额'])
 //基础表单数据
-const FormData = reactive({
-  amount: 240,
-  classificationDomain: "velit anim non occaecat",
-  config: "anim non",
+const FormData = ref({
+  amount: 120,
+  config: "102*96mm",
   content: {},
   deadline: null,
-  harvestAddress: "tempor",
+  harvestAddress:null,
   isSendSample: 1,
-  merchantsNumber: 1,
+  isVideoSendSample: 1,
   orderName: "laborum tempor",
   productId: 2,
   productName: "ut aute",
-  quantity: 12,
-  releaseArea: "sint",
-  remarks: "ut dolor esse",
-  sampleAddress: "ad ut consequat esse nulla",
-  selfIssuedQuantity: 12,
-  targetedCondition: "et sunt eu Lorem ex",
+  remarks: "备注",
+  selfIssuedQuantity: null,
+  sampleAddress: "厦门软件园",
   templateId: 21,
-  unit: "quis ullamco anim",
+  unit: "张",
+  //印刷厂id，再下单前设计器获取
   vendorId: 1,
-  vendorIds: [
-    1
-  ],
-  workId: 1
-})
+  workId: route.query.id,
+});
 //投放数据
 const placeData = ref({
-  targetedCondition: "et sunt eu Lorem ex",
+  deadline: null,
+  merchantsNumber: null,
+  quantity:null,
+  classificationDomain: "餐饮、美发",
+  releaseArea: "厦门市思明区",
+  targetedCondition:[],
+  //分发商id
+  vendorIds: [],
 });
+//总数据
+const totalData = ref({});
+//地址经纬度
+const position=ref('118.082745,24.445676');
 //弹窗展示
 const isShow = ref(false);
+//地址弹窗展示
+const isShow2 = ref(false);
+//收货地址
+const deliveryAddress=ref({
+  name:null,
+  address:null
+});
 //是否投放
 const isPlace = ref(1);
 //投放条件
 const rulenumber = ref(0);
-const ruleList = ref([[],['adad', 'testtsd'], ['adad', 'teste']]);
+const ruleList = ref([[], ['adad', 'testtsd'], ['adad', 'teste']]);
+//获取时间
+const getTime = (e) => {
+  placeData.value.deadline = e;
+};
+//设置收获地址
+const setDeliveryAddress=(e)=>{
+  deliveryAddress.value.address=e.address;
+  deliveryAddress.value.name=e.name;
+  FormData.value.harvestAddress=e.address;
+  isShow2.value=false;
+}
+//查询地址
+const searchAddress = async () => {
+let data=await getMapAddress(placeData.value.releaseArea);
+ position.value= data.data.geocodes[0].location;
+}
+//设置分发商
+const setVendor = (data) => {
+  placeData.value.vendorIds;
+  if (!placeData.value.vendorIds.includes(data)) {
+  placeData.value.vendorIds.push(data);
+} else {
+  placeData.value.vendorIds.splice(placeData.value.vendorIds.indexOf(data), 1);
+}
+}
 const delrule = (id, index) => {
   ruleList.value[id].splice(index, 1);
 };
@@ -400,10 +442,17 @@ const add = (e) => {
   console.log(e)
   ruleList.value[e.number].push(e.data);
 };
+const BeforeSend = () => {
+  if (isPlace) {
+    totalData.value = { ...FormData.value, ...placeData.value };
+  } else {
+    totalData.value =FormData.value;
+  }
+}
 const sendOrder = async () => {
-
+  BeforeSend();
   try {
-    let { id } = await addOrder(FormData);
+    let { id } = await addOrder(totalData.value);
     emit('change', id);
   }
   catch (e) {
@@ -415,7 +464,7 @@ const sendOrder = async () => {
 };
 const init = async () => {
   MaterialDetailparams.id = route.query.templateId;
-  await Materialdetail.getDetail();
+  let data=await Materialdetail.getDetail();
 }
 onMounted(() => {
   init()
@@ -478,8 +527,9 @@ onMounted(() => {
 
 .number {
   font-size: 24px;
-  font-family: Arial, Arial-Regular;
-  font-weight: 400;
+  font-family:
+  Arial,
+  Arial-Regular;
   color: #333333;
   line-height: 32px;
 }
@@ -523,7 +573,7 @@ onMounted(() => {
 
 .total-number {
   font-size: 20px;
-  font-family: Arial, Arial-Regular;
+  font-family: Arial,Arial-Regular;
   font-weight: 400;
   text-align: right;
   color: #ff5030;

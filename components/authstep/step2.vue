@@ -28,7 +28,7 @@
           <div><span class="apply-text">经营地址</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div class="grid grid-cols-3 gap-3">
               <Select v-model="FromData.province">
-                <SelectTrigger id="framework" class="w-full px-3 py-2 rounded-[4px]">
+                <SelectTrigger id="framework" class="w-full px-3 py-2 rounded-[4px]" >
                   <SelectValue placeholder="申请退款" class="apply-text" />
                 </SelectTrigger>
                 <SelectContent position="popper">
@@ -87,6 +87,10 @@
     <div class="mb-4">
       <Button class="w-[80px] rounded-[4px] bg-[#ffffff] text-muted-foreground mr-3 hover:bg-white" @click="prevStep">上一步</Button>
       <Button class="w-[80px] rounded-[4px] bg-[#2277ff] text-white" @click="nextStep">下一步</Button>
+    </div>
+    <div class="flex gap-5 mb-10">
+    <MySelectAddress class="!w-[240px]"></MySelectAddress>
+
     </div>
   </div>
 </template>

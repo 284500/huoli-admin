@@ -15,3 +15,7 @@ export const addAfterSale = (data) => {
 export const deleteAfterSale = (data) => {
   return postAxios('/api/app-api/ffd/v1/order/aftersale/del', data);
 };
+// 取消售后单
+export const cancelAfterSale = (data) => {
+  return postAxios('/api/app-api/ffd/v1/order/aftersale/stop', data);
+};

@@ -17,8 +17,8 @@ const request = axios.create({
 //请求响应
 request.interceptors.request.use(
   (config) => {
-    config.headers['token'] =
-      getToken() ;
+    config.headers['huoli-token'] =
+      getToken();
     return config;
     //return Promise.resolve(config)
   },

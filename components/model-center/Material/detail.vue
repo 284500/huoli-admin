@@ -9,7 +9,7 @@
         <div class="flex justify-center">
           <Wuliao v-model="tabactive" :tab="tabList"></Wuliao>
         </div>
-        <div v-if="tabactive===0" class="h-[300px] bg-[#F0F1F5] w-full"></div>
+        <div v-if="tabactive===0" class="h-[300px]  w-full p-5">{{ data.materialDetail?.content }}</div>
         <div v-else class="h-[600px] bg-[#F0F1F5] w-full"></div>
       </div>
       <div class="flex flex-col flex-1 min-w-[300px] max-w-[720px]">

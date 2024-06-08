@@ -28,13 +28,7 @@
                 <div
                   class="w-[100px] h-[100px] input-border flex justify-center items-center relative"
                 >
-                  <input type="file" class="absolute top-0 z-50 left-0 right-0 bottom-0 opacity-0" @change="Upload"/>
-                  <img  class="w-full h-full absolute" :src="preImgList" />
-                  <div class="w-6 h-6 dashed-border flex justify-center items-center">
-                    <div class="w-[14px] h-[14px] dashed-border">
-                      <img src="/public/add.png" alt="" class="w-full h-full" />
-                    </div>
-                  </div>
+                <MyUploadImg v-model="AfterSaleData.applyScrip"></MyUploadImg>
                 </div>
                 <div class="table-text">需图片、文字清晰、边框完整真实性</div>
             </div>
@@ -50,7 +44,7 @@
 </template>
 <script setup>
 import MyTable from '@/components/my-table/table.vue';
-import { getAfterSaleDetail, addAfterSale } from '@/server/apis/aftersale/index.js';
+import {  addAfterSale } from '@/server/apis/aftersale/index.js';
 import {  getOrderDetail } from '@/server/apis/modelorder/index.js';
 definePageMeta({
   layout: 'center',
@@ -61,20 +55,20 @@ const material=ref({});
 const AfterSale = ref({});
 const selectType = ref([
   {
-    value: 'name',
+    value: '申请退款',
     key: '申请退款',
   },
   {
-    value: 'content',
+    value: '申请换货',
     key: '申请换货',
   },
 ]);
 const AfterSaleData = reactive({
     amount: 0,
     applyReason: "质量太差",
-    applyScrip: "consectetur labore eu eiusmod ut",
+    applyScrip:null,
     applyTime: (new Date()).getTime(),
-    applyType: "elit culpa amet nostrud deserunt",
+    applyType: "申请退款",
     orderId:route.query.id,
     orderType: "Lorem ipsum dolor sit amet",
 })
@@ -117,7 +111,7 @@ const createAfterSalesOrder = async () => {
 const init = async () => {
   material.value=await getOrderDetail({id:Number(route.query.id)})
 };
-onBeforeMount(()=>{
+onMounted(()=>{
   init();
 });
 </script>

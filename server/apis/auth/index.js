@@ -41,6 +41,10 @@ export const SubmitAuth = (data) => {
 export const AuthStatus = (data) => {
   return getAxios('/api/admin-api/ffd/v1/authentication/status', data);
 };
+//查看认证进度
+export const AuthProgress = (data) => {
+  return getAxios('/api/admin-api/ffd/v1/confirm/process', data);
+};
 //查看认证详情
 export const AuthDetail = (data) => {
   return getAxios('/api/admin-api/ffd/v1/authentication/detail', data);
