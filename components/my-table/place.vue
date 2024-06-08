@@ -45,7 +45,7 @@
             <NuxtLink :to="`/placedorder/detail?id=${item.id}`">
               <div class="text-[#2277FF] cursor-pointer">查看详情</div>
             </NuxtLink>
-            <div class="text-[#FF5030] cursor-pointer" @click="del(item.id)">停止投放</div>
+            <div v-if="statusList.indexOf(item.status)<4" class="text-[#FF5030] cursor-pointer" @click="del(item.id)">停止投放</div>
           </div>
         </TableCell>
       </TableRow>

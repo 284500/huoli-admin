@@ -5,7 +5,7 @@
       <div class="flex flex-col gap-4 mt-5">
 
         <div class="flex  gap-3 items-center">
-          <Switch id="airplane-mode" v-model:checked="Default" @update:checked="changeDefault"/>
+          <MySwitch v-model="address.isDefault" id="airplane-mode"></MySwitch>
           <Label for="airplane-mode" class="apply-text">设置为默认地址</Label>
         </div>
         <div class="grid gap-4 sm:grid-cols-2 ">
@@ -33,31 +33,7 @@
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">所在地区</span></div>
           <div class="grid grid-cols-3 gap-3">
-
-            <Select v-model="address.province">
-              <SelectTrigger id="framework" class="w-full px-3 py-2 rounded-[4px]">
-                <SelectValue placeholder="申请退款" class="apply-text" />
-              </SelectTrigger>
-              <SelectContent position="popper">
-                <SelectItem value="车上"> 车上 </SelectItem>
-              </SelectContent>
-            </Select>
-            <Select v-model="address.city">
-              <SelectTrigger id="framework" class="w-full px-3 py-2 rounded-[4px]">
-                <SelectValue placeholder="申请退款" class="apply-text" />
-              </SelectTrigger>
-              <SelectContent position="popper">
-                <SelectItem value="车上"> 车上 </SelectItem>
-              </SelectContent>
-            </Select>
-            <Select v-model="address.county">
-              <SelectTrigger id="framework" class="w-full px-3 py-2 rounded-[4px]">
-                <SelectValue placeholder="申请退款" class="apply-text" />
-              </SelectTrigger>
-              <SelectContent position="popper">
-                <SelectItem value="车上"> 车上 </SelectItem>
-              </SelectContent>
-            </Select>
+            <MySelectAddress @finish="setAddress"></MySelectAddress>
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
@@ -112,16 +88,10 @@ const props = defineProps({
 });
 const emit = defineEmits(['finish', 'close']);
 const address = props.data;
-const Default=ref(props.data.isDefault?true:false)
-// const Default=computed(()=>{
-//   return address.isDefault===true;
-// });
-const changeDefault=(e)=>{
-  if(e){
-    address.isDefault=1;
-  }else{
-    address.isDefault=0;
-  }
+const setAddress=(e)=>{
+  address.province=e.province;
+  address.city=e.city;
+  address.county=e.country;
 };
 </script>
 <style scoped>

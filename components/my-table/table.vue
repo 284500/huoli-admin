@@ -21,8 +21,8 @@
             </div>
             <div class="ml-2">
               <div class=" table-title">{{ item.name }}</div>
-              <div class="text-sm !text-[12px]  text-[#999999]">{{ item.specification }}</div>
-              <div class="text-sm !text-[12px] text-[#999999]">制作方:{{ item.name }}</div>
+              <div class="text-sm !text-[12px]  text-[#999999]">{{ item.specification||'规格' }}</div>
+              <div class="text-sm !text-[12px] text-[#999999]">制作方:{{ item.manufacturer }}</div>
             </div>
           </div>
         </TableCell>

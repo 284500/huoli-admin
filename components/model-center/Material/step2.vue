@@ -452,8 +452,8 @@ const BeforeSend = () => {
 const sendOrder = async () => {
   BeforeSend();
   try {
-    let { id } = await addOrder(totalData.value);
-    emit('change', id);
+    let { orderId } = await addOrder(totalData.value);
+    emit('change', orderId);
   }
   catch (e) {
     toast({

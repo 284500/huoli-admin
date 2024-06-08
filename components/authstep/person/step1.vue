@@ -117,7 +117,7 @@ import {FristAuth} from '@/server/apis/auth/index.js'
 
 const emit=defineEmits(['change']);
 const nextStep=async ()=>{
-  await FristAuth({adId:11,adType:0});
+  await FristAuth({adId:11,adType:0,vendorType:2});
   emit('change',1);
 };
 const prevStep=()=>{

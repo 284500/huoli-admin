@@ -169,8 +169,8 @@
 import { useToast } from '@/components/ui/toast/use-toast';
 import { reactive, ref, watch } from 'vue';
 import { accountLogin, mobileLogin, getResetCode,  getLoginCode, getSignupCode, getWechatCode, register,forgetPassword } from '@/server/apis/login/index';
-const Token = useCookie('huoli-token');
-const IsLogin = useCookie('isLogin')
+const Token = useCookie('huoli-token',{ maxAge:60*60*24*30*1000});
+const IsLogin = useCookie('isLogin',{ maxAge:60*60*24*30*1000 })
 const props = defineProps({
   logintype: {
     type: String,

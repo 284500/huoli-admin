@@ -5,22 +5,23 @@
         <TableHead class="w-6">
           <Checkbox v-model:checked="allCheck" @update:checked="allCheckChange" />
         </TableHead>
-        <TableHead v-for="title in totalTile" class="title">
+        <TableHead v-for="title in totalTile" class="title !w-[200px]">
           {{ title }}
         </TableHead>
       </TableRow>
     </TableHeader>
   </Table>
   <Table v-for="(item, index) in tabItems" :key="index" >
-    <TableHeader>
-      <TableRow class="!bg-[#f9fafb] relative">
+    <TableHeader class="relative">
+      <TableRow class="!bg-[#f9fafb">
         <TableHead class="w-6">
           <Checkbox v-model:checked="allCheck" @update:checked="allCheckChange" />
         </TableHead>
-        <TableHead v-for="title in totalTile" class="title">
+        <TableHead v-for="title in totalTile" class="title !w-[200px]">
           {{ title }}
         </TableHead>
-        <div class=" absolute top-0 left-0 right-0 bottom-0 bg-[#F9FAFB] flex items-center px-4 gap-6">
+      </TableRow>
+      <div class=" absolute top-0 left-0 right-0 bottom-0 bg-[#F9FAFB] flex items-center px-4 gap-6">
         <div class="flex items-center gap-2 text-nowrap bg-[#FFA024] rounded-full px-2 pt-1 text-[white] text-[12px]">售后单</div>
         <div class="flex gap-1"><div class="title">申请单号：</div><div class="text">{{ item.ffdOrderDetailVo.orderNo}}</div></div>
         <div class="flex gap-1"><div class="title">关联单号：</div><div class="text">{{ item.orderId }}</div></div>
@@ -28,7 +29,6 @@
         <div class="flex"><div class="title !text-[#2277FF]">制作订单</div><Lucide class="h-5 w-5" icon="ChevronRight" color="#2277FF"></Lucide></div>
       </div>
 
-      </TableRow>
     </TableHeader>
     <TableBody>
       <TableRow class="" :class="item.selected ? 'bg-muted' : ''">
@@ -57,7 +57,7 @@
             <span class="w-2 h-2 rounded-full bg-[#FFA024]"></span><span>{{ item.status}}</span>
           </div>
         </TableCell>
-        <TableCell class="text sm:!w-[240px]">
+        <TableCell class="text">
           <div class="flex gap-4 w-[fit-content]">
             <NuxtLink :to="`/aftersales/detail?id=${item.id}`">
             <div class="text-[#2277FF] cursor-pointer">查看详情</div></NuxtLink>

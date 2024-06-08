@@ -83,7 +83,7 @@ const FromData = ref({
   name: null,
   phone: null,
   phoneCode: null,
-  vendorType: 0
+  vendorType: 2
 });
 const emit = defineEmits(['change']);
 const nextStep = async () => {

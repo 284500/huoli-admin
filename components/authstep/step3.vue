@@ -142,7 +142,7 @@ const FromData=ref({
 });
 const other=ref({
   otherQualifications:null
-})
+});
 const emit=defineEmits(['change']);
 const nextStep=async ()=>{
   try{

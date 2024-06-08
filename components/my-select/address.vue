@@ -1,7 +1,7 @@
 
 <template>
   <Select v-model="address.selectProvince" class="w-[240px]" @update:modelValue="filterProvince">
-    <SelectTrigger class="w-[120px] px-3 py-2 !rounded-none !rounded-l-[4px]" v-bind="$attrs">
+    <SelectTrigger class=" px-3 py-2 !rounded-none !rounded-l-[4px]" v-bind="$attrs">
       <SelectValue placeholder="省份" />
     </SelectTrigger>
     <SelectContent position="popper">
@@ -9,16 +9,16 @@
     </SelectContent>
   </Select>
   <Select v-model="address.selectCity" class="w-[240px]" @update:modelValue="filterCity">
-    <SelectTrigger class="w-[120px] px-3 py-2 !rounded-none !rounded-l-[4px]" v-bind="$attrs">
-      <SelectValue placeholder="省份" />
+    <SelectTrigger class=" px-3 py-2 !rounded-none !rounded-l-[4px]" v-bind="$attrs">
+      <SelectValue placeholder="城市" />
     </SelectTrigger>
     <SelectContent position="popper">
       <SelectItem v-for="(item, index) in address.cities" :key="index" :value="item.label">{{ item.label }}</SelectItem>
     </SelectContent>
   </Select>
   <Select v-model="address.selectArea" class="w-[240px]" @update:modelValue="filterCounty">
-    <SelectTrigger class="w-[120px] px-3 py-2 !rounded-none !rounded-l-[4px]" v-bind="$attrs">
-      <SelectValue placeholder="省份" />
+    <SelectTrigger class=" px-3 py-2 !rounded-none !rounded-l-[4px]" v-bind="$attrs">
+      <SelectValue placeholder="地区" />
     </SelectTrigger>
     <SelectContent position="popper">
       <SelectItem v-for="(item, index) in address.area" :key="index" :value="item.label">{{ item.label }}</SelectItem>
@@ -58,6 +58,6 @@ const filterCity = () => {
       }
 };
 const filterCounty = () => {
-  emit('finish', {provide: address.selectProvince, city: address.selectCity, area: address.selectArea})
+  emit('finish', {province: address.selectProvince, city: address.selectCity, country: address.selectArea})
  };
 </script>

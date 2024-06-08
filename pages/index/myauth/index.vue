@@ -43,9 +43,6 @@ import Step6 from '@/components/authstep/step6.vue';
 import PersonStep6 from '@/components/authstep/person/step6.vue';
 import { onMounted } from 'vue';
 import {AuthProgress} from '@/server/apis/auth/index.js'
-
-
-
 const tabactive = ref(0);
 const EnterpriseStep = ref([
   '广告制作和投放协议',
@@ -85,7 +82,7 @@ const StepChange= (e) => {
   console.log(e)
 };
 onMounted(async() => {
-let data= await AuthProgress();
+let data= await AuthProgress({adId:12,adType:0});
 stepNumber.value = data?.process || 0;
 tabactive.value = data?.vendorType || 0;
 });

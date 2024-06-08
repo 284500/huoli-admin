@@ -43,7 +43,7 @@ export default defineNuxtConfig({
         changeOrigin: true,
       },
       '/admin': {
-        target: 'http://192.168.10.103:8082',
+        target: 'http://admin.fafadan.cn/',
         changeOrigin: true,
       },
       '/test': {

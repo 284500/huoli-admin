@@ -6,18 +6,19 @@
       <div class="title">认证成功</div>
     </div>
     <div class="mb-4">
-      <Button class="w-[80px] rounded-[4px] bg-[#ffffff] text-muted-foreground mr-3 hover:bg-white">重新认证</Button>
-
+      <Button class="w-[80px] rounded-[4px] bg-[#ffffff] text-muted-foreground mr-3 hover:bg-white" @click="prevStep">重新认证</Button>
     </div>
   </div>
 </template>
 <script setup>
+import {RevokewAuth} from '@/server/apis/auth/index.js'
 const emit=defineEmits(['change']);
 const nextStep=()=>{
   emit('change',)
 };
-const prevStep=()=>{
-  emit('change',)
+const prevStep=async ()=>{
+  await RevokewAuth({adId:12,adType:0})
+  emit('change',3)
 };
 </script>
 <style scoped>

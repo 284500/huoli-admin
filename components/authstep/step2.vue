@@ -27,32 +27,9 @@
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">经营地址</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div class="grid grid-cols-3 gap-3">
-              <Select v-model="FromData.province">
-                <SelectTrigger id="framework" class="w-full px-3 py-2 rounded-[4px]" >
-                  <SelectValue placeholder="申请退款" class="apply-text" />
-                </SelectTrigger>
-                <SelectContent position="popper">
-                  <SelectItem value="福建省"> 福建省 </SelectItem>
-                </SelectContent>
-              </Select>
-              <Select v-model="FromData.city">
-                <SelectTrigger id="framework" class="w-full px-3 py-2 rounded-[4px]">
-                  <SelectValue placeholder="申请退款" class="apply-text" />
-                </SelectTrigger>
-                <SelectContent position="popper">
-                  <SelectItem value="厦门市"> 厦门市 </SelectItem>
-                </SelectContent>
-              </Select>
-              <Select v-model="FromData.county">
-                <SelectTrigger id="framework" class="w-full px-3 py-2 rounded-[4px]">
-                  <SelectValue placeholder="申请退款" class="apply-text" />
-                </SelectTrigger>
-                <SelectContent position="popper">
-                  <SelectItem value="思明区"> 思明区 </SelectItem>
-                </SelectContent>
-              </Select>
+             <MySelectAddress @finish="setAddress"></MySelectAddress>
           </div>
-        </div>
+         </div>
         <div class="flex flex-col gap-1.5">
           <div><span class="apply-text">详细地址</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div>
@@ -88,10 +65,7 @@
       <Button class="w-[80px] rounded-[4px] bg-[#ffffff] text-muted-foreground mr-3 hover:bg-white" @click="prevStep">上一步</Button>
       <Button class="w-[80px] rounded-[4px] bg-[#2277ff] text-white" @click="nextStep">下一步</Button>
     </div>
-    <div class="flex gap-5 mb-10">
-    <MySelectAddress class="!w-[240px]"></MySelectAddress>
 
-    </div>
   </div>
 </template>
 <script setup>
@@ -131,6 +105,12 @@ formData.append('file', file);
 let{data:{data:data}}=await uploadImg(formData)
 FromData.value.enterpriseIcon=data.path;
 };
+//设置地址
+const setAddress=(data)=>{
+  FromData.value.province=data.province;
+  FromData.value.city=data.city;
+  FromData.value.county=data.country;
+}
 //获取验证码
 const getSms=async ()=>{
 let {data:data}= await getStep2Code(FromData.value.phone)
