@@ -5,7 +5,7 @@
     </template>
   </Myheader>
   <ScrollArea class="flex-1 overflow-auto">
-    <div class="w-[100vw] px-4 relative md:px-8 lg:px-12 box-border md:w-full">
+    <div class="w-[100vw] px-4 relative md:px-8 lg:px-12 box-border md:w-full min-h-[calc(100vh-76px)] flex flex-col">
       <div class="flex justify-between items-center">
         <div class="flex items-center">
           <div class="bg-[#2277FF] w-[3px] h-[16px] mr-2"></div>
@@ -42,8 +42,8 @@
         <MySelect class="mr-10" v-model="Orderparams" @Search="Order.getLists"></MySelect>
         <MySelectDate v-model="Orderparams"></MySelectDate>
       </div>
-      <div v-if="Order.pager.lists.length">
-        <MyTable :tab-items="Order.pager.lists" @delete="deleteOrder"> </MyTable>
+      <div v-if="Order.pager.lists.length" class="flex-1 flex flex-col">
+        <MyTable :tab-items="Order.pager.lists" @delete="deleteOrder" > </MyTable>
          <MyPagination v-model="Order.pager" @change="Order.getLists"></MyPagination></div>
         <div v-else class="flex flex-col items-center py-20">
           <svg width="184" height="152" viewBox="0 0 184 152" xmlns="http://www.w3.org/2000/svg">

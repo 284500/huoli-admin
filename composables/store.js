@@ -49,6 +49,17 @@ export const useLoginStore = defineStore('login', {
 
   },
 });
+export const useNavStore = defineStore('nav', {
+  state: () => ({
+   index:0,
+  }),
+  getters: {
+
+  },
+  persist: process.client && {
+    storage: sessionStorage,
+  },
+});
 export const useUserStore = defineStore('users', () => {
   const count = ref(12);
   return {

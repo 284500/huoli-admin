@@ -1,5 +1,5 @@
 <template>
-	<div class="flex items-center mt-6 mb-10 justify-center">
+	<div class="flex items-end mt-6 mb-10 justify-center flex-1">
 		<Pagination class="ml-4" v-model:page="pager.page" @update:page="pageChange" v-slot="{ page }"
 			:total="pager.count" :items-per-page="pager.size" :sibling-count="1" show-edges :default-page="1">
 			<PaginationList v-slot="{ items }" class="flex items-center gap-1">

@@ -27,8 +27,8 @@
         </div>
           <div class=" relative apply-text ">
             <span class="hidden-text float-left" :class="{'!line-clamp-[999]':toggletext}">日常用品杯/桶/碗/盒/管频道提供《几何花纹纸杯包装设计》在线包装设计创作，点击“编辑模板”按钮，可对《几何花纹纸杯包装设计》进行在线编辑，模板、尺寸和材质可自定义修改，可自主添加修改文字图片及背景颜色</span>
-            <span v-if="!toggletext" class=" float-right  !text-[#2277FF]" @click="toggletext=true">更多</span>
-            <div v-else class=" float-right !text-[#2277FF]" @click="toggletext=false">收起</div>
+            <span v-if="!toggletext" class=" float-right cursor-pointer  !text-[#2277FF]" @click="toggletext=true">更多</span>
+            <div v-else class=" float-right  cursor-pointer !text-[#2277FF]" @click="toggletext=false">收起</div>
 
           </div>
           <div class="mt-4 flex flex-col gap-3 text">

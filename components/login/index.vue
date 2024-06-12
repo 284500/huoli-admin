@@ -224,8 +224,9 @@ const accountlogin = async () => {
     emits('closepop', false);
     toast({
       title: '登陆成功',
-      duration: '2000',
+      duration: '3000',
     });
+    navigateTo('/');
   } else {
     existed.value.type = true;
     existed.value.data=data.msg;

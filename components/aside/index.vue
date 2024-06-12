@@ -1,14 +1,14 @@
 <script setup>
 import { ref } from 'vue';
-import { useLoginStore } from '~/composables/store';
+import { useLoginStore,useNavStore } from '~/composables/store';
 const Token = useCookie('huoli-token',{ maxAge:60*60*24*30});
 const store=useLoginStore();
+const nav=useNavStore();
 const props = defineProps(['tabList']);
 //选中按钮的索引
-const ActiveNumber = ref(-1);
 const ChangeActivenumber = (index) => {
   if(Token.value){
-  ActiveNumber.value = index;
+  nav.index= index;
   navigateTo(props.tabList[index].path)
 }
   else{
@@ -34,7 +34,7 @@ const ChangeActivenumber = (index) => {
           <div v-else>
 
               <div
-                :class="ActiveNumber === index ? 'isActive' : ''"
+                :class="nav.index === index ? 'isActive' : ''"
                 class="flex items-center gap-3 rounded-[4px] px-3 h-10 nav-tab"
                 @click="ChangeActivenumber(index)"
               >

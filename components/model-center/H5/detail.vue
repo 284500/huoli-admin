@@ -41,7 +41,7 @@
               <div class="!text-[#666666]">节日：</div><div>{{ props.data.applicableHolidays }}</div>
             </div>
           </div>
-          <Button class="mt-5">应用模板</Button>
+          <Button class="mt-5 w-full cursor-pointer" @click="jumpTo">应用模板</Button>
 
           <div class="sm:flex flex-col items-center mt-10 gap-3 hidden">
             <div class=" code-border"><img/></div>
@@ -56,12 +56,27 @@
   </ScrollArea>
 </template>
 <script setup>
+import { useLoginStore } from '~/composables/store';
+const Token = useCookie('huoli-token',{ maxAge:60*60*24*30});
+const store=useLoginStore();
 const props=defineProps({
   data:{
     type:Object,
   }
 })
 const emits=defineEmits(['close']);
+const jumpTo=()=>{
+if(Token.value){
+  navigateTo({
+    path:'/modelcenter/h5/edit',
+    query:{
+      id:props.data.id,
+    }
+  });
+}else{
+  store.isShow=true;
+}
+};
 </script>
 <style scoped>
 .code-border{
