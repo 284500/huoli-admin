@@ -169,8 +169,10 @@
 import { useToast } from '@/components/ui/toast/use-toast';
 import { reactive, ref, watch } from 'vue';
 import { accountLogin, mobileLogin, getResetCode,  getLoginCode, getSignupCode, getWechatCode, register,forgetPassword } from '@/server/apis/login/index';
-const Token = useCookie('huoli-token',{ maxAge:60*60*24*30*1000});
-const IsLogin = useCookie('isLogin',{ maxAge:60*60*24*30*1000 })
+const Token = useCookie('huoli-token',{ maxAge:60*60*24*30});
+const IsLogin = useCookie('isLogin',{ maxAge:60*60*24*30 });
+const UserInfo = useCookie('userInfo',{ maxAge:60*60*24*30 })
+
 const props = defineProps({
   logintype: {
     type: String,
@@ -218,6 +220,7 @@ const accountlogin = async () => {
   if (data.code === 200) {
     Token.value = data.data.token;
     IsLogin.value = true;
+    UserInfo.value = {id:data.data.id,...data.data.userVo};
     emits('closepop', false);
     toast({
       title: '登陆成功',
@@ -226,7 +229,6 @@ const accountlogin = async () => {
   } else {
     existed.value.type = true;
     existed.value.data=data.msg;
-
     setTimeout(() => {
       existed.value.type = false
     }, 2000)
@@ -238,6 +240,7 @@ const mobilelogin=async ()=>{
   if (data.code === 200) {
     Token.value = data.data.token;
     IsLogin.value = true;
+    UserInfo.value = {id:data.data.id,...data.data.userVo};
     emits('closepop', false);
     toast({
       title: '登陆成功',
@@ -347,7 +350,6 @@ const clear=()=>{
     userinfo.repassword='';
     userinfo.mobile='';
     userinfo.code='';
-
 }
 //改变方式
 const changeType = (type) => {

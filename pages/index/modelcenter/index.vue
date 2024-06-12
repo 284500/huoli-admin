@@ -182,7 +182,7 @@
 <script setup>
 
 import Myheader from '@/components/navbar/header.vue';
-import MyDrawer from '@/components/drawer/index.vue';
+import MyDrawer from '@/components/drawer/lower.vue';
 import MaterialDetail from '@/components/model-center/Material/detail.vue';
 import H5Detail from '@/components/model-center/H5/detail.vue';
 import MyPagination from '@/components/my-pagination/index.vue';
@@ -196,8 +196,7 @@ import { useDetail } from '@/hooks/useDetail';
 
 
 import { ref ,reactive} from 'vue';
-import { useMealsStore } from '~/composables/store';
-const store=useMealsStore()
+
 const isShow = ref(false);
 const H5params=reactive({});
 const Materialparams=reactive({});

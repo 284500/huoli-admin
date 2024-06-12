@@ -9,39 +9,47 @@
   </div>
   <DropdownMenu v-else>
     <DropdownMenuTrigger as-child>
-      <Button variant="secondary" size="icon" class="rounded-full">
-        <Lucide class="h-5 w-5" />
-        <span class="sr-only">Toggle user menu</span>
-      </Button>
+      <Avatar>
+       <AvatarImage :src="AvatorImg" alt="@radix-vue" />
+     </Avatar>
     </DropdownMenuTrigger>
-    <DropdownMenuContent align="center" >
-      <DropdownMenuLabel>My Account</DropdownMenuLabel>
-      <DropdownMenuSeparator />
-      <DropdownMenuItem>Settings</DropdownMenuItem>
-      <DropdownMenuItem>Support</DropdownMenuItem>
+    <DropdownMenuContent align="center">
+      <NuxtLink to="/security">
+      <DropdownMenuItem >安全中心</DropdownMenuItem>
+      </NuxtLink>
       <DropdownMenuSeparator />
       <DropdownMenuItem @click="logout">退出登录</DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
-  <Drawer v-model="isshow"><Login @closepop="Closepop" :logintype="loginType"></Login></Drawer>
+  <Drawer v-model="store.isShow"><Login @closepop="Closepop" :logintype="loginType"></Login></Drawer>
 </template>
 <script setup>
 import Drawer from '@/components/drawer/index.vue';
 import Login from '@/components/login/index.vue';
-const Token = useCookie('token');
-const IsLogin=useCookie('isLogin')
+import { useLoginStore } from '~/composables/store';
+const emit=defineEmits(['finish']);
+const store=useLoginStore();
+const Token = useCookie('huoli-token',{ maxAge:60*60*24*30});
+const IsLogin = useCookie('isLogin',{ maxAge:60*60*24*30});
+const UserInfo = useCookie('userInfo',{ maxAge:60*60*24*30 });
+//状态
+const AvatorImg=computed(()=>{
+  return UserInfo.value?.avator || '/img/login/user-avator.png';
+});
 const popup = (type) => {
   loginType.value = type;
-  isshow.value = true;
+  store.isShow = true;
+  console.log(store.isShow);
 };
-const isshow = ref(false);
 const loginType=ref('signup');
 const Closepop = (e) => {
   console.log(e);
-  isshow.value = false;
+  store.isShow = false;
+  emit('finish');
 };
 const logout = () => {
   Token.value=null;
   IsLogin.value=false;
-}
+  UserInfo.value=null;
+};
 </script>

@@ -45,8 +45,8 @@
               <div class="!text-[#666666]">节日：</div><div>端午节 夏至</div>
             </div>
           </div>
-          <nuxt-link :to="`/modelcenter/material/edit?id=${props.data.id}`" class="w-full">
-          <Button class="mt-5 w-full">应用模板</Button></nuxt-link>
+
+          <Button class="mt-5 w-full cursor-pointer" @click="jumpTo">应用模板</Button>
           <Separator class="my-4 sep-shadow" />
           <div class="font-[600] text-[#333333] my-1">费用评估</div>
           <div class="flex flex-col gap-1.5">
@@ -79,7 +79,7 @@
           </div>
           <div class="flex items-center mt-5">
           <div class="bg-[#2277FF] w-[3px] h-[12px] mr-2"></div>
-          <div class="!text-[14px] font-[600]">订单列表</div>
+          <div class="!text-[14px] font-[600]">产品价格表</div>
           </div>
           <MyTable  :tableData="tableData" :tableTitle="tableTile"></MyTable>
           <div class="descripe mt-3">以上评估仅从广告定制成本考虑，实际情况需要考虑，物流成本、有无样品、是否分发等综合条件略有浮动，仅供参考，最终价格以下单时支付金额为准。</div>
@@ -91,6 +91,9 @@
 <script setup>
 import Wuliao from '@/components/my-tab/wuliao.vue'
 import MyTable from '@/components/my-table/main.vue';
+import { useLoginStore } from '~/composables/store';
+const Token = useCookie('huoli-token',{ maxAge:60*60*24*30});
+const store=useLoginStore();
 const props=defineProps({
   data:{
     type:Object,
@@ -112,6 +115,18 @@ const tableData=ref([{
   number:1,
   price:'100',
 }]);
+const jumpTo=()=>{
+if(Token.value){
+  navigateTo({
+    path:'/modelcenter/material/edit',
+    query:{
+      id:props.data.id,
+    }
+  });
+}else{
+  store.isShow=true;
+}
+};
 </script>
 <style scoped>
 .main {

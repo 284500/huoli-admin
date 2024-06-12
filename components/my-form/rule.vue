@@ -111,10 +111,9 @@ const addrules = () => {
     }, 2000)
   } else {
     const data = concatProperties(rules.value);
-    emit('finish', {number:props.rulenumber-1,data});
+    emit('finish', {number:props.rulenumber,data});
   }
 };
-
 </script>
 <style scoped>
 .title {

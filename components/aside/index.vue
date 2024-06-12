@@ -1,9 +1,21 @@
 <script setup>
 import { ref } from 'vue';
-
+import { useLoginStore } from '~/composables/store';
+const Token = useCookie('huoli-token',{ maxAge:60*60*24*30});
+const store=useLoginStore();
 const props = defineProps(['tabList']);
 //选中按钮的索引
 const ActiveNumber = ref(-1);
+const ChangeActivenumber = (index) => {
+  if(Token.value){
+  ActiveNumber.value = index;
+  navigateTo(props.tabList[index].path)
+}
+  else{
+    store.isShow=true;
+    store.loginType='login';
+  }
+};
 </script>
 
 <template>
@@ -20,16 +32,15 @@ const ActiveNumber = ref(-1);
             {{ tab.name }}
           </div>
           <div v-else>
-            <NuxtLink :to="tab.path">
+
               <div
                 :class="ActiveNumber === index ? 'isActive' : ''"
                 class="flex items-center gap-3 rounded-[4px] px-3 h-10 nav-tab"
-                @click="ActiveNumber = index"
+                @click="ChangeActivenumber(index)"
               >
                 <img :src="tab.icon" class="h-4 w-4 svgicon" />
                 {{ tab.name }}
               </div>
-            </NuxtLink>
           </div>
         </div>
       </div>

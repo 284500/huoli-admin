@@ -37,19 +37,16 @@ export const useMealsStore = defineStore('meals', {
     storage: sessionStorage,
   },
 });
-export const useNavStore = defineStore('nav', {
+export const useLoginStore = defineStore('login', {
   state: () => ({
-   ActiveNumber:0,
-   keyword:"as"
+  loginType: 'login',
+  isShow:false,
   }),
   getters: {
 
   },
   actions: {
 
-  },
-  persist: process.client && {
-    storage: sessionStorage,
   },
 });
 export const useUserStore = defineStore('users', () => {

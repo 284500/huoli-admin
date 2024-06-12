@@ -24,11 +24,11 @@
                 <div class="number sm:!text-[40px] sm:leading-[48px] mr-auto flex items-center">
                   1000.03
                 </div>
-                <Button
+                <!-- <Button
                   class="sm:ml-6 ml-3 sm:h-10 text-[#2277FF] bWallet-[#2277FF] rounded-[4px]"
                   variant="outline" @click="isExtract = true"
                   >提现</Button
-                >
+                > -->
                 <Button class="sm:h-10 ml-3 rounded-[4px]" @click="isPay = true">充值</Button>
               </div>
             </div>

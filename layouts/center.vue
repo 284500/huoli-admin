@@ -1,4 +1,5 @@
 <template>
+  <Toaster />
   <div
     class="h-[88px] bg-[#ffffff] fixed top-0 left-0 right-0 flex justify-between pl-6 pr-9 items-center z-[1]"
   >
@@ -19,7 +20,7 @@
     </div>
     <RightButton></RightButton>
   </div>
-  <ScrollArea class="mt-[88px] h-[calc(100vh-88px)] overflow-auto bg-[#f6f7f9]">
+  <ScrollArea class="mt-[88px] h-[calc(100vh-88px)]  bg-[#f6f7f9]">
     <div class="min-h-[calc(100vh-88px)] flex justify-center px-4">
       <div class="w-full lg:w-[980px] xl:w-[1280px] pt-5 flex flex-col justify-between">
         <div>
