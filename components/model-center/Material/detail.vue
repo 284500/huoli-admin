@@ -25,12 +25,13 @@
           </div>
 
         </div>
-          <div class=" relative apply-text ">
-            <span class="hidden-text float-left" :class="{'!line-clamp-[999]':toggletext}">日常用品杯/桶/碗/盒/管频道提供《几何花纹纸杯包装设计》在线包装设计创作，点击“编辑模板”按钮，可对《几何花纹纸杯包装设计》进行在线编辑，模板、尺寸和材质可自定义修改，可自主添加修改文字图片及背景颜色</span>
-            <span v-if="!toggletext" class=" float-right cursor-pointer  !text-[#2277FF]" @click="toggletext=true">更多</span>
-            <div v-else class=" float-right  cursor-pointer !text-[#2277FF]" @click="toggletext=false">收起</div>
+        <div class="flex">
+        <div class="more-text" :class="{'!line-clamp-[999]':toggletext}">
+          <span v-if="!toggletext" class="btn" @click="toggletext=true">更多</span>
+            <span v-else class="btn" @click="toggletext=false">收起</span>
 
-          </div>
+          日常用品杯/桶/碗/盒/管频道提供《几何花纹纸杯包装设计》在线包装设计创作，点击“编辑模板”按钮，可对《几何花纹纸杯包装设计》进行在线编辑，模板、尺寸和材质可自定义修改，可自主添加修改文字图片及背景颜色，可自由选择素材，可自由添加图片、文字、图案等元素，可自由设置边框、阴影、透明度等属性。
+        </div></div>
           <div class="mt-4 flex flex-col gap-3 text">
             <div class="flex gap-3">
               <div class="!text-[#666666]">类型：</div><div>{{ props.data.productType }}</div>
@@ -85,7 +86,7 @@
           <div class="descripe mt-3">以上评估仅从广告定制成本考虑，实际情况需要考虑，物流成本、有无样品、是否分发等综合条件略有浮动，仅供参考，最终价格以下单时支付金额为准。</div>
       </div>
     </div>
-    <div class=" absolute right-4 top-4 xl:hidden"><Lucide icon="X" color="#666666" @click="emits('close')"></Lucide></div>
+    <div class=" absolute right-4 top-4 "><Lucide icon="X" color="#666666" @click="emits('close')"></Lucide></div>
   </ScrollArea>
 </template>
 <script setup>
@@ -132,6 +133,25 @@ if(Token.value){
 .main {
   background: #ffffff;
   /* border-radius: 8px 0px 0px 8px; */
+}
+.btn {
+  color: #2277ff;
+  float: right;
+  clear: both;
+  margin-left: 30px;
+  /*其他装饰样式*/
+}
+.more-text::before{
+  content:'';
+  float: right;
+  height: calc(100% - 24px);
+  background-color: red;
+}
+.more-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .hidden-text{
   display: -webkit-box;

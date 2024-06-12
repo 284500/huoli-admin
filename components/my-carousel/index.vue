@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card'
 const props=defineProps({
   imgList:{
     type:Array,
-    default:()=>['1','2','3','4','5','6']
+    default:()=>['1','2','3']
   }
 })
 const emblaMainApi = ref<CarouselApi>()
@@ -59,7 +59,7 @@ watchOnce(emblaMainApi, (emblaMainApi) => {
       class="relative w-full"
       @init-api="(val) => emblaThumbnailApi = val"
     >
-      <CarouselContent class="flex gap-2 ml-0">
+      <CarouselContent class="flex gap-2 ml-0 justify-center">
         <CarouselItem v-for="(_, index) in props.imgList" :key="index" class="pl-0 basis-1/5 cursor-pointer" @click="onThumbClick(index)">
           <div class="p-1" :class="index === selectedIndex ? '' : 'opacity-50'">
             <Card class="rounded-[0] mt-4">

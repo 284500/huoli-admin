@@ -39,7 +39,7 @@
           </div>
         </div>
         <div><img src="/public/img/address/chevron.png" alt="" /></div>
-        <div class="border-[1px] border-[#eeeeee] rounder-[4px] flex justify-between items-center p-4 flex-1 h-[80px]">
+        <div @click="isShow2=true" class="border-[1px] border-[#eeeeee] rounder-[4px] flex justify-between items-center p-4 flex-1 h-[80px]">
           <div class="flex items-center">
             <div
               class="w-8 h-8 address-text overflow-hidden flex justify-center items-center mr-3 rounded-full bg-[#FFA024]">
@@ -56,7 +56,7 @@
             </div>
           </div>
           <div class="flex gap-4">
-            <Lucide icon="ChevronRight" color="#CCCCCC" class="h-5 w-5" @click="isShow2=true"></Lucide>
+            <Lucide icon="ChevronRight" color="#CCCCCC" class="h-5 w-5" ></Lucide>
           </div>
         </div>
       </div>
@@ -406,6 +406,10 @@ const ruleList = ref([[], ['adad', 'testtsd'], ['adad', 'teste']]);
 const getTime = (e) => {
   placeData.value.deadline = e;
 };
+//设置总价格
+const totalAmount=computed(()=>{
+  return 120;
+})
 //设置收获地址
 const setDeliveryAddress=(e)=>{
   deliveryAddress.value.address=e.address;

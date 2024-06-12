@@ -1,19 +1,21 @@
 <template>
   <NuxtLayout >
-<div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
-  <Button @click="createOrder">立即下单</Button>
-  <Button @click="createWorks">保存</Button>
-</div>
+    <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
+   <Button @click="createOrder">立即下单</Button>
+   <Button @click="createWorks">保存</Button>
+   </div>
+   
   </NuxtLayout>
 </template>
 <script setup>
+import MyDrawer from '@/components/drawer/index.vue';
 import {addH5Work} from '@/server/apis/works/h5.js'
 const route=useRoute();
 definePageMeta({
   layout: 'center',
 });
 const createWorks=async ()=>{
-await addH5Work({templateId:Number(route.query.id),content:{name:'国庆长假'},name:'国庆'});
+
 };
 const createOrder=async ()=>{
   let data=await addH5Work({templateId:Number(route.query.id),content:{name:'国庆长假'},name:'国庆'});

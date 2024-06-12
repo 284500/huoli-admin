@@ -1,10 +1,10 @@
 <template>
   <div class="w-[100px] input-border flex justify-center items-center relative aspect-square">
     <input type="file" class=" absolute top-0 z-10 left-0 right-0 bottom-0 opacity-0" @change="upload" />
-    <img v-if="modelValue" class="absolute w-full h-full" :src="value" />
+    <img v-if="modelValue" class="absolute w-full h-full object-cover" :src="value" />
     <div v-else class="w-6 h-6  dashed-border flex justify-center items-center">
       <div class="w-[14px] h-[14px]  dashed-border">
-        <img src="/public/add.png" alt="" class="w-full h-full">
+        <img src="/public/add.png" alt="" class="w-full h-full object-cover">
       </div>
     </div>
   </div>

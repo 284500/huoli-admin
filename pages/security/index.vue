@@ -135,6 +135,7 @@ definePageMeta({
 });
 const { toast } = useToast();
 const IsLogin = useCookie('isLogin', { maxAge: 60 * 60 * 24 * 30 });
+const user = useCookie('userInfo',{ maxAge:60*60*24*30 })
 const userInfo = ref({});
 const newInfo = ref({
   avatar: null,
@@ -207,6 +208,7 @@ const getSms = async (type) => {
 //修改头像
 const ChangeAvatar = async () => {
   await editUserInfo({ field: 'avatar', value: newInfo.value.avatar });
+  user.value.avatar = newInfo.value.avatar;
   init();
   closePop();
   toast({
@@ -217,6 +219,7 @@ const ChangeAvatar = async () => {
 //修改昵称
 const ChangeNickname = async () => {
   await editUserInfo({ field: 'nickname', value: newInfo.value.nickname });
+  user.value.nickname = newInfo.value.nickname;
   init();
   closePop();
   toast({

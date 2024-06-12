@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
     <div class="w-full lg:w-[800px] min-h-[500px] flex flex-col justify-between">
-      <div v-if="pager.lists.length" class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div v-if="pager.lists.length" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div
             v-for="(item,index) in pager.lists" :key="index" :class="{'!bg-muted':Active===index}"
             @click="Active=index"
@@ -29,8 +29,8 @@
               <div>暂无数据</div>
         </div>
       <div class="flex justify-around">
-        <Button class="mt-4 mr-8" @click="edit">提交地址</Button>
-        <Button class="mt-4" variant="outline" @click="emit('cancel')">取消保存</Button>
+        <Button class="mt-4 mr-8 w-2/5  sm:w-[240px]" @click="edit">提交地址</Button>
+        <Button class="mt-4 w-2/5  sm:w-[240px]" variant="outline" @click="emit('cancel')">取消保存</Button>
       </div>
     </div>
   </div>
@@ -50,7 +50,7 @@ const emit = defineEmits(['finish','cancel']);
 const edit=async (id)=>{
   Params.id=pager.lists[Active.value].id;
   await getDetail();
-  let address=`${detail.data.province}${detail.data.city}${detail.data.county}${detail.data.address}`;
+  let address=`${detail.data.province} ${detail.data.city} ${detail.data.county} ${detail.data.address}`;
   let name=`${detail.data.consignee}${detail.data.phone}`;
   emit('finish',{address,name});
 }
