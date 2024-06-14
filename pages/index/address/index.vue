@@ -53,6 +53,8 @@
           </div>
         </div>
       </div>
+      <button @click="Alert.AlertShow({title:'测试'})">点击弹窗</button>
+      <MyAlert ref="Alert"></MyAlert>
       <Footer></Footer>
     </div>
   </ScrollArea>

@@ -132,11 +132,14 @@
               </div>
               <div class="flex gap-3">
                 <div class="muted-text w-[98px]">定向条件：</div>
-                <div class="text">{{ Orderdetail.targetedCondition }}</div>
+                <div class="text flex" v-if="Orderdetail.targetedCondition?.length">
+                  <div v-for="item in Orderdetail.targetedCondition">{{ item }}</div>
+                </div>
+                <div class="text" v-else>无</div>
               </div>
               <div class="flex gap-3">
                 <div class="muted-text w-[98px]">定向加价：</div>
-                <div class="text">{{ Orderdetail.targetedPrice/100 }}元</div>
+                <div class="text">{{ Orderdetail.targetedPrice }}元</div>
               </div>
 
             </div>

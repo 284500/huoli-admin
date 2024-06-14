@@ -357,13 +357,13 @@ const tableTitle = ref(['浙江印刷厂订单', '规格参数', '数量', '金�
 //基础表单数据
 const FormData = ref({
   amount: 120,
-  config: "102*96mm",
+  config: {"数量": "500张", "材料": "铜版纸300g-不覆膜", "规格": "900X54mm", "价格/元": "10"},
   content: {},
   deadline: null,
   harvestAddress:null,
   isSendSample: 1,
   isVideoSendSample: 1,
-  orderName: "laborum tempor",
+  orderName: "卡片",
   quantity:0,
   productId: 2,
   productName: "ut aute",

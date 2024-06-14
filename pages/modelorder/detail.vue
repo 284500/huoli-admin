@@ -7,31 +7,37 @@
           <div class="flex items-center">
             <div class="title mr-2">订单状态</div>
             <div
-             v-if="material.status!==10"
-              :class="{'!bg-[#2277FF]':material.status>2}"
+              v-if="material.status !== 10"
+              :class="{ '!bg-[#2277FF]': material.status > 2 }"
               class="px-2 pt-1 py-0.5 rounded-[12px] bg-[#FFA024] text-center text-white font-medium text-[14px] leading-[16px]"
             >
-             {{statusList[material.status]}}
+              {{ statusList[material.status] }}
             </div>
             <div
-              v-if="material.status===10"
+              v-if="material.status === 10"
               class="px-2 py-1 rounded-[12px] bg-[#2277FF] text-center text-white font-medium text-[14px] leading-[16px]"
             >
-             {{statusList[material.status]}}
+              {{ statusList[material.status] }}
             </div>
           </div>
           <nuxt-link :to="`/modelcenter/material/pay?id=${material.id}`">
-          <Button v-if="material.status===0">立即付款</Button></nuxt-link>
-          <Button v-if="material.status===1" @click="deleteOrder(material.id)">取消订单</Button>
+            <Button v-if="material.status === 0">立即付款</Button></nuxt-link
+          >
+          <Button v-if="material.status === 1" @click="deleteOrder(material.id)">取消订单</Button>
         </div>
-        <div v-if="material.status<8">
+        <div v-if="material.status < 8">
           <div class="flex">
             <div class="text">该订单会为您保留</div>
             <div class="text !text-[#FF5030]">7天</div>
             <div class="text">（从下单之日算起），7天之后如果还未付款，系统将自动取消该订单。</div>
           </div>
         </div>
-        <MyStep v-if="material.status<8" :tab="stepTab" :activeNumber="stepNumber" class="mt-6"></MyStep>
+        <MyStep
+          v-if="material.status < 8"
+          :tab="stepTab"
+          :activeNumber="stepNumber"
+          class="mt-6"
+        ></MyStep>
       </div>
       <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
         <div class="grid md:grid-cols-2 relative gap-x-10 md:gap-x-20 gap-y-5">
@@ -67,46 +73,57 @@
               </div>
             </div>
           </div>
-
+        </div>
+        <div v-if="material.isRelease === '是'">
+          <Separator class="!bg-[#EEEEEE] mt-8 mb-6" />
+          <div class="flex items-center gap-3 mb-3 justify-between">
+            <div class="flex items-center">
+              <div class="title mr-2">投放信息</div>
+            </div>
+          </div>
+          <MyTableMaterialPlaceinfo
+            :item="placeorder"
+            :name="material.ffdOrderDesignDetailVo?.productName"
+          ></MyTableMaterialPlaceinfo>
         </div>
       </div>
       <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
         <h1 class="title">购买信息</h1>
-        <MyTable :hasCheck="false" :tabItems="TabItems"></MyTable>
+        <MyTable :tabItems="TabItems"></MyTable>
         <div class="py-4">
           <div class="gap-3 flex flex-col items-end">
-              <div class="flex gap-2">
-                <div class="muted-text">产品总价：</div>
-                <div class="text w-24  text-right">￥20.00</div>
-              </div>
-              <div class="flex gap-2">
-                <div class="muted-text">样品费：</div>
-                <div class="text w-24  text-right">￥20.00</div>
-              </div>
-
-              <div class="flex gap-2 items-center">
-                <Lucide icon="CircleHelp" color="#AAAAAA" class="w-4 h-4"></Lucide>
-                <div class="muted-text">寄样物流费：</div>
-                <div class="text w-24  text-right">￥20.00</div>
-              </div>
-
-              <div class="flex gap-2">
-                <div class="muted-text">广告投放费：</div>
-                <div class="text w-24  text-right">￥20.00</div>
-              </div>
-              <div class="flex gap-2 items-center">
-                <Lucide icon="CircleHelp" color="#AAAAAA" class="w-4 h-4"></Lucide>
-
-                <div class="muted-text">钱包原有款：</div>
-                <div class="text w-24  text-right !text-[#FF5030]" >-￥20.00</div>
-              </div>
-              <div class="flex gap-2">
-                <div class="muted-text">物流费用：</div>
-                <div class="text w-24  text-right">￥20.00</div>
-              </div>
+            <div class="flex gap-2">
+              <div class="muted-text">产品总价：</div>
+              <div class="text w-24 text-right">￥20.00</div>
             </div>
+            <div class="flex gap-2">
+              <div class="muted-text">样品费：</div>
+              <div class="text w-24 text-right">￥20.00</div>
+            </div>
+
+            <div class="flex gap-2 items-center">
+              <Lucide icon="CircleHelp" color="#AAAAAA" class="w-4 h-4"></Lucide>
+              <div class="muted-text">寄样物流费：</div>
+              <div class="text w-24 text-right">￥20.00</div>
+            </div>
+
+            <div class="flex gap-2">
+              <div class="muted-text">广告投放费：</div>
+              <div class="text w-24 text-right">￥20.00</div>
+            </div>
+            <div class="flex gap-2 items-center">
+              <Lucide icon="CircleHelp" color="#AAAAAA" class="w-4 h-4"></Lucide>
+
+              <div class="muted-text">钱包原有款：</div>
+              <div class="text w-24 text-right !text-[#FF5030]">-￥20.00</div>
+            </div>
+            <div class="flex gap-2">
+              <div class="muted-text">物流费用：</div>
+              <div class="text w-24 text-right">￥20.00</div>
+            </div>
+          </div>
         </div>
-        <Separator/>
+        <Separator />
 
         <div class="flex justify-end mt-4 items-center">
           <div class="title !text-[14px] !leading-[20px]">订单合计：</div>
@@ -117,19 +134,18 @@
   </NuxtLayout>
 </template>
 <script setup>
-import MyTable from '@/components/my-table/table.vue';
-import {  getOrderDetail } from '@/server/apis/modelorder/index.js';
-import {  getMaterialOrder } from '@/server/apis/placeorder/index.js';
-import { cancelOrder } from '@/server/apis/modelorder/index.js';
+import MyTable from '@/components/my-table/material/config.vue';
 import { useToast } from '@/components/ui/toast/use-toast';
+import { cancelOrder, getOrderDetail } from '@/server/apis/modelorder/index.js';
+import { getMaterialOrder } from '@/server/apis/placeorder/index.js';
 const { toast } = useToast();
 
 definePageMeta({
   layout: 'center',
 });
-const route=useRoute();
-const material=ref({});
-const placeorder=ref({});
+const route = useRoute();
+const material = ref({});
+const placeorder = ref({});
 const BreadcrumbList = ref([
   {
     name: '物料订单',
@@ -149,7 +165,6 @@ const stepTab = ref([
   '确认收样',
   '制作商发货',
   '完成',
-
 ]);
 const statusList = ref([
   '待付款',
@@ -174,17 +189,17 @@ const TabItems = ref([
     productType: '名片',
   },
 ]);
-const deleteOrder=async (e)=>{
-  await cancelOrder({id:Number(e)});
+const deleteOrder = async (e) => {
+  await cancelOrder({ id: Number(e) });
   toast({
-  title: '取消订单',
- })
+    title: '取消订单',
+  });
   init();
 };
-const init=async ()=>{
-  material.value=await getOrderDetail({id:Number(route.query.id)})
-  // placeorder.value=await getMaterialOrder({orderId:Number(route.query.id)})
-  stepNumber.value=material.value.status+1 || 0;
+const init = async () => {
+  material.value = await getOrderDetail({ id: Number(route.query.id) });
+  placeorder.value = await getMaterialOrder({ orderId: Number(route.query.id) });
+  stepNumber.value = material.value.status + 1 || 0;
 };
 onMounted(init);
 </script>

@@ -13,7 +13,10 @@
         <Separator class="mt-4 mb-5" />
         <div class="flex flex-col gap-4">
           <div class="flex flex-col gap-1.5">
-            <div><span class="apply-text">申请类型</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
+            <div>
+              <span class="apply-text">申请类型</span
+              ><span class="text-[#FF5030] ml-[2px] pt-2">*</span>
+            </div>
 
             <div>
               <Select>
@@ -27,41 +30,45 @@
             </div>
           </div>
           <div class="flex flex-col gap-1.5">
-            <div><span class="apply-text">申请理由</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
+            <div>
+              <span class="apply-text">申请理由</span
+              ><span class="text-[#FF5030] ml-[2px] pt-2">*</span>
+            </div>
 
             <div>
-              <Input
-                id="search"
-                type="text"
-                placeholder="请输入"
-                class=" w-full rounded-[4px]"
-              />
+              <Input id="search" type="text" placeholder="请输入" class="w-full rounded-[4px]" />
             </div>
           </div>
           <div class="flex flex-col gap-1.5">
             <div><span class="apply-text">申请凭证</span></div>
             <div class="flex gap-2">
               <div class="w-[100px] h-[100px]"></div>
-              <div  class="w-[100px] h-[100px] input-border flex justify-center items-center">
-                <div class="w-6 h-6  dashed-border flex justify-center items-center">
-                  <div class="w-[14px] h-[14px]  dashed-border">
-                    <img src="/public/add.png" alt="" class="w-full h-full" >
+              <div class="w-[100px] h-[100px] input-border flex justify-center items-center">
+                <div class="w-6 h-6 dashed-border flex justify-center items-center">
+                  <div class="w-[14px] h-[14px] dashed-border">
+                    <img src="/public/add.png" alt="" class="w-full h-full" />
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="mb-4">
-      <Button class="w-[80px] rounded-[4px] bg-[#ffffff] text-muted-foreground mr-12 hover:bg-white" @click="router.back">取消申请</Button>
-      <Button class="w-[80px] rounded-[4px] bg-[#2277ff] text-white" @click="nextStep">确认申请</Button>
-      </div>
+            <Button
+              class="w-[80px] rounded-[4px] bg-[#ffffff] text-muted-foreground mr-12 hover:bg-white"
+              @click="router.back"
+              >取消申请</Button
+            >
+            <Button class="w-[80px] rounded-[4px] bg-[#2277ff] text-white" @click="nextStep"
+              >确认申请</Button
+            >
+          </div>
         </div>
       </div>
     </div>
   </NuxtLayout>
 </template>
 <script setup>
-import MyTable from '@/components/my-table/table.vue';
+import MyTable from '@/components/my-table/material/config.vue';
 import { addAfterSale } from '@/server/apis/aftersale/index.js';
 
 definePageMeta({
@@ -69,9 +76,7 @@ definePageMeta({
 });
 const route = useRoute();
 const router = useRouter();
-const FromData=reactive({
-
-})
+const FromData = reactive({});
 const BreadcrumbList = ref([
   {
     name: '物料订单',
@@ -95,7 +100,7 @@ const TabItems = ref([
     productType: '名片',
   },
 ]);
-const nextStep =async () => {
+const nextStep = async () => {
   await addAfterSale(FromData);
 };
 </script>
@@ -141,11 +146,11 @@ const nextStep =async () => {
   border-radius: 4px;
 }
 .input-border {
-  border: 1px solid #DDDDDD;
+  border: 1px solid #dddddd;
   border-radius: 4px;
 }
-.dashed-border{
-  border: 1px dashed #DDDDDD;
+.dashed-border {
+  border: 1px dashed #dddddd;
 }
 .table-title {
   font-size: 16px;
@@ -184,12 +189,14 @@ input::placeholder {
   color: #aaaaaa;
   line-height: 20px;
 }
-.apply-text{
+.apply-text {
   height: 24px;
-font-size: 14px;
-font-family: PingFang SC, PingFang SC-Regular;
-font-weight: 400;
-color: #333333;
-line-height: 24px;
+  font-size: 14px;
+  font-family:
+    PingFang SC,
+    PingFang SC-Regular;
+  font-weight: 400;
+  color: #333333;
+  line-height: 24px;
 }
 </style>

@@ -1,10 +1,10 @@
 <template>
 <Transition>
- <Alert :variant="isError?'destructive':''" class="alert " v-if="isShow">
+ <Alert :variant="isError?'destructive':''" class="alert z-[9999999]" v-if="isShow">
     <AlertCircle class="w-4 h-4" />
-    <AlertTitle>{{ title }}</AlertTitle>
+    <AlertTitle>{{ options.title }}</AlertTitle>
     <AlertDescription>
-     {{ message }}
+     {{ options.message }}
     </AlertDescription>
   </Alert>
 </Transition>
@@ -24,8 +24,15 @@ const props = defineProps({
     default:false
   }
 });
+const options=reactive({
+  title:'Error',
+  message:'Your session has expired. Please log in again.',
+  isError:false,
+  duration:2000
+})
 const isShow=ref(false);
-const AlertShow=()=>{
+const AlertShow=({title,data,duration})=>{
+  options.title=title;
   isShow.value=true;
   setTimeout(()=>{
     isShow.value=false;
@@ -49,6 +56,6 @@ defineExpose({AlertShow});
 
 .v-enter-from,
 .v-leave-to {
-  top:-20%
+  top:-10%;
 }
 </style>

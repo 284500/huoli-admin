@@ -19,9 +19,9 @@ const df = new DateFormatter('zh', {
 const date=ref<any>({start:null,end:null})
 const emit=defineEmits(['change'])
 const value = ref({
-  start: new CalendarDate(2022, 1, 20),
-  end: new CalendarDate(2022, 1, 20).add({ days: 20 }),
-}) as Ref<DateRange>
+  start: null,
+  end: null,
+})
 function convertToTimestamp(year:any, month:any, day:any) {
     var date = new Date(year, month - 1, day);
     var timestamp = date.getTime();
