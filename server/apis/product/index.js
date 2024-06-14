@@ -29,7 +29,7 @@ export function ProductEdit(data) {
 }
 //获取单个产品详情
 export function getProductDetail(params) {
-  return getAxios('/api/admin-api/ffd/v1/product/detail', params);
+  return getAxios('/api/app-api/ffd/v1/product/detail', params);
 }
 //删除产品
 export function ProductDel(data) {

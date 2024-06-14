@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue';
 import { useLoginStore,useNavStore } from '~/composables/store';
 const Token = useCookie('huoli-token',{ maxAge:60*60*24*30});
 const store=useLoginStore();
@@ -27,8 +26,8 @@ const ChangeActivenumber = (index) => {
         </a>
       </div>
       <div class="flex-1 px-4">
-        <div v-for="(tab, index) in props.tabList">
-          <div v-if="tab.isTitle" class="title items-start px-3 mt-5 mb-2">
+        <div v-for="(tab, index) in props.tabList" :class="{'cursor-pointer':!tab.isTitle}">
+          <div v-if="tab.isTitle" class="title items-start px-3 mt-5 mb-2  ">
             {{ tab.name }}
           </div>
           <div v-else>

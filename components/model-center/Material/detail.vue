@@ -13,7 +13,7 @@
         <div v-else class="h-[600px] bg-[#F0F1F5] w-full"></div>
       </div>
       <div class="flex flex-col flex-1 min-w-[300px] max-w-[720px]">
-        <h1 class="main-title">{{ props.data.name }} </h1>
+        <h1 class="main-title">{{ data.name }} </h1>
         <div class="flex  justify-between mt-3">
           <div class="px-2 py-1 bg-[rgba(255,160,36,0.10)] rounded-full flex items-center">
             <span class="text-[12px] text-[#FFA024] leading-4  font-[500]">线下免费印刷</span>
@@ -34,16 +34,16 @@
         </div></div>
           <div class="mt-4 flex flex-col gap-3 text">
             <div class="flex gap-3">
-              <div class="!text-[#666666]">类型：</div><div>{{ props.data.productType }}</div>
+              <div class="!text-[#666666]">类型：</div><div>{{ data.productType }}</div>
             </div>
             <div class="flex gap-3">
-              <div class="!text-[#666666]">行业：</div><div>{{ props.data.industryTypeList }}</div>
+              <div class="!text-[#666666]">行业：</div><div>{{ data.industryTypeList }}</div>
             </div>
             <div class="flex gap-3">
-              <div class="!text-[#666666]">颜色：</div><div ><div class="w-5 h-5 rounded-full bg-[#BCE6D1]"></div></div>
+              <div class="!text-[#666666]">颜色：</div><div ><div class="w-5 h-5 rounded-full bg-[#BCE6D1]" :style="`background:${data.themeColor}`"></div></div>
             </div>
             <div class="flex gap-3">
-              <div class="!text-[#666666]">节日：</div><div>端午节 夏至</div>
+              <div class="!text-[#666666]">节日：</div><div>{{ data.applicableHolidays }}</div>
             </div>
           </div>
 
@@ -82,7 +82,7 @@
           <div class="bg-[#2277FF] w-[3px] h-[12px] mr-2"></div>
           <div class="!text-[14px] font-[600]">产品价格表</div>
           </div>
-          <MyTable  :tableData="tableData" :tableTitle="tableTile"></MyTable>
+          <MyTable :tableData="product.productBaseData?.priceSettings" :tableTitle="tableTile"></MyTable>
           <div class="descripe mt-3">以上评估仅从广告定制成本考虑，实际情况需要考虑，物流成本、有无样品、是否分发等综合条件略有浮动，仅供参考，最终价格以下单时支付金额为准。</div>
       </div>
     </div>
@@ -98,6 +98,9 @@ const store=useLoginStore();
 const props=defineProps({
   data:{
     type:Object,
+  },
+  product:{
+    type:Object,
   }
 })
 const emits=defineEmits(['close']);
@@ -105,17 +108,6 @@ const tabactive = ref(0);
 const tabList = ref(['模板详情', '客户分享']);
 const toggletext = ref(false);
 const tableTile=ref(['材料','规格','数量','价格/元']);
-const tableData=ref([{
-  material:'100g',
-  specification:'100g',
-  number:1,
-  price:'100',
-},{
-  material:'100g',
-  specification:'100g',
-  number:1,
-  price:'100',
-}]);
 const jumpTo=()=>{
 if(Token.value){
   navigateTo({

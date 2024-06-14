@@ -46,5 +46,5 @@
 	});
 	const pageChange = (page) => {
 		emit('change')
-	}
+	};
 </script>

@@ -16,11 +16,38 @@ import { cn } from '@/lib/utils'
 const df = new DateFormatter('zh', {
   dateStyle: 'medium',
 })
+const date=ref<any>({start:null,end:null})
 const emit=defineEmits(['change'])
 const value = ref({
   start: new CalendarDate(2022, 1, 20),
   end: new CalendarDate(2022, 1, 20).add({ days: 20 }),
 }) as Ref<DateRange>
+function convertToTimestamp(year:any, month:any, day:any) {
+    var date = new Date(year, month - 1, day);
+    var timestamp = date.getTime();
+    return Math.floor(timestamp / 1000);
+}
+const getStart=(startDate:any) =>
+{
+
+if(startDate){
+  value.value.start = startDate;
+  const {year,month,day}=startDate;
+  date.value.start=convertToTimestamp(year, month, day)
+  emit('change',date.value)
+}else{
+  emit('change',{start:null,end:null});
+}
+}
+const getTime=(e:any)=>{
+  if(e.end){
+  const {year,month,day}=e.end;
+  date.value.end=convertToTimestamp(year, month, day)
+  emit('change',date.value);
+  }else{
+    date.value.end=null;
+  }
+}
 </script>
 
 <template>
@@ -50,7 +77,7 @@ const value = ref({
       </Button>
     </PopoverTrigger>
     <PopoverContent class="w-auto p-0">
-      <RangeCalendar v-model="value" initial-focus :number-of-months="2" @update:start-value="(startDate) => value.start = startDate" />
+      <RangeCalendar v-model="value" initial-focus :number-of-months="2" @update:start-value="getStart" @update:model-value="getTime" />
     </PopoverContent>
   </Popover>
 </template>

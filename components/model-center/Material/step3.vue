@@ -50,7 +50,7 @@
       <div class=" bg-white flex justify-center items-center">
         <div class="w-full lg:w-[980px] xl:w-[1280px] flex justify-end items-center">
           <div class="apply-text">合计(含运费,投放费)：</div>
-          <div class="number !text-[18px]">￥270.00</div>
+          <div class="number !text-[18px]">￥{{ material.amount }}</div>
           <Button class="ml-6" @click="payorder">提交订单</Button>
         </div>
       </div>
@@ -72,7 +72,7 @@
         </div>
         <div class="flex flex-col items-center">
           <div class="table-title !font-[400]">订单支付金额</div>
-          <div class="pop-number my-1">￥270.00</div>
+          <div class="pop-number my-1">￥{{ material.amount }}</div>
           <div class="pop-code my-4"><img :src="qr_code" class="w-full h-full" /></div>
 
           <div class="apply-text !text-[#666666] ">请使用{{ payconfig.payWay === 3 ? '支付宝' : '微信' }}扫一扫，扫描二维码支付</div>
@@ -222,7 +222,7 @@ onMounted(() => {
 .number {
   font-size: 24px;
   font-family: Arial, Arial-Regular;
-  font-weight: 400;
+  font-weight: 600;
   color: #333333;
   line-height: 32px;
 }

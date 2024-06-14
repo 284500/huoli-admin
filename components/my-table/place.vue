@@ -22,7 +22,7 @@
         <TableCell class="text">{{ item.releaseArea }}</TableCell>
         <TableCell class="text">{{ $dayjs(item.deadline * 1000).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
         <TableCell class="text">￥{{ item.regularPrice }}</TableCell>
-        <TableCell class="text">{{item.targetedPrice/100}}</TableCell>
+        <TableCell class="text">{{item.targetedPrice}}</TableCell>
         <TableCell class="text">{{ item.prepaidAmount }}</TableCell>
         <TableCell>
           <div class="flex items-center gap-1.5">
@@ -31,14 +31,15 @@
           </div>
         </TableCell>
         <TableCell class="text sm:!w-[200px]">
-          <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-2" v-if="item.status!=='已停止'">
             <div class="flex justify-between">
-              <div class="text flex !text-[12px]"><span>300</span><span class="text-[#999999]">/</span><span
+              <div class="text flex !text-[12px]"><span>{{ item.releaseCount}}</span><span class="text-[#999999]">/</span><span
                   class="text-[#999999]">{{ item.quantity }}</span></div>
-              <div class="text-[#2277FF]">30%</div>
+              <div class="text-[#2277FF]" :class="{'text-[#12D137]':item.releaseCount==item.quantity}">{{ item.releaseCount/item.quantity*100 }}%</div>
             </div>
-            <Progress :model-value="33" class="!bg-[#F6F7F9]" />
+            <Progress :model-value="item.releaseCount/item.quantity" class="!bg-[#F6F7F9]" />
           </div>
+          <div v-else>-</div>
         </TableCell>
         <TableCell class="text sm:!w-[200px]">
           <div class="flex gap-4 w-[fit-content]">

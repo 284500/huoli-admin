@@ -27,7 +27,7 @@ function convertToTimestamp(year:any, month:any, day:any) {
 const getTime=(e:any)=>{
   if(e){
   const {year,month,day}=e;
-  const date=convertToTimestamp(year, month, day)
+  const date=convertToTimestamp(year, month, day);
   emit('check',date);
   }else{
     emit('check',null);

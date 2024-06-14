@@ -54,8 +54,7 @@
         </div>
         <div class="mt-3 w-full h-10 flex gap-3">
           <Input class="w-full h-10 rounded-[4px]" type="phone" placeholder="请输入验证码" v-model="userinfo.code" required />
-          <Button class="h-full px-3 text-[#333333]" variant="outline" @click="logincode" :disabled="disabled.mobile">{{
-        disabled.mobile ? `(${countdown}s)后重新获取` : '获取验证码' }}</Button>
+          <MyButtonSms ref="LoginButton" type="LoginButton" @click="logincode"></MyButtonSms>
         </div>
         <div class="w-full text-left text-[12px] mt-2 text-[#f15533]" v-if="existed.type">{{ existed.data }}</div>
 
@@ -108,9 +107,7 @@
         </div>
         <div class="mt-3 w-full h-10 flex gap-3">
           <Input class="w-full h-10 rounded-[4px]" type="phone" placeholder="请输入验证码" v-model="userinfo.code" required />
-          <Button class="h-full px-3 text-[#333333]" variant="outline" @click="signupcode"
-            :disabled="disabled.signup">{{
-        disabled.signup ? `(${countdown}s)后重新获取` : '获取验证码' }}</Button>
+          <MyButtonSms ref="SignupButton" type="SignupButton" @click="signupcode"></MyButtonSms>
         </div>
         <div class="mt-3 w-full h-10">
           <Input class="w-full h-10 rounded-[4px]" type="password" placeholder="请输入密码" v-model="userinfo.password"
@@ -139,8 +136,8 @@
         </div>
         <div class="mt-3 w-full h-10 flex gap-3">
           <Input class="w-full h-10 rounded-[4px]" type="phone" placeholder="请输入验证码" v-model="userinfo.code" required />
-          <Button class="h-full px-3 text-[#333333]" variant="outline" @click="resetcode" :disabled="disabled.resert">{{
-        disabled.resert ? `(${countdown}s)后重新获取` : '获取验证码' }}</Button>
+          <MyButtonSms ref="ResertButton" type="ResertButton" @click="resertcode"></MyButtonSms>
+
         </div>
         <div class="mt-3 w-full h-10">
           <Input class="w-full h-10 rounded-[4px]" type="phone" placeholder="请输入密码" v-model="userinfo.password"
@@ -191,10 +188,10 @@ const userinfo = reactive({
 //微信二维码地址
 const codeurl = ref('');
 //判断登录密码是否一致
-watch(() => userinfo.mobile, (now) => {
-  console.log(now);
-  // hanleInput()
-})
+// watch(() => userinfo.mobile, (now) => {
+//   console.log(now);
+//   // hanleInput()
+// })
 //倒计时
 const countdown = ref(60);
 //错误提示
@@ -202,6 +199,8 @@ const existed = ref({
   type:false,
   data:''
 });
+
+
 //禁用按钮
 const disabled = reactive({
   login: false,
@@ -209,7 +208,9 @@ const disabled = reactive({
   vercode: false,
   resert:false,
 });
-
+const LoginButton=ref(null);
+const SignupButton=ref(null);
+const ResertButton=ref(null);
 //登录方式
 const Type = ref(props.logintype);
 //通知弹窗
@@ -261,15 +262,7 @@ const signupcode = async () => {
   hanleInput();
   if (vaildate.mobile) {
     await getSignupCode(userinfo.mobile)
-    countdown.value = 60;
-    disabled.signup = true;
-    setInterval(() => {
-      countdown.value--;
-      if (countdown.value === 0) {
-        disabled.signup = false;
-        countdown.value = 60;
-      }
-    }, 1000);
+    SignupButton.value.countDown();
   } else {
     alert('请输入正确的手机号')
   }
@@ -279,35 +272,24 @@ const logincode = async () => {
   hanleInput();
   if (vaildate.mobile) {
     await getLoginCode(userinfo.mobile)
-    countdown.value = 60;
-    disabled.mobile = true;
-    setInterval(() => {
-      countdown.value--;
-      if (countdown.value === 0) {
-        disabled.mobile = false;
-        countdown.value = 60;
-      }
-    }, 1000);
+    LoginButton.value.countDown();
   } else {
-    alert('请输入正确的手机号')
+    toast({
+      title: '请输入正确的手机号',
+      duration: '3000',
+    });
   }
 };
 //获取重置密码验证码
-const resetcode = async () => {
+const resertcode = async () => {
   hanleInput();
   if (vaildate.mobile) {
-    await getResetCode(userinfo.mobile)
-    countdown.value = 60;
-    disabled.resert = true;
-    setInterval(() => {
-      countdown.value--;
-      if (countdown.value === 0) {
-        disabled.resert = false;
-        countdown.value = 60;
-      }
-    }, 1000);
+    ResertButton.value.countDown();
   } else {
-    alert('请输入正确的手机号')
+    toast({
+      title: '请输入正确的手机号',
+      duration: '3000',
+    });
   }
 };
 //注册函数

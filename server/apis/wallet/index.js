@@ -7,6 +7,10 @@ export const getWalletList = (data) => {
 export const getWalletDetail = (data) => {
   return getAxios('/api/app-api/ffd/v1/trade/record/detail', data);
 };
+//锁定明细列表
+export const getLockList = (data) => {
+  return getAxios('/api/app-api/ffd/v1/advertiser/lock_detail/list', data);
+};
 //新增交易流水
 export const addWallet = (data) => {
   return postAxios('/api/app-api/ffd/v1/trade/record/add', data);
@@ -18,4 +22,8 @@ export const editWallet = (data) => {
 //删除交易流水
 export const deleteWallet = (data) => {
   return postAxios('/api/app-api/ffd/v1/trade/record/del', data);
+};
+//获取账户详情
+export const getAccountInfo = (data) => {
+  return getAxios('/api/app-api/ffd/v1/advertiser/account/detail', data);
 };

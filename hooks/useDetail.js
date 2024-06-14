@@ -12,6 +12,7 @@ export function useDetail(fetchFun,params) {
     return fetchFun(params)
       .then((res) => {
        detail.data=res;
+       return res;
       })
       .catch((err) => {
         return Promise.reject(err);

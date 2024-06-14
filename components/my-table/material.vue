@@ -21,7 +21,7 @@
           </div>
         </TableCell>
         <TableCell class="text">{{ item.quantity + item.unit }}</TableCell>
-        <TableCell class="text">是</TableCell>
+        <TableCell class="text">{{ item.isRelease }}</TableCell>
         <TableCell class="text">￥{{ item.unitPrice }}</TableCell>
         <TableCell class="text">￥{{ item.payAmount }}</TableCell>
         <TableCell class="text">{{item.payTime?$dayjs(item.payTime*1000).format('YYYY-MM-DD HH:mm:ss'):'-' }}</TableCell>

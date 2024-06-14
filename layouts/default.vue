@@ -1,5 +1,5 @@
 <template>
-  <Toaster />
+  <Toaster style="z-index: 10001;" />
   <div>
     <div class="flex h-screen w-full">
 

@@ -11,17 +11,58 @@
           <div class="bg-[#2277FF] w-[3px] h-[16px] mr-2"></div>
           <div class="!text-[16px]">数据统计</div>
         </div>
-        <MyDate></MyDate>
+        <MyDate @change="getPlaceTime"></MyDate>
       </div>
       <div
         class="mt-3 rounded-md border-[1px] border-[#eeeeee] px-4 py-5 grid lg:grid-cols-8 grid-cols-4"
       >
         <div
-          v-for="num in 8"
           class="flex flex-col gap-2 border-r-2 border-[#EEEEEE] last:border-none"
         >
-          <div class="number">number</div>
-          <div class="title">title</div>
+          <div class="number">1000</div>
+          <div class="title">总投放单</div>
+        </div>
+        <div
+          class="flex flex-col gap-2 border-r-2 border-[#EEEEEE] last:border-none"
+        >
+          <div class="number">1000</div>
+          <div class="title">总分发数</div>
+        </div>
+        <div
+          class="flex flex-col gap-2 border-r-2 border-[#EEEEEE] last:border-none"
+        >
+          <div class="number">1000</div>
+          <div class="title">预算金额</div>
+        </div>
+        <div
+          class="flex flex-col gap-2 border-r-2 border-[#EEEEEE] last:border-none"
+        >
+          <div class="number">1000</div>
+          <div class="title">消费金额</div>
+        </div>
+        <div
+          class="flex flex-col gap-2 border-r-2 border-[#EEEEEE] last:border-none"
+        >
+          <div class="number">1000</div>
+          <div class="title">有效用户</div>
+        </div>
+        <div
+          class="flex flex-col gap-2 border-r-2 border-[#EEEEEE] last:border-none"
+        >
+          <div class="number">1000</div>
+          <div class="title">条件用户</div>
+        </div>
+        <div
+          class="flex flex-col gap-2 border-r-2 border-[#EEEEEE] last:border-none"
+        >
+          <div class="number">1000</div>
+          <div class="title">有效条件用户</div>
+        </div>
+        <div
+          class="flex flex-col gap-2 border-r-2 border-[#EEEEEE] last:border-none"
+        >
+          <div class="number">1000</div>
+          <div class="title">完成投放率</div>
         </div>
       </div>
       <div class="mt-10">
@@ -101,6 +142,10 @@ import { onMounted } from 'vue';
 import { usePaging } from '@/hooks/usePaging';
 import { useToast } from '@/components/ui/toast/use-toast';
 const { toast } = useToast();
+const placeTime=ref({
+  start:null,
+  end:null,
+});
 const Orderparams = reactive({});
 const Order = usePaging({ fetchFun: getReleaseOrderList, params: Orderparams });
 const list1 = ref([
@@ -117,6 +162,11 @@ init();
 toast({
   title: '取消投放成功',
  })
+};
+// 获取投放时间段
+const getPlaceTime = async (e) => {
+placeTime.value = e;
+console.log(e)
 }
 const init = async () => {
   await Order.getLists();
@@ -152,7 +202,7 @@ onMounted(() => {
 .number {
   font-size: 24px;
   font-family: Arial, Arial-Regular;
-  @apply font-normal;
+  @apply font-semibold;
 
   text-align: center;
   color: #333333;

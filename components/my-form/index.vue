@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
+  <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4 h-[500px] overflow-auto sm:h-auto">
     <div class="w-full lg:w-[640px]">
       <div class="title">收货地址</div>
       <div class="flex flex-col gap-4 mt-5">
@@ -63,8 +63,11 @@
           </div>
         </div>
       </div>
-      <Button class="mt-4 mr-8" @click="emit('finish', address)">提交地址</Button>
-      <Button class="mt-4" variant="outline" @click="emit('close')">取消保存</Button>
+      <div class="flex gap-4 sm:gap-20 justify-center mt-4">
+        <Button class="mt-4 w-2/5  sm:w-[240px]" @click="emit('finish', address)">提交地址</Button>
+      <Button class="mt-4 w-2/5 sm:w-[240px]" variant="outline" @click="emit('close')">取消保存</Button>
+      </div>
+
     </div>
   </div>
 </template>

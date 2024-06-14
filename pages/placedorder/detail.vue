@@ -27,7 +27,7 @@
           </div>
           <div  class="bg-[#F6F7F9] rounded-[4px] sm:px-3 sm:py-5 p-2 flex flex-col sm:gap-2 gap-1">
             <div class="number text-center !font-[600]">1000</div>
-            <div class="text text-center">消耗金额</div>
+            <div class="text text-center">预算金额</div>
           </div>
           <div  class="bg-[#F6F7F9] rounded-[4px] sm:px-3 sm:py-5 p-2 flex flex-col sm:gap-2 gap-1">
             <div class="number text-center !font-[600]">1000</div>

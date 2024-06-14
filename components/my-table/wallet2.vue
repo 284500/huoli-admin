@@ -9,25 +9,22 @@
     </TableHeader>
     <TableBody>
       <TableRow v-for="(item, index) in tabItems" :key="index" :class="item.selected ? 'bg-muted' : ''">
-        <TableCell v-if="hasCheck" class="w-6">
-          <Checkbox v-model:checked="item.selected" @update:checked="CheckboxChange" />
+        <TableCell class="text">
+          {{ item.orderId }}
         </TableCell>
-        <TableCell class="flex items-center">
-          <div class="flex">
-            <div class="flex items-center"><img class="w-12 h-12" />
-            </div>
-            <div class="ml-2">
-              <div class=" table-title">{{ item.name }}</div>
-              <div class="text-sm !text-[12px]  text-[#999999]">{{ item.content }}</div>
-              <div class="text-sm !text-[12px] text-[#999999]">{{ item.name }}</div>
-            </div>
+        <TableCell class="text">{{ item.lockedAmount }}</TableCell>
+        <TableCell>{{$dayjs(item.lockTime*1000).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
+        <TableCell>
+          <div class="flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-[#12D137]" :class="{'!bg-[#FF5030]':item.status!=='已解锁'}"></span><span>{{ item.status }}</span>
           </div>
         </TableCell>
-        <TableCell class="text">{{$dayjs(item.createdTime*1000).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
-        <TableCell>{{$dayjs(item.updatedTime*1000).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
-        <TableCell class="text sm:!w-[240px]">
-          <div class="flex gap-4 w-[fit-content]">
-            <div class="text-[#FF5030] cursor-pointer" @click="del(item.id)">删除</div>
+        <TableCell class="text"> <div class="flex gap-4 w-[fit-content]">
+            <div  :class="{'text-[#FF5030]':item.status==='已解锁'}">{{item.status==='已解锁'?item.usedAmount:'-'}}</div>
+          </div>
+        </TableCell>
+        <TableCell class="text"> <div class="flex gap-4 w-[fit-content]">
+            <div  :class="{'text-[#FF5030]':item.status==='已解锁'}">{{item.status==='已解锁'?item.unlockedAmount:'-'}}</div>
           </div>
         </TableCell>
       </TableRow>
@@ -43,16 +40,8 @@ const props = defineProps({
   },
   tabItems: {
     typeof: Array,
-    default: [
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '名片',
-        createdTime: '',
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 0, selected: false, productType: '名片'
-      },
+    default: [{id: 17, vendorId: 3, status: "已解锁", orderId: "FFD2024053017000030", lockTime: 1718332611,
+    lockedAmount: 10, unlockTime: 1724398611, unlockedAmount: 10,usedAmount:100,updatedTime: 1724398611,createdTime: 1724398611},
     ]
   }
 });

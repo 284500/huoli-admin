@@ -47,7 +47,7 @@
           <div><span class="apply-text">运营者手机</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span></div>
           <div class="w-full flex gap-3">
             <Input class="w-full  rounded-[4px]" id="phone" type="phone" placeholder="请输入验证码" v-model="FromData.phone" required />
-            <MyButtonSms ref='ButtonSms' class="h-full px-3 text-[#2277ff]" @click="getSms" />
+            <MyButtonSms ref='ButtonSms' type="sms" class="h-full px-3 text-[#2277ff]" @click="getSms" />
           </div>
         </div>
         <div class="flex flex-col gap-1.5">

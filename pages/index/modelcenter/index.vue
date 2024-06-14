@@ -69,12 +69,16 @@
               >
             </div>
             <div class="flex">
+              <MyDownmean #default :mean="ColorDict" @change="getMaterialColor">
               <div class="flex w-[82px] h-[32px] justify-center items-center gap-1">
                 <img src="/public/img/wuliao/color.png" alt="" class="w-4 h-4" /> <span>颜色</span>
               </div>
-              <div class="flex w-[82px] h-[32px] justify-center items-center gap-1">
+            </MyDownmean>
+              <MyDownmean #default :mean="FestivalDict" @change="getMaterialFestival">
+               <div class="flex w-[82px] h-[32px] justify-center items-center gap-1">
                 <img src="/public/img/wuliao/date.png" alt="" class="w-4 h-4" /><span>节日</span>
-              </div>
+               </div>
+              </MyDownmean>
             </div>
           </div>
           <div v-if="Material.pager.loading" class="flex flex-col items-center py-20">
@@ -102,8 +106,8 @@
                 <div class="flex justify-between items-center py-2">
                   <span class="title">{{ item.name }}</span>
                   <div
-                    class="rounded-full bg-blue-600 w-[20px] h-[20px]"
-                    :class="`bg-[${item.themeColor}]`"
+                    class="rounded-full bg-white  w-[20px] h-[20px]"
+                    :style="`background:${item.themeColor}`"
                   ></div>
                 </div>
               </div>
@@ -193,12 +197,16 @@
               >
             </div>
             <div class="flex">
+              <MyDownmean #default :mean="ColorDict" @change="getH5Color">
               <div class="flex w-[82px] h-[32px] justify-center items-center gap-1">
                 <img src="/public/img/wuliao/color.png" alt="" class="w-4 h-4" /> <span>颜色</span>
               </div>
-              <div class="flex w-[82px] h-[32px] justify-center items-center gap-1">
+            </MyDownmean>
+              <MyDownmean #default :mean="FestivalDict" @change="getH5Festival">
+               <div class="flex w-[82px] h-[32px] justify-center items-center gap-1">
                 <img src="/public/img/wuliao/date.png" alt="" class="w-4 h-4" /><span>节日</span>
-              </div>
+               </div>
+              </MyDownmean>
             </div>
           </div>
           <div
@@ -229,12 +237,13 @@
       <Footer></Footer>
     </div>
   </ScrollArea>
-  <!-- <input type="text" v-model="store.keyword"> -->
+
   <MyDrawer v-model="isShow" color="bg-[rgba(249,250,251,0.95)]">
     <MaterialDetail
       v-if="!popname"
       @close="closepop"
       :data="Materialdetail.detail.data"
+      :product="ProductType"
     ></MaterialDetail>
     <H5Detail v-else @close="closepop" :data="H5detail.detail.data"></H5Detail>
   </MyDrawer>
@@ -251,7 +260,8 @@ import {
   getMaterialTemplateList,
 } from '@/server/apis/template/material.js';
 import { getIndustryType, getProductType, getPurposesType } from '@/server/apis/type/index.js';
-
+import {getColorDict,getFestivalDict} from '@/server/apis/dict/index.js';
+import {getProductDetail} from '@/server/apis/product/index.js';
 import { useDetail } from '@/hooks/useDetail';
 import { usePaging } from '@/hooks/usePaging';
 import { useType } from '@/hooks/useType';
@@ -263,6 +273,7 @@ const H5params = reactive({});
 const Materialparams = reactive({});
 const MaterialDetailparams = reactive({});
 const H5Detailparams = reactive({});
+const ProductType = ref(null);
 const Material = usePaging({ fetchFun: getMaterialTemplateList, params: Materialparams });
 const H5 = usePaging({ fetchFun: getH5TemplateList, params: H5params });
 const H5detail = useDetail(getH5TemplateDetail, H5Detailparams);
@@ -270,7 +281,24 @@ const Materialdetail = useDetail(getMaterialTemplateDetail, MaterialDetailparams
 const Product = useType(getProductType);
 const Industry = useType(getIndustryType);
 const Purposes = useType(getPurposesType);
-
+const ColorDict=ref(null);
+const FestivalDict=ref(null);
+const getMaterialFestival=(e)=>{
+  Materialparams.applicableHolidays=e;
+  Material.getLists();
+};
+const getH5Festival=(e)=>{
+  H5params.applicableHolidays=e;
+  H5.getLists();
+};
+const getMaterialColor=(e)=>{
+  Materialparams.themeColor=e;
+  Material.getLists();
+};
+const getH5Color=(e)=>{
+  H5params.themeColor=e;
+  H5.getLists();
+}
 //初始化
 const init = async () => {
   Material.getLists();
@@ -278,6 +306,8 @@ const init = async () => {
   Product.getTypes();
   Industry.getTypes();
   await Purposes.getTypes();
+  ColorDict.value=await getColorDict();
+  FestivalDict.value=await getFestivalDict();
 };
 onBeforeMount(() => {
   init();
@@ -290,11 +320,12 @@ const changeTemplate = (index) => {
     H5.resetPage();
   }
 };
-const popup = (name, id) => {
+const popup =async (name, id) => {
   if (name == MaterialDetail) {
     popname.value = 0;
     MaterialDetailparams['id'] = id;
-    Materialdetail.getDetail();
+    await Materialdetail.getDetail();
+    ProductType.value= await getProductDetail({id:Materialdetail.detail.data.productTypeId});
   } else if ((name = H5Detail)) {
     popname.value = 1;
     H5Detailparams['id'] = id;

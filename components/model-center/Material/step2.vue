@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-4 mt-3">
+  <div class="flex flex-col gap-4 mt-3 mb-3">
     <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
       <h1 class="title">投放配置</h1>
       <div class="flex gap-10 mt-5 mb-4">
@@ -107,6 +107,7 @@
             <span class="apply-text">选择意向分发商户分类领域</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span>
           </div>
           <div>
+            <my-combobox class="!w-full" @select="(e)=>{console.log(e)}"></my-combobox>
             <Select v-model="placeData.classificationDomain">
               <SelectTrigger id="framework" class="w-full px-3 py-2 rounded-[4px]">
                 <SelectValue placeholder="餐饮、美发" class="apply-text" />
@@ -334,6 +335,7 @@
 import MyDate from '@/components/my-date/radio.vue';
 import MyDrawer from '@/components/drawer/index.vue';
 import { addOrder } from '@/server/apis/modelorder/index.js';
+import {getCategoryDict} from '@/server/apis/dict/index.js';
 import { toast } from '~/components/ui/toast';
 import { getMaterialTemplateDetail } from '@/server/apis/template/material.js';
 import { useDetail } from '@/hooks/useDetail';
@@ -362,12 +364,14 @@ const FormData = ref({
   isSendSample: 1,
   isVideoSendSample: 1,
   orderName: "laborum tempor",
+  quantity:0,
   productId: 2,
   productName: "ut aute",
   remarks: "备注",
   selfIssuedQuantity: null,
   sampleAddress: "厦门软件园",
   templateId: 21,
+  specificationId:1,
   unit: "张",
   //印刷厂id，再下单前设计器获取
   vendorId: 1,
@@ -381,6 +385,8 @@ const placeData = ref({
   classificationDomain: "餐饮、美发",
   releaseArea: "厦门市思明区",
   targetedCondition:[],
+  latitude:118.082745,
+  longitude:24.445676,
   //分发商id
   vendorIds: [],
 });
@@ -401,6 +407,8 @@ const deliveryAddress=ref({
 const isPlace = ref(1);
 //投放条件
 const rulenumber = ref(0);
+//投放领域字典
+const CategoryDict=ref(null)
 const ruleList = ref([[], ['adad', 'testtsd'], ['adad', 'teste']]);
 //获取时间
 const getTime = (e) => {
@@ -420,7 +428,10 @@ const setDeliveryAddress=(e)=>{
 //查询地址
 const searchAddress = async () => {
 let data=await getMapAddress(placeData.value.releaseArea);
+console.log(data.data)
  position.value= data.data.geocodes[0].location;
+ let array=position.value.split(',');
+
 }
 //设置分发商
 const setVendor = (data) => {
@@ -447,7 +458,7 @@ const add = (e) => {
   ruleList.value[e.number].push(e.data);
 };
 const BeforeSend = () => {
-  if (isPlace) {
+  if (isPlace.value) {
     totalData.value = { ...FormData.value, ...placeData.value };
   } else {
     totalData.value =FormData.value;
@@ -468,7 +479,10 @@ const sendOrder = async () => {
 };
 const init = async () => {
   MaterialDetailparams.id = route.query.templateId;
-  let data=await Materialdetail.getDetail();
+  await Materialdetail.getDetail();
+  FormData.value.productName=Materialdetail.detail.data.name;
+  CategoryDict.value=await getCategoryDict();
+  console.log(CategoryDict.value)
 }
 onMounted(() => {
   init()
