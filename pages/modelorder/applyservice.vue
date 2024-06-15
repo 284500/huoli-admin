@@ -4,7 +4,7 @@
     <div class="flex flex-col gap-4 mt-3">
       <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
         <h1 class="title">订单信息</h1>
-        <MyTable :hasCheck="false" :tabItems="TabItems"></MyTable>
+        <MyTable :tableItem="ProductInfo"></MyTable>
 
         <div class="flex justify-end py-4 items-center">
           <div class="title !text-[14px] !leading-[20px]">订单合计：</div>
@@ -69,6 +69,8 @@
 </template>
 <script setup>
 import MyTable from '@/components/my-table/material/config.vue';
+import {  getOrderDetail } from '@/server/apis/modelorder/index.js';
+
 import { addAfterSale } from '@/server/apis/aftersale/index.js';
 
 definePageMeta({
@@ -91,15 +93,13 @@ const BreadcrumbList = ref([
     url: '/modelorder/applyservice',
   },
 ]);
-const TabItems = ref([
-  {
-    id: 1,
-    remarks: 'Alice',
-    isShelves: 1,
-    selected: false,
-    productType: '名片',
-  },
-]);
+const ProductInfo = reactive({
+        cover:'https://tse3-mm.cn.bing.net/th/id/OIP-C.a0j9chzsOquc9MyjXpNB-gHaEo?w=206&h=187&c=7&r=0&o=5&pid=1.7',
+        name:'卡片',
+        id:9999,
+        config:'100*100',
+        price:100
+ });
 const nextStep = async () => {
   await addAfterSale(FromData);
 };

@@ -34,14 +34,14 @@ export default defineNuxtConfig({
 
   nitro: {
     devProxy: {
-      '/api': {
-        target: 'http://192.168.10.106:8084',
-        changeOrigin: true,
-      },
       // '/api': {
-      //   target: 'http://fafadan.cn/',
+      //   target: 'http://192.168.10.106:8084',
       //   changeOrigin: true,
       // },
+      '/api': {
+        target: 'http://fafadan.cn/',
+        changeOrigin: true,
+      },
       '/admin': {
         target: 'http://admin.fafadan.cn/',
         changeOrigin: true,

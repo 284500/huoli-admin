@@ -89,37 +89,63 @@
       </div>
       <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
         <h1 class="title">购买信息</h1>
-        <MyTable :tabItems="TabItems"></MyTable>
-        <div class="py-4">
+        <MyTable :tableItem="ProductInfo"></MyTable>
+        <div class="py-4" v-if="material.isRelease==='否'">
           <div class="gap-3 flex flex-col items-end">
             <div class="flex gap-2">
               <div class="muted-text">产品总价：</div>
-              <div class="text w-24 text-right">￥20.00</div>
+              <div class="text w-24 text-right">￥{{ ProductInfo.price }}</div>
             </div>
             <div class="flex gap-2">
               <div class="muted-text">样品费：</div>
-              <div class="text w-24 text-right">￥20.00</div>
+              <div class="text w-24 text-right">￥{{ product.samplePrice }}</div>
             </div>
 
             <div class="flex gap-2 items-center">
               <Lucide icon="CircleHelp" color="#AAAAAA" class="w-4 h-4"></Lucide>
               <div class="muted-text">寄样物流费：</div>
-              <div class="text w-24 text-right">￥20.00</div>
+              <div class="text w-24 text-right">￥{{ product.sampleSendFee }}</div>
             </div>
 
-            <div class="flex gap-2">
+            <!-- <div class="flex gap-2">
               <div class="muted-text">广告投放费：</div>
               <div class="text w-24 text-right">￥20.00</div>
-            </div>
-            <div class="flex gap-2 items-center">
+            </div> -->
+            <!-- <div class="flex gap-2 items-center">
               <Lucide icon="CircleHelp" color="#AAAAAA" class="w-4 h-4"></Lucide>
 
               <div class="muted-text">钱包原有款：</div>
               <div class="text w-24 text-right !text-[#FF5030]">-￥20.00</div>
+            </div> -->
+            <div class="flex gap-2">
+              <div class="muted-text">物流费用：</div>
+              <div class="text w-24 text-right">￥{{ product.expressFeeBase}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="py-4" v-else>
+          <div class="gap-3 flex flex-col items-end">
+            <div class="flex gap-2">
+              <div class="muted-text">产品总价：</div>
+              <div class="text w-24 text-right">￥{{ ProductInfo.price }}</div>
+            </div>
+            <div class="flex gap-2">
+              <div class="muted-text">样品费：</div>
+              <div class="text w-24 text-right">￥{{ material.isSendSample==='是'?product.samplePrice:0 }}</div>
+            </div>
+
+            <div class="flex gap-2 items-center">
+              <Lucide icon="CircleHelp" color="#AAAAAA" class="w-4 h-4"></Lucide>
+              <div class="muted-text">寄样物流费：</div>
+              <div class="text w-24 text-right">￥{{material.isSendSample==='是'?product.sampleSendFee:0 }}</div>
+            </div>
+             <div class="flex gap-2">
+              <div class="muted-text">广告投放费：</div>
+              <div class="text w-24 text-right">￥{{ placeorder.prepaidAmount }}</div>
             </div>
             <div class="flex gap-2">
               <div class="muted-text">物流费用：</div>
-              <div class="text w-24 text-right">￥20.00</div>
+              <div class="text w-24 text-right">￥{{ product.expressFeeBase*placeorder.merchantsNumber}}</div>
             </div>
           </div>
         </div>
@@ -127,7 +153,7 @@
 
         <div class="flex justify-end mt-4 items-center">
           <div class="title !text-[14px] !leading-[20px]">订单合计：</div>
-          <div class="total-number ml-2 pl-3">￥270.00</div>
+          <div class="total-number ml-2 pl-3">￥{{ material.amount }}</div>
         </div>
       </div>
     </div>
@@ -135,6 +161,7 @@
 </template>
 <script setup>
 import MyTable from '@/components/my-table/material/config.vue';
+import {getProductDetail} from '@/server/apis/product/index.js';
 import { useToast } from '@/components/ui/toast/use-toast';
 import { cancelOrder, getOrderDetail } from '@/server/apis/modelorder/index.js';
 import { getMaterialOrder } from '@/server/apis/placeorder/index.js';
@@ -146,6 +173,7 @@ definePageMeta({
 const route = useRoute();
 const material = ref({});
 const placeorder = ref({});
+const product = ref({});
 const BreadcrumbList = ref([
   {
     name: '物料订单',
@@ -179,16 +207,20 @@ const statusList = ref([
   '已退款 ',
   '已取消 ',
 ]);
+const priceNumber=reactive({
+  price:0,
+  samplePrice:0,
+  sampleSendFee:0,
+  expressFeeBase:0,
+})
 const stepNumber = ref(1);
-const TabItems = ref([
-  {
-    id: 1,
-    remarks: 'Alice',
-    isShelves: 1,
-    selected: false,
-    productType: '名片',
-  },
-]);
+const ProductInfo = reactive({
+        cover:'https://tse3-mm.cn.bing.net/th/id/OIP-C.a0j9chzsOquc9MyjXpNB-gHaEo?w=206&h=187&c=7&r=0&o=5&pid=1.7',
+        name:'卡片',
+        id:9999,
+        config:'100*100',
+        price:100
+ });
 const deleteOrder = async (e) => {
   await cancelOrder({ id: Number(e) });
   toast({
@@ -196,10 +228,23 @@ const deleteOrder = async (e) => {
   });
   init();
 };
-const init = async () => {
+const getProductInfo=async ()=>{
   material.value = await getOrderDetail({ id: Number(route.query.id) });
+  ProductInfo.cover = material.value.cover;
+  ProductInfo.name = material.value.ffdOrderDesignDetailVo?.productName;
+  ProductInfo.id = material.value.id;
+  ProductInfo.config = material.value.config['材料'];
+  ProductInfo.price = material.value.config['价格/元'];
+}
+const init = async () => {
+  await getProductInfo();
+  if(material.value.isRelease==='是'){
   placeorder.value = await getMaterialOrder({ orderId: Number(route.query.id) });
-  stepNumber.value = material.value.status + 1 || 0;
+  }else{
+
+  }
+  stepNumber.value = material.value.status + 1;
+  product.value = await getProductDetail({ id: Number(material.value.ffdOrderDesignDetailVo?.productId)});
 };
 onMounted(init);
 </script>

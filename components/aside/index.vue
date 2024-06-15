@@ -33,7 +33,7 @@ const ChangeActivenumber = (index) => {
           <div v-else>
 
               <div
-                :class="nav.index === index ? 'isActive' : ''"
+                :class="nav.index === index ?'isActive' : ''"
                 class="flex items-center gap-3 rounded-[4px] px-3 h-10 nav-tab"
                 @click="ChangeActivenumber(index)"
               >

@@ -26,8 +26,9 @@
 <script setup>
 import Drawer from '@/components/drawer/index.vue';
 import Login from '@/components/login/index.vue';
-import { useLoginStore } from '~/composables/store';
+import { useLoginStore,useNavStore } from '~/composables/store';
 const store=useLoginStore();
+const nav=useNavStore();
 const Token = useCookie('huoli-token',{ maxAge:60*60*24*30});
 const IsLogin = useCookie('isLogin',{ maxAge:60*60*24*30});
 const UserInfo = useCookie('userInfo',{ maxAge:60*60*24*30 });
@@ -46,6 +47,7 @@ const Closepop = (e) => {
   store.isShow = false;
 };
 const logout = () => {
+  nav.index= 0;
   Token.value=null;
   IsLogin.value=false;
   UserInfo.value=null;

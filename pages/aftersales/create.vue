@@ -4,7 +4,7 @@
     <div class="flex flex-col gap-4 mt-3">
       <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
         <h1 class="title">订单信息</h1>
-        <MyTable :hasCheck="false" :tabItems="TabItems"></MyTable>
+        <MyTable :tableItem="ProductInfo"></MyTable>
         <div class="flex justify-end mt-4 items-center">
           <div class="title !text-[14px] !leading-[20px]">订单合计：</div>
           <div class="total-number ml-2 pl-3">￥270.00</div>
@@ -99,15 +99,13 @@ const BreadcrumbList = ref([
     url: '/aftersales/create',
   },
 ]);
-const TabItems = ref([
-  {
-    id: 1,
-    remarks: 'Alice',
-    isShelves: 1,
-    selected: false,
-    productType: '名片',
-  },
-]);
+const ProductInfo = reactive({
+        cover:'https://tse3-mm.cn.bing.net/th/id/OIP-C.a0j9chzsOquc9MyjXpNB-gHaEo?w=206&h=187&c=7&r=0&o=5&pid=1.7',
+        name:'卡片',
+        id:9999,
+        config:'100*100',
+        price:100
+ });
 // 获取图片
 const preImgList = ref('');
 const Upload = (e) => {
@@ -125,8 +123,16 @@ const createAfterSalesOrder = async () => {
   await addAfterSale(AfterSaleData);
   navigateTo('/aftersales');
 };
-const init = async () => {
+const getProductInfo=async ()=>{
   material.value = await getOrderDetail({ id: Number(route.query.id) });
+  ProductInfo.cover = material.value.cover;
+  ProductInfo.name = material.value.ffdOrderDesignDetailVo?.productName;
+  ProductInfo.id = material.value.id;
+  ProductInfo.config = material.value.config['材料'];
+  ProductInfo.price = material.value.config['价格/元'];
+}
+const init = async () => {
+  getProductInfo();
 };
 onMounted(() => {
   init();

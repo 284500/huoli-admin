@@ -65,7 +65,7 @@
          <MySelectDate v-model="H5params" class="ml-10"></MySelectDate>
         </div>
         <div  v-if="H5.pager.lists.length">
-      <MyTable :tabItems="H5.pager.lists" @delete="delH5Work" @checkchange="getH5Select"></MyTable>
+      <H5Table :tabItems="H5.pager.lists" @delete="delH5Work" @checkchange="getH5Select"></H5Table>
       <MyPagination v-model="H5.pager" @change="H5.getLists"></MyPagination></div>
       <div v-else class="flex flex-col items-center py-20">
           <svg width="184" height="152" viewBox="0 0 184 152" xmlns="http://www.w3.org/2000/svg">
@@ -118,6 +118,7 @@
 import Wuliao from '@/components/my-tab/wuliao.vue';
 import Myheader from '@/components/navbar/header.vue';
 import MyTable from '@/components/my-table/table.vue';
+import H5Table from '@/components/my-table/h5work.vue';
 import MyPagination from '@/components/my-pagination/index.vue';
 import { usePaging } from '@/hooks/usePaging';
 import { useDetail } from '@/hooks/useDetail';

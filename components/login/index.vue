@@ -6,9 +6,9 @@
     <div class="bg-white w-[480px] sm:h-[520px] max-w-[100vw] h-[420px] relative sm:py-[60px] sm:px-[100px] px-8 py-6">
       <!-- 账号登录 -->
       <div v-if="Type === 'login'" class="flex flex-col items-center h-full">
-        <h1 class="title font-semibold">密码登录</h1>
+        <h1 class="title font-semibold">账号登录</h1>
         <div class="mt-3">
-          <span class="descripe">没有账号？</span><span class="descripe font-medium !text-[#2277FF]"
+          <span class="descripe ">没有账号？</span><span class="descripe font-medium !text-[#2277FF] cursor-pointer"
             @click="changeType('signup')">立即注册</span>
         </div>
         <div class="mt-10 w-full h-10">
@@ -24,18 +24,18 @@
           <div class="flex gap-2 items-center">
             <Checkbox id="terms1" /><span class="descripe !text-[#666666]">记住密码</span>
           </div>
-          <div class="descripe" @click="changeType('forget')">忘记密码</div>
+          <div class="descripe cursor-pointer" @click="changeType('forget')">忘记密码</div>
         </div>
         <div class="w-full mt-5">
-          <Button class="w-full rounded-[4px] bg-[#2277FF]" @click="accountlogin">登录</Button>
+          <Button class="w-full rounded-[4px] bg-[#2277FF] cursor-pointer" @click="accountlogin">登录</Button>
         </div>
         <div class="mt-auto flex justify-center items-center">
-          <div class="flex gap-1.5">
+          <div class="flex gap-1.5  cursor-pointer items-center">
             <img src="/public/img/login/weixing.png" alt="" class="w-5 h-5" /><span class="text"
               @click="changeType('weixing')">微信登录</span>
           </div>
           <div class="w-[1px] h-4 bg-[#DDDDDD] mx-4"></div>
-          <div class="flex gap-1.5">
+          <div class="flex gap-1.5  cursor-pointer items-center">
             <img src="/public/img/login/phone.png" alt="" class="w-5 h-5" /><span class="text"
               @click="changeType('phone')">手机登录</span>
           </div>
@@ -45,7 +45,7 @@
       <div v-if="Type === 'phone'" class="flex flex-col items-center h-full">
         <h1 class="title font-semibold">手机验证码登录</h1>
         <div class="mt-3">
-          <span class="descripe">没有账号？</span><span class="descripe font-medium !text-[#2277FF]"
+          <span class="descripe ">没有账号？</span><span class="descripe font-medium !text-[#2277FF] cursor-pointer"
             @click="changeType('signup')">立即注册</span>
         </div>
         <div class="mt-10 w-full h-10">
@@ -62,12 +62,12 @@
           <Button class="w-full rounded-[4px] bg-[#2277FF]" @click="mobilelogin">登录</Button>
         </div>
         <div class="mt-auto flex justify-center items-center">
-          <div class="flex gap-1.5">
+          <div class="flex gap-1.5 cursor-pointer items-center">
             <img src="/public/img/login/weixing.png" alt="" class="w-5 h-5" /><span class="text"
               @click="changeType('weixing')">微信登录</span>
           </div>
           <div class="w-[1px] h-4 bg-[#DDDDDD] mx-4"></div>
-          <div class="flex gap-1.5">
+          <div class="flex gap-1.5 cursor-pointer items-center">
             <img src="/public/img/login/phone.png" alt="" class="w-5 h-5" /><span class="text"
               @click="changeType('login')">账号登录</span>
           </div>
@@ -83,12 +83,12 @@
           <iframe :src="codeurl" width="300" height="400" class="wx-login"></iframe>
         </div>
         <div class="mt-auto flex justify-center items-center">
-          <div class="flex gap-1.5">
+          <div class="flex gap-1.5 cursor-pointer items-center">
             <img src="/public/img/login/weixing.png" alt="" class="w-5 h-5" /><span class="text"
               @click="changeType('login')">账号登录</span>
           </div>
           <div class="w-[1px] h-4 bg-[#DDDDDD] mx-4"></div>
-          <div class="flex gap-1.5">
+          <div class="flex gap-1.5 cursor-pointer items-center">
             <img src="/public/img/login/phone.png" alt="" class="w-5 h-5" /><span class="text"
               @click="changeType('phone')">手机登录</span>
           </div>
@@ -122,7 +122,7 @@
           <Button class="w-full rounded-[4px] bg-[#2277FF]" @click="signup">注册</Button>
         </div>
         <div class="mt-auto flex justify-center items-center">
-          <span class="descripe">已有账号，</span><span class="descripe font-medium !text-[#2277FF]"
+          <span class="descripe">已有账号，</span><span class="descripe font-medium !text-[#2277FF] cursor-pointer"
             @click="changeType('login')">直接登录</span>
         </div>
       </div>
@@ -153,7 +153,7 @@
           <Button class="w-full rounded-[4px] bg-[#2277FF]" @click="forget">确认修改</Button>
         </div>
         <div class="mt-auto flex justify-center items-center">
-          <span class="descripe">想起密码？</span><span class="descripe font-medium !text-[#2277FF]"
+          <span class="descripe">想起密码？</span><span class="descripe font-medium !text-[#2277FF] cursor-pointer"
             @click="changeType('login')">去登录</span>
         </div>
       </div>

@@ -9,13 +9,13 @@
     </TableHeader>
     <TableBody>
       <TableRow v-for="(item, index) in tabItems" :key="index" :class="item.selected ? 'bg-muted' : ''">
-        <TableCell class="flex items-center lg:!w-[200px] ">
+        <TableCell class="flex items-center lg:!w-[300px] ">
           <div class="flex">
             <div class="flex items-center"><img class="w-12 h-12" :src="item.ffdOrderDetailVo?.cover" />
             </div>
             <div class="ml-2">
-              <div class=" table-title">{{ item.name }}</div>
-              <div class="text-sm !text-[12px]  text-[#999999]">{{ item.content }}</div>
+              <div class=" table-title text-nowrap">{{ item.ffdOrderDetailVo?.orderType }}</div>
+              <div class="text-sm !text-[12px]  text-[#999999]">{{ item.ffdOrderDetailVo?.quantity }}{{ item.ffdOrderDetailVo?.unit }}</div>
             </div>
           </div>
         </TableCell>

@@ -76,7 +76,7 @@ const props = defineProps({
   data: {
     type: Object,
     default: {
-      country: '',
+      country: '中国',
       province: '',
       city: '',
       county: '',

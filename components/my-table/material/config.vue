@@ -14,16 +14,16 @@
             <div class="flex items-center"><img class="w-12 h-12" :src="tableItem.cover"/>
             </div>
             <div class="ml-2">
-              <div class=" table-title">{{ tableItem.id }}</div>
-              <div class="text-sm !text-[12px]  text-[#999999]">{{ tableItem.specification||'规格' }}</div>
-              <div class="text-sm !text-[12px] text-[#999999]">制作方:{{ tableItem.manufacturer }}</div>
+              <div class=" table-title">{{ tableItem.name }}</div>
+              <div class="text-sm !text-[12px]  text-[#999999]">产品ID {{ tableItem.id }}</div>
+
             </div>
           </div>
         </TableCell>
-        <TableCell class="text"></TableCell>
-        <TableCell class="text"></TableCell>
+        <TableCell class="text">{{ tableItem.config }}</TableCell>
+        <TableCell class="text">1</TableCell>
         <TableCell class="text sm:!w-[240px]">
-
+          ￥{{ tableItem.price }}
         </TableCell>
       </TableRow>
     </TableBody>
@@ -40,8 +40,11 @@ const props = defineProps({
     typeof: Object,
     default:
       {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
+        cover:'https://tse3-mm.cn.bing.net/th/id/OIP-C.a0j9chzsOquc9MyjXpNB-gHaEo?w=206&h=187&c=7&r=0&o=5&pid=1.7',
+        name:'卡片',
+        id:9999,
+        config:'100*100',
+        price:10
       }
   }
 });

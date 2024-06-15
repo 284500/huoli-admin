@@ -107,13 +107,13 @@
             <span class="apply-text">选择意向分发商户分类领域</span><span class="text-[#FF5030] ml-[2px] pt-2">*</span>
           </div>
           <div>
-            <my-combobox class="!w-full" @select="(e)=>{console.log(e)}"></my-combobox>
+            <!-- <my-combobox class="!w-full" @select="(e)=>{console.log(e)}"></my-combobox> -->
             <Select v-model="placeData.classificationDomain">
               <SelectTrigger id="framework" class="w-full px-3 py-2 rounded-[4px]">
                 <SelectValue placeholder="餐饮、美发" class="apply-text" />
               </SelectTrigger>
-              <SelectContent position="popper">
-                <SelectItem value="餐饮、美发"> 餐饮、美发</SelectItem>
+              <SelectContent position="popper" class="max-h-[300px]">
+                <SelectItem v-for="item in CategoryDict" :value="item.value"> {{ item.name }}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -245,36 +245,7 @@
     </div>
     <div class="bg-white rounded-[8px] md:px-10 md:py-8 p-4">
       <h1 class="title">确认订单信息</h1>
-      <Table>
-        <TableHeader>
-          <TableRow class="!bg-[#f9fafb]">
-            <TableHead v-for="(item, index) in tableTitle" class="muted-text">
-              {{ item }}
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          <TableRow>
-            <TableCell class="flex items-center">
-              <div class="flex">
-                <div class="flex items-center"><img class="w-12 h-12" :src="Materialdetail.detail.data.templateCover" />
-                </div>
-                <div class="ml-2">
-                  <div class=" table-title !font-[500] mb-1">{{ Materialdetail.detail.data.name }}</div>
-                  <div class="text-sm !text-[12px]  text-[#999999]">{{ }}</div>
-                  <div class="text-sm !text-[12px] text-[#999999]">
-                    产品ID:{{ Materialdetail.detail.data.materialDesign?.emplateId }}</div>
-                </div>
-              </div>
-            </TableCell>
-            <TableCell class="text">{{ Materialdetail.detail.data.materialDesign?.specification }}</TableCell>
-            <TableCell>1</TableCell>
-            <TableCell class="text sm:!w-[240px]">
-              ￥{{ 23 }}
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+      <MyTable :tableItem="ProductInfo"></MyTable>
       <div class="py-4">
         <div class="gap-3 flex flex-col items-end">
           <div class="flex gap-2">
@@ -283,28 +254,21 @@
           </div>
           <div class="flex gap-2">
             <div class="muted-text">样品费：</div>
-            <div class="text w-24 text-right">￥20.00</div>
+            <div class="text w-24 text-right">￥{{ sampleFee }}</div>
           </div>
 
           <div class="flex gap-2 items-center">
             <Lucide icon="CircleHelp" color="#AAAAAA" class="w-4 h-4"></Lucide>
             <div class="muted-text">寄样物流费：</div>
-            <div class="text w-24 text-right">￥20.00</div>
+            <div class="text w-24 text-right">￥{{ sampleExpressFee }}</div>
           </div>
-
           <div class="flex gap-2">
             <div class="muted-text">广告投放费：</div>
-            <div class="text w-24 text-right">￥20.00</div>
-          </div>
-          <div class="flex gap-2 items-center">
-            <Lucide icon="CircleHelp" color="#AAAAAA" class="w-4 h-4"></Lucide>
-
-            <div class="muted-text">钱包原有款：</div>
-            <div class="text w-24 text-right !text-[#FF5030]">-￥20.00</div>
+          <div class="text w-24 text-right">￥{{ placeFee }}</div>
           </div>
           <div class="flex gap-2">
             <div class="muted-text">物流费用：</div>
-            <div class="text w-24 text-right">￥20.00</div>
+            <div class="text w-24 text-right">￥{{ expressFee||0}}</div>
           </div>
         </div>
       </div>
@@ -312,14 +276,14 @@
 
       <div class="flex justify-end mt-4 items-center">
         <div class="title !text-[14px] !leading-[20px]">订单合计：</div>
-        <div class="total-number ml-2 pl-3">￥270.00</div>
+        <div class="total-number ml-2 pl-3">￥{{ totalAmount }}</div>
       </div>
     </div>
   </div>
   <div class="fixed left-0 right-0 bottom-0 bg-white h-16 flex justify-center items-center px-8">
     <div class="w-full lg:w-[980px] xl:w-[1280px] flex justify-end items-center">
       <div class="apply-text">合计(含运费,投放费)：</div>
-      <div class="number !text-[18px]">￥{{  FormData.amount }}</div>
+      <div class="number !text-[18px]">￥{{  totalAmount }}</div>
       <Button class="ml-6" @click="sendOrder">提交订单</Button>
     </div>
   </div>
@@ -337,23 +301,16 @@ import MyDrawer from '@/components/drawer/index.vue';
 import { addOrder } from '@/server/apis/modelorder/index.js';
 import {getCategoryDict} from '@/server/apis/dict/index.js';
 import { toast } from '~/components/ui/toast';
+import {getProductDetail} from '@/server/apis/product/index.js';
 import { getMaterialTemplateDetail } from '@/server/apis/template/material.js';
 import { useDetail } from '@/hooks/useDetail';
 import {getMapAddress} from '@/server/apis/map/index.js';
+import {getMaterialWorkDetail} from '@/server/apis/works/material.js'
+import MyTable from '@/components/my-table/material/config.vue';
 const emit = defineEmits(['change']);
 const route = useRoute();
 const MaterialDetailparams = reactive({});
 const Materialdetail = useDetail(getMaterialTemplateDetail, MaterialDetailparams);
-const TabItems = ref([
-  {
-    id: 1,
-    remarks: 'Alice',
-    isShelves: 1,
-    selected: false,
-    productType: '名片',
-  },
-]);
-const tableTitle = ref(['浙江印刷厂订单', '规格参数', '数量', '金额'])
 //基础表单数据
 const FormData = ref({
   amount: 120,
@@ -366,9 +323,9 @@ const FormData = ref({
   orderName: "卡片",
   quantity:0,
   productId: 2,
-  productName: "ut aute",
+  productName: "商务卡片",
   remarks: "备注",
-  selfIssuedQuantity: null,
+  selfIssuedQuantity: 0,
   sampleAddress: "厦门软件园",
   templateId: 21,
   specificationId:1,
@@ -377,12 +334,13 @@ const FormData = ref({
   vendorId: 1,
   workId: route.query.id,
 });
+const workInfo = ref({});
 //投放数据
 const placeData = ref({
   deadline: null,
   merchantsNumber: null,
-  quantity:null,
-  classificationDomain: "餐饮、美发",
+  quantity:0,
+  classificationDomain:1,
   releaseArea: "厦门市思明区",
   targetedCondition:[],
   latitude:118.082745,
@@ -408,16 +366,22 @@ const isPlace = ref(1);
 //投放条件
 const rulenumber = ref(0);
 //投放领域字典
-const CategoryDict=ref(null)
+const CategoryDict=ref(null);
+
 const ruleList = ref([[], ['adad', 'testtsd'], ['adad', 'teste']]);
 //获取时间
 const getTime = (e) => {
   placeData.value.deadline = e;
 };
-//设置总价格
-const totalAmount=computed(()=>{
-  return 120;
-})
+const productDetail=ref(null);
+//设置表格商品数据
+const ProductInfo = reactive({
+        cover:'https://tse3-mm.cn.bing.net/th/id/OIP-C.a0j9chzsOquc9MyjXpNB-gHaEo?w=206&h=187&c=7&r=0&o=5&pid=1.7',
+        name:'卡片',
+        id:9999,
+        config:'100*100',
+        price:100
+ });
 //设置收获地址
 const setDeliveryAddress=(e)=>{
   deliveryAddress.value.address=e.address;
@@ -428,7 +392,7 @@ const setDeliveryAddress=(e)=>{
 //查询地址
 const searchAddress = async () => {
 let data=await getMapAddress(placeData.value.releaseArea);
-console.log(data.data)
+ console.log(data.data)
  position.value= data.data.geocodes[0].location;
  let array=position.value.split(',');
 
@@ -467,8 +431,9 @@ const BeforeSend = () => {
 const sendOrder = async () => {
   BeforeSend();
   try {
-    let { orderId } = await addOrder(totalData.value);
-    emit('change', orderId);
+    let { orderId,orderReleaseId } = await addOrder(totalData.value);
+    let id=orderId||orderReleaseId;
+    emit('change', id);
   }
   catch (e) {
     toast({
@@ -477,15 +442,60 @@ const sendOrder = async () => {
   }
 
 };
+const getProductInfo=async ()=>{
+  workInfo.value = await getMaterialWorkDetail({ id: Number(route.query.id) });
+  ProductInfo.cover = workInfo.value.cover;
+  ProductInfo.name = workInfo.value.name;
+  ProductInfo.id = workInfo.value.id;
+  ProductInfo.config = workInfo.value.specification['材料'];
+  ProductInfo.price = workInfo.value.specification['价格/元'];
+}
 const init = async () => {
+  getProductInfo();
   MaterialDetailparams.id = route.query.templateId;
   await Materialdetail.getDetail();
+  //产品信息
+  productDetail.value=await getProductDetail({id:Materialdetail.detail.data.productTypeId})
   FormData.value.productName=Materialdetail.detail.data.name;
+  FormData.value.orderName=Materialdetail.detail.data.name;
   CategoryDict.value=await getCategoryDict();
   console.log(CategoryDict.value)
 }
 onMounted(() => {
   init()
+});
+//样品费
+const sampleFee=computed(()=>{
+  return FormData.value.isSendSample?productDetail.value?.sampleSendFee:0
+})
+//样品运费
+const sampleExpressFee=computed(()=>{
+  return FormData.value.isSendSample?productDetail.value?.samplePrice:0
+
+})
+//设置运费
+const expressFee=computed(()=>{
+  return placeData.value.merchantsNumber*productDetail.value?.expressFeeBase;
+})
+//设置投放费
+const placeFee=computed(()=>{
+  if(!isPlace.value){
+    return 0;
+    console.log("测试")
+  }else{
+
+  }
+  if(rulenumber.value===2){
+    return placeData.value.quantity*1.9
+  }else if(rulenumber.value===1){
+    return placeData.value.quantity*1.5
+  }else{
+    return placeData.value.quantity
+  }
+})
+//设置总价格
+const totalAmount=computed(()=>{
+  return 20+expressFee.value+placeFee.value+sampleFee.value+sampleExpressFee.value||20;
 });
 //投放条件选择
 </script>

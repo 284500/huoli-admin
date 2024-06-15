@@ -14,15 +14,15 @@
             <div class="flex items-center"><img class="w-12 h-12" :src="item.cover" />
             </div>
             <div class="ml-2">
-              <div class=" table-title">{{ item.ffdOrderDesignDetailVo.productName }}</div>
-              <div class="text-sm !text-[12px]  text-[#999999]">{{ item.content }}</div>
-              <div class="text-sm !text-[12px] text-[#999999]">{{ item.name }}</div>
+              <div class=" table-title">{{ item.orderType }}</div>
+              <div class="text-sm !text-[12px]  text-[#999999]">{{ item.config['材料'] }}</div>
+              <div class="text-sm !text-[12px] text-[#999999]">制作方:{{ item.vendorName }}</div>
             </div>
           </div>
         </TableCell>
         <TableCell class="text">{{ item.quantity + item.unit }}</TableCell>
         <TableCell class="text">{{ item.isRelease }}</TableCell>
-        <TableCell class="text">￥{{ item.unitPrice }}</TableCell>
+        <TableCell class="text">￥{{ item.amount }}</TableCell>
         <TableCell class="text">￥{{ item.payAmount }}</TableCell>
         <TableCell class="text">{{item.payTime?$dayjs(item.payTime*1000).format('YYYY-MM-DD HH:mm:ss'):'-' }}</TableCell>
         <TableCell>

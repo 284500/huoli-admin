@@ -53,7 +53,7 @@
           </div>
         </div>
       </div>
-      <button @click="Alert.AlertShow({title:'测试'})">点击弹窗</button>
+      <!-- <button @click="Alert.AlertShow({title:'测试'})">点击弹窗</button> -->
       <MyAlert ref="Alert"></MyAlert>
       <Footer></Footer>
     </div>
@@ -61,8 +61,8 @@
   <MyDrawer v-model="editpop" >
     <MyForm :data="detail.data" @finish="editfinish" @close="closeedit"></MyForm>
   </MyDrawer>
-  <MyDrawer v-model="addpop" >
-    <MyForm @finish="addfinish" @close="closeadd"></MyForm>
+  <MyDrawer v-model="addpop">
+    <MyForm  @finish="addfinish" @close="closeadd"></MyForm>
   </MyDrawer>
 
 </template>

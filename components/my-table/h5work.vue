@@ -16,16 +16,14 @@
           <Checkbox v-model:checked="item.selected" @update:checked="CheckboxChange" />
         </TableCell>
         <TableCell class="flex items-center">
-          <div class="flex">
+          <div class="flex items-center">
             <div class="flex items-center"><img class="w-12 h-12" :src="item.cover"/>
             </div>
-            <div class="ml-2">
-              <div class=" table-title !font-[500]">{{ item.name }}</div>
-              <div class="text-sm !text-[12px]  text-[#999999]">{{ item.specification['规格']||'规格' }}</div>
-              <div class="text-sm !text-[12px] text-[#999999]">制作方:{{ item.manufacturer }}</div>
-            </div>
+            <div class=" table-title ml-2 !font-[500]">{{ item.name }}</div>
           </div>
         </TableCell>
+        <TableCell class="text">{{ item.url }}</TableCell>
+        <TableCell class="text">{{ item.status }}</TableCell>
         <TableCell class="text">{{$dayjs(item.createdTime*1000).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
         <TableCell>{{$dayjs(item.updatedTime*1000).format('YYYY-MM-DD HH:mm:ss') }}</TableCell>
         <TableCell class="text sm:!w-[240px]">
@@ -47,7 +45,7 @@
 const props = defineProps({
   tableTitle: {
     typeof: Array,
-    default: ['作品信息', '创作时间', '最后修改时间', '状态']
+    default: ['作品信息','作品地址','状态','创作时间', '最后修改时间', '操作']
   },
   tabItems: {
     typeof: Array,
@@ -57,19 +55,6 @@ const props = defineProps({
         isShelves: 1, selected: false, productType: '名片',
         createdTime: '',
         updatedTime: ''
-      },
-
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
-      },
-      {
-        id: 1, remarks: 'Alice',
-        isShelves: 1, selected: false, productType: '鼠标垫'
       },
     ]
   },

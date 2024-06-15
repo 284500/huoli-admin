@@ -55,13 +55,19 @@
 </template>
 <script setup>
 import { addMaterialWork } from '@/server/apis/works/material.js'
+import {
+  getMaterialTemplateDetail,
+} from '@/server/apis/template/material.js';
 import MyDrawer from '@/components/drawer/index.vue';
 const route = useRoute();
 const isShow = ref(false);
+//模板信息
+const templateInfo = ref({});
 const popData = ref({
   area: null,
-
-})
+});
+//作品信息
+const worksInfo = ref({ templateId: Number(route.query.id), content: { name: '鼠标垫' }, name: '鼠标垫' });
 definePageMeta({
   layout: 'center',
 });
@@ -69,7 +75,8 @@ const createWorks = () => {
   isShow.value = true;
 };
 const createOrder = async () => {
-  let data = await addMaterialWork({ templateId: Number(route.query.id), content: { name: '鼠标垫' }, name: '鼠标垫' });
+  //content 后期添加: { name: '鼠标垫' },
+  let data = await addMaterialWork({...worksInfo.value, name:templateInfo.value.name,manufacturer:1});
   navigateTo({
     path: '/modelcenter/material/order',
     query: {
@@ -78,6 +85,17 @@ const createOrder = async () => {
     }
   })
 };
+const init=async ()=>{
+  templateInfo.value = await getMaterialTemplateDetail({id:Number(route.query.id)});
+  //设置作品信息
+  worksInfo.value = templateInfo.value.materialDesign;
+  worksInfo.value.specification = {"数量": "500张", "材料": "铜版纸300g-不覆膜", "规格": "900X54mm", "价格/元": "10"};
+  worksInfo.value.content = { name: '鼠标垫' };
+  worksInfo.value.manufacturer = 1;
+};
+onMounted(()=>{
+  init();
+});
 </script>
 <style scoped>
 .header-bg {

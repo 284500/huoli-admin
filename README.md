@@ -74,21 +74,19 @@ yarn preview
 bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+# 前端项目交接文档
 
-## Git提交规范
+## 一. CODING
 
-### 基本的 message 格式
+### 1.  项目文件（Java）
 
-```
-<type>[optional scope]: <subject>
+​		进入[CODING](https://coding.net/)下载项目文件夹或通过连接仓库进行项目下拉操作。
 
-[optional body]
+![image-20240607090329299](./assetc/后端交接明细/image-20240607090329299.png)
 
-[optional footer(s)]
-```
+![image-20240607090715544](./assetc/后端交接明细/image-20240607090715544.png)
 
-其中 message header（即首行）必选，scope、body 和 footer 可选。
+![image-20240607090850844](./assetc/后端交接明细/image-20240607090850844.png)
 
 ### type 用来描述本次提交的改动类型，可选值及对应含义如下：
 

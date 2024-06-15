@@ -5,7 +5,7 @@
         <TableHead class="w-6">
           <Checkbox v-model:checked="allCheck" @update:checked="allCheckChange" />
         </TableHead>
-        <TableHead v-for="title in totalTile" class="title !w-[200px]">
+        <TableHead v-for="(title,index) in totalTile" class="title !w-[200px]" :key="index" :class="{'!w-[400px]':index===0}">
           {{ title }}
         </TableHead>
       </TableRow>
@@ -17,7 +17,7 @@
         <TableHead class="w-6">
           <Checkbox v-model:checked="allCheck" @update:checked="allCheckChange" />
         </TableHead>
-        <TableHead v-for="title in totalTile" class="title !w-[200px]">
+        <TableHead v-for="(title,index) in totalTile" class="title !w-[200px]" :key="index" :class="{'!w-[400px]':index===0}">
           {{ title }}
         </TableHead>
       </TableRow>
@@ -41,12 +41,12 @@
             </div>
             <div class="ml-2 hidden 2xl:block">
               <div class=" table-title">{{ item.ffdOrderDetailVo.orderType }}</div>
-              <div class="text-sm !text-[12px]  text-[#999999]">{{ item.ffdOrderDetailVo.config }}</div>
-              <div class="text-sm !text-[12px] text-[#999999]">{{ item.name }}</div>
+              <div class="text-sm !text-[12px]  text-[#999999]">{{ item.ffdOrderDetailVo?.config['材料'] }}</div>
+              <div class="text-sm !text-[12px] text-[#999999]">制作方:{{ item.vendorName }}</div>
             </div>
           </div>
         </TableCell>
-        <TableCell class="text">{{ item.ffdOrderDetailVo.amount }}</TableCell>
+        <TableCell class="text">￥{{ item.amount }}</TableCell>
         <TableCell class="text">{{ item.applyReason }}</TableCell>
         <TableCell class="text">{{ item.auditName?item.auditName:'-' }}</TableCell>
         <TableCell class="text">￥{{ item.returnAmount }}</TableCell>
